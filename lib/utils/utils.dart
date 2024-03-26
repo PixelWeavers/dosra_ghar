@@ -22,7 +22,7 @@ class Utils {
         padding: const EdgeInsets.all(15),
         duration: const Duration(seconds: 3),
         borderRadius: BorderRadius.circular(2),
-        flushbarPosition: FlushbarPosition.TOP,
+        flushbarPosition: FlushbarPosition.BOTTOM,
         backgroundColor: Colors.red,
         reverseAnimationCurve: Curves.easeInOut,
         positionOffset: 20,
