@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "699846551173",
+    "project_id": "dosraghar",
+    "storage_bucket": "dosraghar.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:699846551173:android:69cc4d9c67646e9ba66bec",
+        "android_client_info": {
+          "package_name": "com.example.dosra_ghar"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsO6nh0qqCgyOI2kyFefsQvF2NhHf2HjM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
