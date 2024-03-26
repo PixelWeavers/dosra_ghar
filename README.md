@@ -1,16 +1,21 @@
-# dosra_ghar
+# Getting Starter with DusraGhar
+A Flutter app for managing hostel activities for students and wardens alike!
+## Introduction
+Project currently in development.
+### Current Progress
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+ - Announcement screen completed.
+#### Pages To Be Implemented
+##### Mess Screen
+- [ ] Mess Menu 
+-  [ ] Student absence update
+- [ ] Night Mess Menu
+- [ ] Caterer Swap
+- [ ] Daily review
+##### Student Security
+-  [ ] Harassment Complaints
+- [ ] Ragging Complaints
+- [ ] Counselling
+##### Shuttle Service and Travelling 
+- [ ] Shuttle Service 
+- [ ] Carpooling
