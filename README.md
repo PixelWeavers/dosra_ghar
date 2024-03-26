@@ -19,3 +19,6 @@ Project currently in development.
 ##### Shuttle Service and Travelling 
 - [ ] Shuttle Service 
 - [ ] Carpooling
+##### Hostel Metrics
+- [ ] Sports items track
+- [ ] Attendance register for hostel wardens
