@@ -7,10 +7,10 @@ class FirestoreService {
       FirebaseFirestore.instance.collection('users');
 
   Future<void> addUser(UserModel user) {
-    final String _name = user.name;
-    final String _email = user.email;
-    final Hostel _hostelBlock = user.hostelBlock;
-    final Mess _messType = user.messType;
+    final String? _name = user.name;
+    final String? _email = user.email;
+    final Hostel? _hostelBlock = user.hostelBlock;
+    final Mess? _messType = user.messType;
 
     return users.add({
       'name': _name,

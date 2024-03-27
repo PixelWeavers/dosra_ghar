@@ -1,18 +1,18 @@
 class UserModel {
   UserModel(
-      {required this.name,
+      {required this.uid,
+      required this.name,
       required this.email,
       required this.hostelBlock,
       required this.messType,
-      required this.accountType})
-      : role = accountType == AccountType.admin ? 'warden' : 'student';
+      required this.accountType});
   // UserModel({required this.username, required this.password});
-  final String name;
-  final String email;
-  final Hostel hostelBlock;
-  final Mess messType;
-  final AccountType accountType;
-  final String role;
+  final String? uid;
+  final String? name;
+  final String? email;
+  final Hostel? hostelBlock;
+  final Mess? messType;
+  final AccountType? accountType;
 }
 
 enum Mess { veg, nonveg, special }
