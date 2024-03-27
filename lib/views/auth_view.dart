@@ -38,7 +38,9 @@ class _AuthViewState extends State<AuthView> {
           Container(
               child: SignInButton(
             Buttons.GoogleDark,
-            onPressed: () {},
+            onPressed: () {
+              signInWithGoogle(context);
+            },
           ))
         ],
       ),
