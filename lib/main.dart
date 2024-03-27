@@ -1,5 +1,6 @@
 import 'package:dosra_ghar/firebase_options.dart';
 import 'package:dosra_ghar/providers/menu_provider.dart';
+import 'package:dosra_ghar/views/auth_view.dart';
 import 'package:dosra_ghar/views/home.dart';
 import 'package:dosra_ghar/views/menu.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -22,20 +23,20 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(create: (_) => MMenuProvider(),
-    child: Consumer<MMenuProvider>(
-      builder: (context, value, child) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Flutter Demo',
-          theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-            useMaterial3: true,
-          ),
-          home: MenuScreen(),
-        );
-      },
-    ));
-    
+    return ChangeNotifierProvider(
+        create: (_) => MMenuProvider(),
+        child: Consumer<MMenuProvider>(
+          builder: (context, value, child) {
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: 'DusraGhar',
+              theme: ThemeData(
+                colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+                useMaterial3: true,
+              ),
+              home: AuthView(),
+            );
+          },
+        ));
   }
 }
