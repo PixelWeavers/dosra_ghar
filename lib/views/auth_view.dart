@@ -1,3 +1,4 @@
+import 'package:dosra_ghar/services/firebase_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,6 +14,8 @@ class AuthView extends StatefulWidget {
 }
 
 class _AuthViewState extends State<AuthView> {
+  String? _selectedMessType;
+  String? _selectedHostel;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,28 +45,23 @@ class _AuthViewState extends State<AuthView> {
             onPressed: () async {
               TextEditingController nameController = TextEditingController();
 
-              final List<Mess?> messTypes = [
-                Mess.veg,
-                Mess.nonveg,
-                Mess.special
+              final List<String?> messTypes = ['Veg', 'Non-Veg', 'Special'];
+              final List<String?> hostelBlocks = [
+                'A Block',
+                'B Block',
+                'C Block',
+                'D1 Block',
+                'D2 Block'
               ];
-              final List<Hostel?> hostelBlocks = [
-                Hostel.blockA,
-                Hostel.blockB,
-                Hostel.blockC,
-                Hostel.blockD1,
-                Hostel.blockD2,
-              ];
-              Mess? _selectedMessType;
-              Hostel? _selectedHostel;
 
               final SignIn signIn = SignIn();
 
               UserCredential? userCredential =
                   await signIn.signInWithGoogle(context);
               signIn.testFetch(userCredential);
-              ProfileCompletionPopUp(context, hostelBlocks, _selectedHostel,
-                  messTypes, _selectedMessType);
+              final String? accountType = signIn.isAccountType(userCredential);
+              ProfileCompletionPopUp(userCredential, context, hostelBlocks,
+                  _selectedHostel, messTypes, _selectedMessType, accountType);
             },
           ))
         ],
@@ -72,11 +70,15 @@ class _AuthViewState extends State<AuthView> {
   }
 
   Future<dynamic> ProfileCompletionPopUp(
+      UserCredential? userCredential,
       BuildContext context,
-      List<Hostel?> hostelBlocks,
-      Hostel? _selectedHostel,
-      List<Mess?> messTypes,
-      Mess? _selectedMessType) {
+      List<String?> hostelBlocks,
+      String? _selectedHostel,
+      List<String?> messTypes,
+      String? _selectedMessType,
+      String? accountType) {
+    String hostelHint = "Hostel";
+    String messHint = "Mess";
     return showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -92,20 +94,23 @@ class _AuthViewState extends State<AuthView> {
             children: [
               DropdownButton(
                   padding: EdgeInsets.all(10),
-                  hint: Text("Hostel"),
+                  hint: Text(hostelHint),
                   icon: Icon(Icons.house),
                   items: hostelBlocks.map((hostel) {
                     return DropdownMenuItem(
                         child: new Text(hostel.toString()), value: hostel);
                   }).toList(),
+                  value: _selectedHostel,
                   onChanged: (newHostel) {
                     setState(() {
                       _selectedHostel = newHostel;
+                      hostelHint = _selectedHostel.toString();
+                      initState();
                     });
                   }),
               DropdownButton(
                   padding: EdgeInsets.all(10),
-                  hint: Text("Mess"),
+                  hint: Text(messHint),
                   icon: Icon(Icons.food_bank),
                   items: messTypes.map((mess) {
                     return DropdownMenuItem(
@@ -114,8 +119,23 @@ class _AuthViewState extends State<AuthView> {
                   onChanged: (newMess) {
                     setState(() {
                       _selectedMessType = newMess;
+                      messHint = _selectedMessType.toString();
                     });
-                  })
+                  }),
+              ElevatedButton(
+                  onPressed: () {
+                    final UserModel user = UserModel(
+                        uid: userCredential?.user?.uid,
+                        name: userCredential?.user?.displayName,
+                        email: userCredential?.user?.email,
+                        hostelBlock: _selectedHostel,
+                        messType: _selectedMessType,
+                        accountType: accountType);
+                    final FirestoreService firestoreService =
+                        FirestoreService();
+                    firestoreService.addUser(user, context);
+                  },
+                  child: Text("Confirm"))
             ],
           ),
         ),

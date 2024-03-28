@@ -10,13 +10,19 @@ class UserModel {
   final String? uid;
   final String? name;
   final String? email;
-  final Hostel? hostelBlock;
-  final Mess? messType;
-  final AccountType? accountType;
+  final String? hostelBlock;
+  final String? messType;
+  final String? accountType;
+
+  Map<String, dynamic> toDocument() {
+    return {
+      'uid': uid,
+      'name': name,
+      'email': email,
+      'hostel': hostelBlock,
+      'mess': messType,
+      'account_type': accountType,
+      // Add any other fields you need
+    };
+  }
 }
-
-enum Mess { veg, nonveg, special }
-
-enum Hostel { blockA, blockB, blockC, blockD1, blockD2 }
-
-enum AccountType { admin, student }

@@ -29,6 +29,24 @@ class SignIn {
   void testFetch(UserCredential? userCredential) {
     print(userCredential?.user?.displayName);
     print(userCredential?.user?.email);
+    print(userCredential?.user?.uid);
+  }
+
+  String? isAccountType(
+    UserCredential? userCredential,
+  ) {
+    if (userCredential != null) {
+      if (userCredential != null &&
+          userCredential.user != null &&
+          userCredential.user?.email != null &&
+          userCredential.user!.email!.contains('vitstudent.ac.in')) {
+        return "student";
+      } else {
+        return "admin";
+      }
+    } else {
+      throw {};
+    }
   }
 
   bool isValidDomain(String userEmail) {
