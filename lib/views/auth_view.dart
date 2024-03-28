@@ -1,10 +1,12 @@
 import 'package:dosra_ghar/services/firebase_services.dart';
+import 'package:dosra_ghar/views/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:dosra_ghar/utils/auth.dart';
 import 'package:dosra_ghar/models/user.dart';
+import 'package:provider/provider.dart';
 
 class AuthView extends StatefulWidget {
   const AuthView({super.key});
@@ -54,13 +56,16 @@ class _AuthViewState extends State<AuthView> {
                 'D2 Block'
               ];
 
-              final SignIn signIn = SignIn();
+              final authProvider =
+                  Provider.of<AuthenticationProvider>(context, listen: false);
+
               final FirestoreService firestoreService = FirestoreService();
 
               UserCredential? userCredential =
-                  await signIn.signInWithGoogle(context);
-              signIn.testFetch(userCredential);
-              final String? accountType = signIn.isAccountType(userCredential);
+                  await authProvider.signInWithGoogle(context);
+              authProvider.testFetch(userCredential);
+              final String? accountType =
+                  authProvider.isAccountType(userCredential);
               final String _uid = userCredential?.user?.uid as String;
               print("This is ${_uid}");
               final bool userExists =
@@ -123,7 +128,6 @@ class _AuthViewState extends State<AuthView> {
                     setState(() {
                       _selectedHostel = newHostel;
                       hostelHint = _selectedHostel.toString();
-                      initState();
                     });
                   }),
               DropdownButton(
@@ -152,6 +156,8 @@ class _AuthViewState extends State<AuthView> {
 
                     firestoreService.addUser(user, context);
                     Navigator.pop(context);
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (_) => HomeScreen()));
                   },
                   child: Text("Confirm"))
             ],

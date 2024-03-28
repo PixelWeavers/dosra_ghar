@@ -4,7 +4,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:dosra_ghar/services/firebase_services.dart';
 import 'package:dosra_ghar/models/user.dart';
 
-class SignIn {
+class AuthenticationProvider extends ChangeNotifier {
+  final AuthService _authService = AuthService();
   Future<UserCredential?> signInWithGoogle(BuildContext context) async {
     GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
     GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
@@ -53,5 +54,28 @@ class SignIn {
     final allowedDomains = ['vitstudent.ac.in', 'vit.ac.in'];
 
     return allowedDomains.contains(userEmail.split('@')[1]);
+  }
+
+  User? _user;
+
+  User? get user => _user;
+
+  set user(User? value) {
+    _user = value;
+    notifyListeners();
+  }
+
+  // Initialize with current user
+  Future<void> initialize() async {
+    final user = await _authService.userStream.first;
+    if (user != null) {
+      _user = user;
+      notifyListeners();
+    }
+  }
+
+  Future<bool> isUserSignedIn() async {
+    final user = await _authService.getCurrentUser();
+    return user != null;
   }
 }

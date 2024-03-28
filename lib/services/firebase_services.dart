@@ -1,4 +1,5 @@
 import 'package:dosra_ghar/models/user.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import "package:cloud_firestore/cloud_firestore.dart";
 import 'package:flutter/material.dart';
@@ -28,5 +29,14 @@ class FirestoreService {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text("User already exists")));
     }
+  }
+}
+
+class AuthService {
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  Stream<User?> get userStream => _firebaseAuth.authStateChanges();
+  // Get the current user
+  Future<User?> getCurrentUser() async {
+    return _firebaseAuth.currentUser;
   }
 }
