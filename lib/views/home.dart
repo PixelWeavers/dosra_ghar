@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dosra_ghar/models/user.dart';
 import 'package:dosra_ghar/views/announce.dart';
 import 'package:dosra_ghar/widgets/annoucement_card.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,7 +15,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeState extends State<HomeScreen> {
- /* final user = FirebaseAuth.instance.currentUser;
+  /* final user = FirebaseAuth.instance.currentUser;
 
   String? name = "";
 
@@ -60,15 +62,15 @@ class _HomeState extends State<HomeScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                     Row(
+                    Row(
                       children: [
-                         const SizedBox(
+                        const SizedBox(
                           width: 20,
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                        /*    if (name != null)
+                            /*    if (name != null)
                               Text('Hi $name 👋',
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
@@ -76,13 +78,13 @@ class _HomeState extends State<HomeScreen> {
                                       fontFamily: "Sen",
                                       fontSize: 30,
                                       fontWeight: FontWeight.w500)),*/
-                        /*    const SizedBox(
+                            /*    const SizedBox(
                               height: 8,
                             ),*/
                             Material(
                               child: Text('Announcements ',
                                   style: GoogleFonts.lato(
-                                    backgroundColor: Colors.white,
+                                      backgroundColor: Colors.white,
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 28)),
@@ -97,7 +99,9 @@ class _HomeState extends State<HomeScreen> {
                           icon: const Icon(Icons.add, size: 30),
                           onPressed: () {
                             // Perform search operation
-                          Navigator.of(context).push(MaterialPageRoute(builder: (_)=> const CreateAnnouncementScreen()));
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (_) =>
+                                    const CreateAnnouncementScreen()));
                           },
                         ),
                         const SizedBox(
@@ -127,12 +131,15 @@ class _HomeState extends State<HomeScreen> {
 
                                 if (!snapshot.hasData) {
                                   return Container(
-                                      color: Theme.of(context).colorScheme.secondary,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
                                       child: Center(
                                           child: SpinKitFadingCube(
                                               color: Theme.of(context)
                                                   .colorScheme
-                                                  .primary, size: 100.0)));
+                                                  .primary,
+                                              size: 100.0)));
                                 }
 
                                 // Data is available
@@ -160,15 +167,13 @@ class _HomeState extends State<HomeScreen> {
                                   itemCount: announcementDocs.length,
                                   reverse: false,
                                   itemBuilder: (context, index) {
-                                    final announcement =
-                                    announcementDocs[index].data()
-                                    as Map<String, dynamic>?;
+                                    final announcement = announcementDocs[index]
+                                        .data() as Map<String, dynamic>?;
                                     final title =
-                                        announcement?['title'] as String? ??
-                                            "";
+                                        announcement?['title'] as String? ?? "";
                                     final description =
                                         announcement?['description']
-                                        as String? ??
+                                                as String? ??
                                             "";
                                     final timestamp = announcement?['date'];
                                     final time = DateTime.parse(timestamp);

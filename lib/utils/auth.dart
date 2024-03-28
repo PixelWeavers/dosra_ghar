@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:dosra_ghar/services/firebase_services.dart';
+import 'package:dosra_ghar/providers/firebase_provider.dart';
 import 'package:dosra_ghar/models/user.dart';
 
 class AuthenticationProvider extends ChangeNotifier {

@@ -1,4 +1,4 @@
-import 'package:dosra_ghar/services/firebase_services.dart';
+import 'package:dosra_ghar/providers/firebase_provider.dart';
 import 'package:dosra_ghar/views/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -59,7 +59,8 @@ class _AuthViewState extends State<AuthView> {
               final authProvider =
                   Provider.of<AuthenticationProvider>(context, listen: false);
 
-              final FirestoreService firestoreService = FirestoreService();
+              final FirestoreServiceProvider firestoreService =
+                  FirestoreServiceProvider();
 
               UserCredential? userCredential =
                   await authProvider.signInWithGoogle(context);
@@ -92,7 +93,7 @@ class _AuthViewState extends State<AuthView> {
   }
 
   Future<dynamic> ProfileCompletionPopUp(
-      FirestoreService firestoreService,
+      FirestoreServiceProvider firestoreService,
       UserCredential? userCredential,
       BuildContext context,
       List<String?> hostelBlocks,
