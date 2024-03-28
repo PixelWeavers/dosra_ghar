@@ -13,6 +13,16 @@ class FirestoreService {
     return doc.exists;
   }
 
+  Future<Map<String, dynamic>?> getUserSnapshot(String docID) async {
+    Stream<DocumentSnapshot> userSnapshotStream = users.doc(docID).snapshots();
+    final DocumentSnapshot doc = await userSnapshotStream.first;
+    if (doc.exists) {
+      return doc.data() as Map<String, dynamic>;
+    } else {
+      return null;
+    }
+  }
+
   Future<void> addUser(UserModel user, BuildContext context) async {
     String docID = user.uid.toString();
     final bool userExists = await checkUserExists(docID);
