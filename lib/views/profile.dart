@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:dosra_ghar/services/firebase_services.dart';
+import 'package:dosra_ghar/providers/firebase_provider.dart';
 import 'package:dosra_ghar/utils/auth.dart';
+import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -13,15 +14,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     final User? user = FirebaseAuth.instance.currentUser;
     final String uid = user?.uid ?? '';
+    final FirestoreServiceProvider firestoreServiceProvider =
+        Provider.of<FirestoreServiceProvider>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(
         title: Text('Profile'),
       ),
       body: FutureBuilder<Map<String, dynamic>?>(
-        future: FirestoreService().getUserSnapshot(uid),
+        future: FirestoreServiceProvider().getUserSnapshot(uid),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
+            final isAdminBool =
+                firestoreServiceProvider.isAdmin().then((value) {
+              return value as String;
+            });
             return Center(
               child: CircularProgressIndicator(),
             );
@@ -33,6 +40,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               String regNo = regExp.stringMatch(name)!;
               RegExp regExp1 = RegExp(r'^[A-Za-z\s]+');
               String extractedName = regExp1.stringMatch(name)!;
+
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -41,6 +49,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Text('Hostel: ${userData['hostel']}'),
                   Text('Mess: ${userData['mess']}'),
                   Text('Registration Number: $regNo'),
+
                   // Add other fields as needed
                 ],
               );

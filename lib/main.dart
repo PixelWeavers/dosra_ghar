@@ -1,4 +1,5 @@
 import 'package:dosra_ghar/firebase_options.dart';
+import 'package:dosra_ghar/providers/firebase_provider.dart';
 import 'package:dosra_ghar/providers/menu_provider.dart';
 import 'package:dosra_ghar/utils/auth.dart';
 import 'package:dosra_ghar/views/auth_view.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => AuthenticationProvider()),
         ChangeNotifierProvider(create: (_) => MMenuProvider()),
+        ChangeNotifierProvider(create: (_) => FirestoreServiceProvider())
       ],
       child: Consumer<AuthenticationProvider>(
         builder: (context, authProvider, child) {
