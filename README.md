@@ -5,9 +5,9 @@ Project currently in development.
 ### Current Progress
 
  - Announcement screen completed.
+ - Mess Menu 
 #### Pages To Be Implemented
 ##### Mess Screen
-- [ ] Mess Menu 
 -  [ ] Student absence update
 - [ ] Night Mess Menu
 - [ ] Caterer Swap
