@@ -7,6 +7,7 @@ import 'package:dosra_ghar/views/menu.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:dosra_ghar/views/profile.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
                   return const CircularProgressIndicator();
                 } else {
                   if (snapshot.hasData && snapshot.data!) {
-                    return HomeScreen();
+                    return ProfileScreen();
                   } else {
                     return AuthView();
                   }
