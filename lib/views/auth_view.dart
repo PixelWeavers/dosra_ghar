@@ -55,13 +55,30 @@ class _AuthViewState extends State<AuthView> {
               ];
 
               final SignIn signIn = SignIn();
+              final FirestoreService firestoreService = FirestoreService();
 
               UserCredential? userCredential =
                   await signIn.signInWithGoogle(context);
               signIn.testFetch(userCredential);
               final String? accountType = signIn.isAccountType(userCredential);
-              ProfileCompletionPopUp(userCredential, context, hostelBlocks,
-                  _selectedHostel, messTypes, _selectedMessType, accountType);
+              final String _uid = userCredential?.user?.uid as String;
+              print("This is ${_uid}");
+              final bool userExists =
+                  await firestoreService.checkUserExists(_uid);
+              if (!userExists) {
+                ProfileCompletionPopUp(
+                    firestoreService,
+                    userCredential,
+                    context,
+                    hostelBlocks,
+                    _selectedHostel,
+                    messTypes,
+                    _selectedMessType,
+                    accountType);
+              } else {
+                return ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text("User already registered")));
+              }
             },
           ))
         ],
@@ -70,6 +87,7 @@ class _AuthViewState extends State<AuthView> {
   }
 
   Future<dynamic> ProfileCompletionPopUp(
+      FirestoreService firestoreService,
       UserCredential? userCredential,
       BuildContext context,
       List<String?> hostelBlocks,
@@ -131,9 +149,9 @@ class _AuthViewState extends State<AuthView> {
                         hostelBlock: _selectedHostel,
                         messType: _selectedMessType,
                         accountType: accountType);
-                    final FirestoreService firestoreService =
-                        FirestoreService();
+
                     firestoreService.addUser(user, context);
+                    Navigator.pop(context);
                   },
                   child: Text("Confirm"))
             ],
