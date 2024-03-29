@@ -14,7 +14,6 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
-    final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
     final UserProvider user = Provider.of<UserProvider>(context, listen: false);
     UserModel? currentUser = user.user;
     String input = currentUser!.name.toString();
@@ -22,22 +21,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
     RegExp regex = RegExp(r"^(.*?)\s(\w+)$");
     Match? match = regex.firstMatch(input);
 
-    String name = match!.group(1)!;
-    String regNo = match.group(2)!;
+    String name = "";
+    String regNo = "";
+    if (match != null) {
+      name = match.group(1)!;
+      regNo = match.group(2)!;
+    } else {
+      throw FormatException("Cannot extract name and reg no");
+    }
 
     return Scaffold(
       appBar: AppBar(
         title: Text('Profile'),
         actions: [
           IconButton(
-              onPressed: () async {
-                await firebaseAuth.signOut();
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (_) => AuthView()));
-                ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("User signed out successfully")));
-              },
-              icon: Icon(Icons.logout_rounded))
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (_) => AuthView()));
+              ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text("User signed out successfully")));
+            },
+            icon: Icon(Icons.logout_rounded),
+          )
         ],
       ),
       body: Column(
