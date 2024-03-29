@@ -1,6 +1,6 @@
 import 'package:dosra_ghar/models/user.dart';
+import 'package:dosra_ghar/views/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import "package:cloud_firestore/cloud_firestore.dart";
 import 'package:flutter/material.dart';
 
@@ -68,7 +68,7 @@ class AuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   Stream<User?> get userStream => _firebaseAuth.authStateChanges();
   // Get the current user
-  Future<User?> getCurrentUser() async {
+  Future<User?> getCurrentUserAuth() async {
     return _firebaseAuth.currentUser;
   }
 

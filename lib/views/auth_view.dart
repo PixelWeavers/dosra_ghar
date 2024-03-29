@@ -1,5 +1,6 @@
 import 'package:dosra_ghar/providers/firebase_provider.dart';
 import 'package:dosra_ghar/views/home.dart';
+import 'package:dosra_ghar/views/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -82,8 +83,10 @@ class _AuthViewState extends State<AuthView> {
                     _selectedMessType,
                     accountType);
               } else {
-                return ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("User already registered")));
+                ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("User already registered")));
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (_) => ProfileScreen()));
               }
             },
           ))
@@ -106,20 +109,20 @@ class _AuthViewState extends State<AuthView> {
     return showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        actionsPadding: EdgeInsets.all(10),
-        contentPadding: EdgeInsets.all(10),
+        actionsPadding: const EdgeInsets.all(10),
+        contentPadding: const EdgeInsets.all(10),
         content: Container(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10), color: Colors.white),
-          margin: EdgeInsets.all(10),
-          padding: EdgeInsets.all(5),
+          margin: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(5),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               DropdownButton(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   hint: Text(hostelHint),
-                  icon: Icon(Icons.house),
+                  icon: const Icon(Icons.house),
                   items: hostelBlocks.map((hostel) {
                     return DropdownMenuItem(
                         child: new Text(hostel.toString()), value: hostel);
@@ -132,9 +135,9 @@ class _AuthViewState extends State<AuthView> {
                     });
                   }),
               DropdownButton(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   hint: Text(messHint),
-                  icon: Icon(Icons.food_bank),
+                  icon: const Icon(Icons.food_bank),
                   items: messTypes.map((mess) {
                     return DropdownMenuItem(
                         child: new Text(mess.toString()), value: mess);
@@ -160,11 +163,11 @@ class _AuthViewState extends State<AuthView> {
                     Navigator.of(context)
                         .push(MaterialPageRoute(builder: (_) => HomeScreen()));
                   },
-                  child: Text("Confirm"))
+                  child: const Text("Confirm"))
             ],
           ),
         ),
-        title: Text("Enter your hostel and mess info"),
+        title: const Text("Enter your hostel and mess info"),
       ),
     );
   }

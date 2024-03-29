@@ -75,7 +75,7 @@ class AuthenticationProvider extends ChangeNotifier {
   }
 
   Future<bool> isUserSignedIn() async {
-    final user = await _authService.getCurrentUser();
+    final user = await _authService.getCurrentUserAuth();
     return user != null;
   }
 }
