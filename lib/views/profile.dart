@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:dosra_ghar/providers/user_provider.dart';
+import 'package:modular_ui/modular_ui.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -14,50 +15,45 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
-    final UserProvider user = Provider.of<UserProvider>(context, listen: false);
+    final UserProvider user = Provider.of<UserProvider>(context, listen: true);
     UserModel? currentUser = user.user;
-    String input = currentUser!.name.toString();
-
-    RegExp regex = RegExp(r"^(.*?)\s(\w+)$");
-    Match? match = regex.firstMatch(input);
-
-    String name = "";
-    String regNo = "";
-    if (match != null) {
-      name = match.group(1)!;
-      regNo = match.group(2)!;
+    if (currentUser == null) {
+      return Scaffold(
+          appBar: AppBar(
+            title: Text('Profile'),
+          ),
+          body: const Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [Center(child: CircularProgressIndicator())],
+          ));
     } else {
-      throw FormatException("Cannot extract name and reg no");
+      return Scaffold(
+          appBar: AppBar(
+            title: Text('Profile'),
+            actions: [
+              IconButton(
+                onPressed: () async {
+                  await FirebaseAuth.instance.signOut();
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (_) => AuthView()));
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("User signed out successfully")));
+                },
+                icon: Icon(Icons.logout_rounded),
+              )
+            ],
+          ),
+          body: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Center(child: Text(currentUser.name.toString())),
+              Text(currentUser.profileUrl.toString())
+            ],
+          ));
     }
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Profile'),
-        actions: [
-          IconButton(
-            onPressed: () async {
-              await FirebaseAuth.instance.signOut();
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (_) => AuthView()));
-              ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text("User signed out successfully")));
-            },
-            icon: Icon(Icons.logout_rounded),
-          )
-        ],
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('Name: $name'),
-          Text('Email: ${currentUser.email}'),
-          Text('Registration Number : $regNo'),
-          Text('Mess: ${currentUser.messType}'),
-          Text('Hostel: ${currentUser.hostelBlock}'),
-          Text('Account Type: ${currentUser.accountType}')
-          // Display other user details as needed
-        ],
-      ),
-    );
   }
 }

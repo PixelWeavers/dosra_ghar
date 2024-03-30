@@ -1,4 +1,5 @@
 import 'package:dosra_ghar/providers/firebase_provider.dart';
+import 'package:dosra_ghar/utils/utils.dart';
 import 'package:dosra_ghar/views/home.dart';
 import 'package:dosra_ghar/views/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -62,10 +63,15 @@ class _AuthViewState extends State<AuthView> {
 
               final FirestoreServiceProvider firestoreService =
                   FirestoreServiceProvider();
+              final Utils utils = Utils();
 
               UserCredential? userCredential =
                   await authProvider.signInWithGoogle(context);
               authProvider.testFetch(userCredential);
+              final List<String?> data =
+                  utils.extractNameReg(userCredential?.user?.displayName);
+              final String? name = data[0];
+              final String? regNo = data[1];
               final String? accountType =
                   authProvider.isAccountType(userCredential);
               final String _uid = userCredential?.user?.uid as String;
@@ -74,6 +80,8 @@ class _AuthViewState extends State<AuthView> {
                   await firestoreService.checkUserExists(_uid);
               if (!userExists) {
                 ProfileCompletionPopUp(
+                    name,
+                    regNo,
                     firestoreService,
                     userCredential,
                     context,
@@ -96,6 +104,8 @@ class _AuthViewState extends State<AuthView> {
   }
 
   Future<dynamic> ProfileCompletionPopUp(
+      String? name,
+      String? regNo,
       FirestoreServiceProvider firestoreService,
       UserCredential? userCredential,
       BuildContext context,
@@ -152,14 +162,15 @@ class _AuthViewState extends State<AuthView> {
                   onPressed: () {
                     final UserModel user = UserModel(
                         uid: userCredential?.user?.uid,
-                        name: userCredential?.user?.displayName,
+                        name: name,
+                        regNo: regNo,
                         email: userCredential?.user?.email,
+                        profileUrl: userCredential?.user?.photoURL,
                         hostelBlock: _selectedHostel,
                         messType: _selectedMessType,
                         accountType: accountType);
 
                     firestoreService.addUser(user, context);
-                    Navigator.pop(context);
                     Navigator.of(context)
                         .push(MaterialPageRoute(builder: (_) => HomeScreen()));
                   },
@@ -172,108 +183,3 @@ class _AuthViewState extends State<AuthView> {
     );
   }
 }
-
-// class ProfileSetup extends StatefulWidget {
-//   const ProfileSetup({super.key});
-
-//   @override
-//   State<ProfileSetup> createState() => _ProfileSetupState();
-// }
-
-// class _ProfileSetupState extends State<ProfileSetup> {
-//   UserCredential? userCredential =
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar:  AppBar(
-//         title: Text("Complete Setup",
-//             style: TextStyle(color: Colors.white)),
-//         centerTitle: true,
-//         toolbarHeight: 70,
-//         backgroundColor: Color.fromRGBO(68, 135, 236, 1),
-//       ),
-//       body: ,
-//     );
-//   }
-// // }
-
-
-//  AccountType accountType;
-
-//                if (userCredential?.user?.email?.contains('vitstudent.ac.in') ??
-//                   false) {
-//                 accountType = AccountType.student;
-//               } else if (userCredential?.user?.email?.contains('vit.ac.in') ??
-//                   false) {
-//                 accountType = AccountType.admin;
-//               } else {
-//                 accountType = AccountType.student;
-//               }
-//               if (userCredential != null) {
-//                 String name;
-//                 Mess? messType;
-//                 Hostel? hostelBlock;
-//                 showDialog(
-//                   context: context,
-//                   builder: (context) => Column(
-//                     mainAxisSize: MainAxisSize.min,
-//                     children: [
-//                       TextField(
-//                         controller: nameController,
-//                         decoration:
-//                             InputDecoration(label: Text("Enter your name")),
-//                       ),
-//                       Row(
-//                         children: [
-//                           DropdownButtonFormField<Mess>(
-//                             decoration: InputDecoration(
-//                                 label: Text("Select your mess")),
-//                             items: messTypes
-//                                 .map<DropdownMenuItem<Mess>>(
-//                                   (Mess mess) => DropdownMenuItem<Mess>(
-//                                     value: mess,
-//                                     child: Text(mess.name),
-//                                   ),
-//                                 )
-//                                 .toList(),
-//                             onChanged: (Mess? value) {
-//                               // Define your onChanged function here
-//                               messType = value;
-//                             },
-//                           ),
-//                           DropdownButtonFormField<Hostel>(
-//                             decoration: InputDecoration(
-//                                 label: Text("Select your hostel")),
-//                             items: hostelBlocks
-//                                 .map<DropdownMenuItem<Hostel>>(
-//                                   (Hostel hostel) => DropdownMenuItem<Hostel>(
-//                                     value: hostel,
-//                                     child: Text(hostel.name),
-//                                   ),
-//                                 )
-//                                 .toList(),
-//                             onChanged: (Hostel? value) {
-//                               // Define your onChanged function here
-//                               hostelBlock = value;
-//                             },
-//                           ),
-//                         ],
-//                       ),
-//                       ElevatedButton(
-//                         onPressed: () {
-//                           Navigator.pop(context);
-//                         },
-//                         child: Text("Confirm"),
-//                       )
-//                     ],
-//                   ),
-//                 ).then((_) {
-//                   UserModel user = UserModel(
-//                       name: nameController.text,
-//                       email: userCredential.user!.email,
-//                       hostelBlock: hostelBlock,
-//                       messType: messType,
-//                       accountType: accountType);
-//                 });
-//               }
-//               ;

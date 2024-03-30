@@ -1,8 +1,9 @@
+// ignore_for_file: avoid_print
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:dosra_ghar/providers/firebase_provider.dart';
-import 'package:dosra_ghar/models/user.dart';
 
 class AuthenticationProvider extends ChangeNotifier {
   final AuthService _authService = AuthService();
@@ -18,14 +19,11 @@ class AuthenticationProvider extends ChangeNotifier {
       return Future(() => userCredential);
     } else {
       GoogleSignIn().signOut();
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Sign in with VIT email")));
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Sign in with VIT email")));
     }
   }
-
-// Dialog profile(UserCredential? userCredential){
-// return showDialog(context: context, builder: builder)
-// }
 
   void testFetch(UserCredential? userCredential) {
     print(userCredential?.user?.displayName);
@@ -37,6 +35,7 @@ class AuthenticationProvider extends ChangeNotifier {
     UserCredential? userCredential,
   ) {
     if (userCredential != null) {
+      // ignore: unnecessary_null_comparison
       if (userCredential != null &&
           userCredential.user != null &&
           userCredential.user?.email != null &&
