@@ -21,6 +21,10 @@ class Utils {
     if (match != null) {
       formattedName = match.group(1)!;
       regNo = match.group(2)!;
+      data[0] = formattedName;
+      data[1] = regNo;
+      print("test $formattedName");
+      print("test $regNo");
       return data;
     } else {
       throw const FormatException("Cannot extract name and reg no");

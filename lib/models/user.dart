@@ -27,6 +27,7 @@ class UserModel {
       'hostel': hostelBlock,
       'mess': messType,
       'account_type': accountType,
+      'profileUrl': profileUrl
       // Add any other fields you need
     };
   }

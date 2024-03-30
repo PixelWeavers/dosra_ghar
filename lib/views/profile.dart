@@ -15,31 +15,45 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
-    final UserProvider user = Provider.of<UserProvider>(context, listen: false);
+    final UserProvider user = Provider.of<UserProvider>(context, listen: true);
     UserModel? currentUser = user.user;
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Profile'),
-        actions: [
-          IconButton(
-            onPressed: () async {
-              await FirebaseAuth.instance.signOut();
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (_) => AuthView()));
-              ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text("User signed out successfully")));
-            },
-            icon: Icon(Icons.logout_rounded),
-          )
-        ],
-      ),
-      body: MUIProfileCard(
-          name: currentUser!.name.toString(),
-          image: Image.network(currentUser!.profileUrl.toString()) ??
-              Image.network(
-                  "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.reddit.com%2Fr%2Fredditmobile%2Fcomments%2Fav496u%2Fandroid321_whenever_i_download_a_gif_my_phone%2F&psig=AOvVaw1qVFW8-qhVg-nJ-zGQwSWR&ust=1711896828113000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCJiSxuWenIUDFQAAAAAdAAAAABAE"),
-          designation: currentUser.accountType.toString()),
-    );
+    if (currentUser == null) {
+      return Scaffold(
+          appBar: AppBar(
+            title: Text('Profile'),
+          ),
+          body: const Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [Center(child: CircularProgressIndicator())],
+          ));
+    } else {
+      return Scaffold(
+          appBar: AppBar(
+            title: Text('Profile'),
+            actions: [
+              IconButton(
+                onPressed: () async {
+                  await FirebaseAuth.instance.signOut();
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (_) => AuthView()));
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("User signed out successfully")));
+                },
+                icon: Icon(Icons.logout_rounded),
+              )
+            ],
+          ),
+          body: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Center(child: Text(currentUser.name.toString())),
+              Text(currentUser.profileUrl.toString())
+            ],
+          ));
+    }
   }
 }
