@@ -16,13 +16,15 @@ class UserProvider extends ChangeNotifier {
             await FirestoreServiceProvider().getUserSnapshot(uid);
         if (userData != null) {
           _user = UserModel(
-            uid: uid,
-            name: userData['name'],
-            email: userData['email'],
-            hostelBlock: userData['hostel'],
-            messType: userData['mess'],
-            accountType: userData['account_type'],
-          );
+              uid: uid,
+              name: userData['name'],
+              regNo: userData[''],
+              email: userData['email'],
+              hostelBlock: userData['hostel'],
+              messType: userData['mess'],
+              accountType: userData['account_type'],
+              profileUrl: userData['profileUrl']);
+
           notifyListeners(); // Notify listeners when the user changes
         }
       }
