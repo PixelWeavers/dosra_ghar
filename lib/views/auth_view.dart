@@ -75,7 +75,7 @@ class _AuthViewState extends State<AuthView> {
               final String? accountType =
                   authProvider.isAccountType(userCredential);
               final String _uid = userCredential?.user?.uid as String;
-              print("This is ${_uid}");
+              print("This is $_uid");
               final bool userExists =
                   await firestoreService.checkUserExists(_uid);
               if (!userExists) {
@@ -93,8 +93,12 @@ class _AuthViewState extends State<AuthView> {
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text("User already registered")));
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (_) => ProfileScreen()));
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (_) => ProfileScreen()),
+                  (route) {
+                    return route is ProfileScreen;
+                  },
+                );
               }
             },
           ))

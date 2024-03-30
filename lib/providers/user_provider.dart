@@ -18,7 +18,7 @@ class UserProvider extends ChangeNotifier {
           _user = UserModel(
               uid: uid,
               name: userData['name'],
-              regNo: userData[''],
+              regNo: userData['regNo'],
               email: userData['email'],
               hostelBlock: userData['hostel'],
               messType: userData['mess'],
