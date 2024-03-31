@@ -37,8 +37,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           children: [
             // Profile Banner (Short)
             Shimmer.fromColors(
-              baseColor: Colors.grey.shade700,
-              highlightColor: Colors.grey.shade300,
+              baseColor: const Color.fromARGB(255, 53, 53, 53),
+              highlightColor: const Color.fromARGB(255, 114, 114, 114),
               child: Container(
                 height: 150, // Adjust height as needed
                 width: 400,
@@ -53,8 +53,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
             // Body (Tall)
             Shimmer.fromColors(
-              baseColor: Colors.grey.shade700,
-              highlightColor: Colors.grey.shade300,
+              baseColor: const Color.fromARGB(255, 53, 53, 53),
+              highlightColor: const Color.fromARGB(255, 114, 114, 114),
               child: Container(
                 height: 460,
                 // Adjust height as needed
@@ -207,8 +207,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(builder: (_) => const AuthView()),
                       (Route route) => route is AuthView);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text("User signed out successfully")));
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text("User signed out successfully")));
                 },
                 icon: const Icon(
                   Icons.logout_rounded,
@@ -299,7 +299,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: const Color.fromARGB(255, 255, 255, 255).withOpacity(0.8)),
+                    color: const Color.fromARGB(255, 255, 255, 255)
+                        .withOpacity(0.8)),
                 height: 460,
                 width: 370,
                 padding: const EdgeInsets.all(15),
