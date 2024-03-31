@@ -23,6 +23,7 @@ class AuthenticationProvider extends ChangeNotifier {
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Sign in with VIT email")));
     }
+    return null;
   }
 
   void testFetch(UserCredential? userCredential) {

@@ -3,13 +3,12 @@ import 'package:dosra_ghar/utils/utils.dart';
 import 'package:dosra_ghar/widgets/mess_menu_card.dart';
 import 'package:dosra_ghar/widgets/rating.dart';
 import 'package:dosra_ghar/widgets/statistics.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class MenuScreen extends StatefulWidget {
-  const MenuScreen({Key? key});
+  const MenuScreen({super.key, Key? key});
 
   @override
   _HomeState createState() => _HomeState();

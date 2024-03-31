@@ -7,11 +7,11 @@ class AnnouncementContainer extends StatelessWidget {
   final DateTime timestamp;
 
   const AnnouncementContainer({
-    Key? key,
+    super.key,
     required this.title,
     required this.description,
     required this.timestamp,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

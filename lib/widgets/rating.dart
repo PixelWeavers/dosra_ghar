@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dosra_ghar/models/rating.dart';
 import 'package:dosra_ghar/utils/utils.dart';
-import 'package:dosra_ghar/widgets/button.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

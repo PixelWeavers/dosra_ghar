@@ -1,16 +1,16 @@
 import 'package:dosra_ghar/models/user.dart';
-import 'package:dosra_ghar/providers/firebase_provider.dart';
 import 'package:dosra_ghar/views/auth_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:dosra_ghar/providers/user_provider.dart';
-import 'package:modular_ui/modular_ui.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shimmer/shimmer.dart';
 
 class ProfileScreen extends StatefulWidget {
+  const ProfileScreen({super.key});
+
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
@@ -22,23 +22,53 @@ class _ProfileScreenState extends State<ProfileScreen> {
     UserModel? currentUser = user.user;
     if (currentUser == null) {
       return Scaffold(
+        backgroundColor: Colors.black,
+        appBar: AppBar(
           backgroundColor: Colors.black,
-          appBar: AppBar(
-            backgroundColor: Colors.black,
-            title: Text(
-              'Profile',
-              style: GoogleFonts.poppins(
-                  textStyle:
-                      TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-            ),
-            centerTitle: true,
+          title: Text(
+            'Profile',
+            style: GoogleFonts.poppins(
+                textStyle:
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           ),
-          body: const Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [Center(child: CircularProgressIndicator())],
-          ));
+          centerTitle: true,
+        ),
+        body: Column(
+          children: [
+            // Profile Banner (Short)
+            Shimmer.fromColors(
+              baseColor: Colors.grey.shade700,
+              highlightColor: Colors.grey.shade300,
+              child: Container(
+                height: 150, // Adjust height as needed
+                width: 400,
+                margin: const EdgeInsets.all(20), // Fills entire width
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.black, // Adjust for desired background
+                ),
+              ),
+            ),
+            const SizedBox(height: 40), // Spacing between containers
+
+            // Body (Tall)
+            Shimmer.fromColors(
+              baseColor: Colors.grey.shade700,
+              highlightColor: Colors.grey.shade300,
+              child: Container(
+                height: 460,
+                // Adjust height as needed
+                width: 370,
+                padding: const EdgeInsets.all(15), // Fills entire width
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.black, // Adjust for desired background
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
     } else {
       List<Widget> mess() {
         if (currentUser.messType == "Veg") {
@@ -48,7 +78,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 width: 30,
                 child: SvgPicture.network(
                     "https://www.svgrepo.com/show/235727/vegetables-salad.svg")),
-            SizedBox(
+            const SizedBox(
               width: 10,
             ),
             Text(
@@ -69,7 +99,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 width: 30,
                 child: SvgPicture.network(
                     "https://www.svgrepo.com/show/297219/chicken.svg")),
-            SizedBox(
+            const SizedBox(
               width: 10,
             ),
             Text(
@@ -90,7 +120,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 width: 30,
                 child: SvgPicture.network(
                     "https://www.svgrepo.com/show/420206/cake-christmas-dessert.svg")),
-            SizedBox(
+            const SizedBox(
               width: 10,
             ),
             Text(
@@ -105,7 +135,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ];
         } else {
-          return [Text("data")];
+          return [const Text("data")];
         }
       }
 
@@ -117,7 +147,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 width: 30,
                 child: SvgPicture.network(
                     "https://www.svgrepo.com/show/474860/graduation-cap.svg")),
-            SizedBox(
+            const SizedBox(
               width: 10,
             ),
             Text(
@@ -138,7 +168,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 width: 30,
                 child: SvgPicture.network(
                     "https://www.svgrepo.com/show/263063/teacher-professor.svg")),
-            SizedBox(
+            const SizedBox(
               width: 10,
             ),
             Text(
@@ -153,7 +183,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ];
         } else {
-          return [Text("data")];
+          return [const Text("data")];
         }
       }
 
@@ -164,7 +194,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             title: Text(
               'Profile',
               style: GoogleFonts.poppins(
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: Colors.white)),
@@ -175,17 +205,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 onPressed: () async {
                   await FirebaseAuth.instance.signOut();
                   Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(builder: (_) => AuthView()),
+                      MaterialPageRoute(builder: (_) => const AuthView()),
                       (Route route) => route is AuthView);
                   ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text("User signed out successfully")));
+                      const SnackBar(content: Text("User signed out successfully")));
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.logout_rounded,
                   color: Colors.white,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               )
             ],
@@ -198,8 +228,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Container(
                 decoration:
                     BoxDecoration(borderRadius: BorderRadius.circular(20)),
-                margin: EdgeInsets.all(20),
-                padding: EdgeInsets.all(5),
+                margin: const EdgeInsets.all(20),
+                padding: const EdgeInsets.all(5),
                 height: 150,
                 width: 400,
                 child: Row(
@@ -210,7 +240,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       radius: 50,
                       backgroundImage: NetworkImage(currentUser.profileUrl!),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 20,
                     ),
                     Column(
@@ -223,7 +253,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           softWrap: true,
                           currentUser.name!,
                           style: GoogleFonts.poppins(
-                              textStyle: TextStyle(
+                              textStyle: const TextStyle(
                                   fontSize: 18,
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold)),
@@ -253,7 +283,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         "Details",
                         textAlign: TextAlign.start,
                         style: GoogleFonts.poppins(
-                            textStyle: TextStyle(
+                            textStyle: const TextStyle(
                           color: Colors.white,
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -263,16 +293,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    color: Color.fromARGB(255, 255, 255, 255).withOpacity(0.8)),
+                    color: const Color.fromARGB(255, 255, 255, 255).withOpacity(0.8)),
                 height: 460,
                 width: 370,
-                padding: EdgeInsets.all(15),
+                padding: const EdgeInsets.all(15),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -280,15 +310,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     Container(
                       height: 80,
-                      padding: EdgeInsets.all(20),
+                      padding: const EdgeInsets.all(20),
                       width: 350,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(17.5),
-                        color: Color.fromARGB(255, 0, 0, 0),
-                        boxShadow: [
+                        color: const Color.fromARGB(255, 0, 0, 0),
+                        boxShadow: const [
                           BoxShadow(
-                              blurRadius: 15,
-                              spreadRadius: -0.8,
+                              blurRadius: 10,
+                              spreadRadius: -0.5,
                               color: Color.fromARGB(255, 75, 75, 75))
                         ],
                       ),
@@ -322,15 +352,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     Container(
                       height: 80,
-                      padding: EdgeInsets.all(20),
+                      padding: const EdgeInsets.all(20),
                       width: 350,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(17.5),
-                        color: Color.fromARGB(255, 0, 0, 0),
-                        boxShadow: [
+                        color: const Color.fromARGB(255, 0, 0, 0),
+                        boxShadow: const [
                           BoxShadow(
-                              blurRadius: 15,
-                              spreadRadius: -0.8,
+                              blurRadius: 10,
+                              spreadRadius: -0.5,
                               color: Color.fromARGB(255, 75, 75, 75))
                         ],
                       ),
@@ -378,15 +408,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     Container(
                       height: 80,
-                      padding: EdgeInsets.all(20),
+                      padding: const EdgeInsets.all(20),
                       width: 350,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(17.5),
-                        color: Color.fromARGB(255, 0, 0, 0),
-                        boxShadow: [
+                        color: const Color.fromARGB(255, 0, 0, 0),
+                        boxShadow: const [
                           BoxShadow(
-                              blurRadius: 15,
-                              spreadRadius: -0.8,
+                              blurRadius: 10,
+                              spreadRadius: -0.5,
                               color: Color.fromARGB(255, 75, 75, 75))
                         ],
                       ),
@@ -421,15 +451,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     Container(
                       height: 80,
-                      padding: EdgeInsets.all(20),
+                      padding: const EdgeInsets.all(20),
                       width: 350,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(17.5),
-                        color: Color.fromARGB(255, 0, 0, 0),
-                        boxShadow: [
+                        color: const Color.fromARGB(255, 0, 0, 0),
+                        boxShadow: const [
                           BoxShadow(
-                              blurRadius: 15,
-                              spreadRadius: -0.8,
+                              blurRadius: 10,
+                              spreadRadius: -0.5,
                               color: Color.fromARGB(255, 75, 75, 75))
                         ],
                       ),

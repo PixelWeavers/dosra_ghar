@@ -4,7 +4,6 @@ import 'package:dosra_ghar/utils/utils.dart';
 import 'package:dosra_ghar/widgets/button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class CreateAnnouncementScreen extends StatefulWidget {
   const CreateAnnouncementScreen({super.key});
