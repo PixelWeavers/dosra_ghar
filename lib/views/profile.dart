@@ -116,10 +116,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         } else if (currentUser.messType == 'Special') {
           return [
             SizedBox(
-                height: 30,
-                width: 30,
-                child: SvgPicture.network(
-                    "https://www.svgrepo.com/show/420206/cake-christmas-dessert.svg")),
+              height: 30,
+              width: 30,
+              child: SvgPicture.network(
+                  "https://www.svgrepo.com/show/484878/cupcake-illustration.svg"),
+            ),
             const SizedBox(
               width: 10,
             ),
