@@ -8,7 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class MenuScreen extends StatefulWidget {
-  const MenuScreen({super.key, Key? key});
+  const MenuScreen({super.key});
 
   @override
   _HomeState createState() => _HomeState();
@@ -20,7 +20,7 @@ class _HomeState extends State<MenuScreen> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
 
-   /* final userProvider = Provider.of<UserProvider>(context);
+    /* final userProvider = Provider.of<UserProvider>(context);
     userProvider.setUser();
     final userType = userProvider.user?.userType ?? 'Unknown';
     if (kDebugMode) {
@@ -30,15 +30,15 @@ class _HomeState extends State<MenuScreen> {
     List<dynamic>? lunch;
 
     final menuProvider = Provider.of<MMenuProvider>(context);
-    menuProvider.fetchMenu("veg","Wednesday","lunch");
+    menuProvider.fetchMenu("veg", "Wednesday", "lunch");
     final data = menuProvider.documentSnapshot?.data() as Map<String, dynamic>?;
-    if (data != null){
+    if (data != null) {
       lunch = data['lunch'] as List<dynamic>?;
     } else {
       print("Data not found");
     }
-     
-   /* final data = menuProvider.documentSnapshot?.data() as Map<String, dynamic>?;
+
+    /* final data = menuProvider.documentSnapshot?.data() as Map<String, dynamic>?;
     final breakfast = data?['breakfast'] as String? ?? "Loading..";
     final lunch = data?['lunch'] as String? ?? "Loading..";
     final dinner = data?['dinner'] as String? ?? "Loading..";
@@ -65,7 +65,7 @@ class _HomeState extends State<MenuScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                   Row(
+                  Row(
                     children: [
                       const SizedBox(
                         width: 20,
@@ -79,7 +79,6 @@ class _HomeState extends State<MenuScreen> {
                               'Mess Updates',
                               style: GoogleFonts.lato(
                                 color: Colors.white,
-                              
                                 fontSize: 28,
                               ),
                             ),
@@ -91,13 +90,18 @@ class _HomeState extends State<MenuScreen> {
                   Row(
                     children: [
                       IconButton(
-                        icon: Icon(Icons.add, size: 30, color: Theme.of(context).colorScheme.tertiary,),
+                        icon: Icon(
+                          Icons.add,
+                          size: 30,
+                          color: Theme.of(context).colorScheme.tertiary,
+                        ),
                         onPressed: () {
                           if (userType == "Admin") {
-                        //    Navigator.pushNamed(context, RoutesName.mMenu);
+                            //    Navigator.pushNamed(context, RoutesName.mMenu);
                           } else {
                             Utils.flushBarErrorMessage(
-                                "You don't have access to add mess menu", context);
+                                "You don't have access to add mess menu",
+                                context);
                           }
                         },
                       ),
@@ -113,13 +117,11 @@ class _HomeState extends State<MenuScreen> {
                   child: Image.asset(
                     'assets/images/aubfoof.gif',
                     width: 300,
-                    height:400,
+                    height: 400,
                     fit: BoxFit.fitWidth,
                   ),
                 ),
-              MessMenuCard(title: 'lunch', items: lunch
-                
-              ),
+              MessMenuCard(title: 'lunch', items: lunch),
               if (userType == "Admin")
                 SizedBox(
                   height: screenHeight / 2.2,
