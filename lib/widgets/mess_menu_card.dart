@@ -89,16 +89,16 @@ class MessMenuCard extends StatelessWidget {
   final List<dynamic>? items; // List to hold items for each category
 
   const MessMenuCard({
-    Key? key,
+    super.key,
     required this.title,
     required this.items,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(12), // Adjust padding as needed
-      child: Container(
+      child: SizedBox(
         width: double.infinity,
         child: Card(
          

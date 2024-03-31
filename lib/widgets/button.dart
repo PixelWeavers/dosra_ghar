@@ -8,11 +8,11 @@ class CustomButton extends StatelessWidget {
   final bool loading;
 
   const CustomButton({
-    Key? key,
+    super.key,
     required this.msg,
     required this.onTap,
     this.loading = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

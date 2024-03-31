@@ -86,7 +86,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                     ),
                   ),
                   SfCartesianChart(
-                    primaryXAxis: CategoryAxis(),
+                    primaryXAxis: const CategoryAxis(),
                     series: <CartesianSeries>[
                       ColumnSeries<_DataPoint, String>(
                         dataSource: _chartData,

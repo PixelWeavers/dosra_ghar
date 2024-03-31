@@ -1,5 +1,4 @@
 import 'package:dosra_ghar/models/user.dart';
-import 'package:dosra_ghar/views/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:cloud_firestore/cloud_firestore.dart";
 import 'package:flutter/material.dart';
@@ -51,15 +50,15 @@ class FirestoreServiceProvider extends ChangeNotifier {
       try {
         await users.doc(docID).set(user.toDocument());
         ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("User created successfully")));
+            .showSnackBar(const SnackBar(content: Text("User created successfully")));
         notifyListeners();
       } catch (error) {
         ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("User creation failed")));
+            .showSnackBar(const SnackBar(content: Text("User creation failed")));
       }
     } else {
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("User already exists")));
+          .showSnackBar(const SnackBar(content: Text("User already exists")));
     }
   }
 }
