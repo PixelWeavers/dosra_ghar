@@ -65,7 +65,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - .env
+   
     - assets/images/aano.png
     - assets/images/aub_logo4-removebg-preview.png
     - assets/images/Aub4.png
