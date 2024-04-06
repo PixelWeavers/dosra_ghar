@@ -24,7 +24,7 @@ class _messagesState extends State<messages> {
     DateTime d = t.toDate();
 
     return Padding(
-      padding: const EdgeInsets.only(top: 8, bottom: 8),
+      padding: const EdgeInsets.only(top: 8, bottom: 8, left: 12),
       child: Column(
         crossAxisAlignment: isSentByCurrentUser
             ? CrossAxisAlignment.end
