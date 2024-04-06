@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dosra_ghar/models/rating.dart';
 import 'package:dosra_ghar/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 class RatingScreen extends StatefulWidget {
@@ -52,9 +53,9 @@ class _RatingScreenState extends State<RatingScreen> {
         child: Column(
           
           children: [
-            const Text(
+             Text(
               'Rate the food:',
-              style: TextStyle(
+              style: GoogleFonts.poppins(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
                 decoration: TextDecoration.none,

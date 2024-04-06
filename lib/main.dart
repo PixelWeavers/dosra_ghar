@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
                   return const CircularProgressIndicator();
                 } else {
                   if (snapshot.hasData && snapshot.data!) {
-                    return const ChatIntiator();
+                    return const MenuScreen();
                   } else {
                     return const AuthView();
                   }
