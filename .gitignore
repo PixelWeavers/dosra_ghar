@@ -33,9 +33,6 @@ migrate_working_dir/
 .pub/
 /build/
 *.env
-**/lib/firebase_options.dart
-**/lib/services/google-services.json
-
 # Symbolication related
 app.*.symbols
 

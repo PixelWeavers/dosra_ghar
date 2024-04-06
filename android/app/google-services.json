@@ -7,7 +7,7 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:699846551173:android:69cc4d9c67646e9ba66bec",
+        "mobilesdk_app_id": "1:699846551173:android:b59c06dfde9c63c5a66bec",
         "android_client_info": {
           "package_name": "com.example.dosra_ghar"
         }
@@ -22,7 +22,7 @@
           }
         },
         {
-          "client_id": "699846551173-7snail30fo8qpc7n6hsjiri589rqr3d3.apps.googleusercontent.com",
+          "client_id": "699846551173-9n9kt11no4ogbc712fta00jsv4quldqv.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
