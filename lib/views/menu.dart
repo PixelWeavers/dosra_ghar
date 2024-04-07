@@ -1,5 +1,6 @@
 import 'package:dosra_ghar/providers/menu_provider.dart';
 import 'package:dosra_ghar/utils/utils.dart';
+import 'package:dosra_ghar/widgets/feedback.dart';
 import 'package:dosra_ghar/widgets/mess_menu_card.dart';
 import 'package:dosra_ghar/widgets/rating.dart';
 import 'package:flutter/material.dart';
@@ -62,7 +63,9 @@ class _MenuScreenState extends State<MenuScreen> {
                 ),
               ),
             MessMenuCard(title: 'Lunch', items: lunch),
+           
             if (userType == "Regular") const RatingScreen(),
+
           ],
         ),
       ),
