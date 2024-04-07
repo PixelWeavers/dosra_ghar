@@ -13,30 +13,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeState extends State<HomeScreen> {
-  /* final user = FirebaseAuth.instance.currentUser;
 
-  String? name = "";
-
-  Future<String?> _fetchName() async {
-    try {
-      var userModel = await _userServices.getUserById(user!.uid);
-      return userModel?.name;
-    } catch (e) {
-      // Handle the error here, e.g., log it or return a default value
-      print('Error fetching name: $e');
-      return null;
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _fetchName().then((data) {
-      setState(() {
-        name = data;
-      });
-    });
-  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -69,17 +46,7 @@ class _HomeState extends State<HomeScreen> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              /*    if (name != null)
-                                Text('Hi $name 👋',
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                        color:Theme.of(context).colorScheme.tertiary,
-                                        fontFamily: "Sen",
-                                        fontSize: 30,
-                                        fontWeight: FontWeight.w500)),*/
-                              /*    const SizedBox(
-                                height: 8,
-                              ),*/
+
                               Material(
                                 child: Text('Announcements ',
                                     style: GoogleFonts.lato(
