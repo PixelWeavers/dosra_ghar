@@ -6,6 +6,7 @@ import 'package:dosra_ghar/providers/user_provider.dart';
 import 'package:dosra_ghar/utils/auth.dart';
 import 'package:dosra_ghar/views/auth_view.dart';
 import 'package:dosra_ghar/views/addComplain.dart';
+import 'package:dosra_ghar/views/home.dart';
 import 'package:dosra_ghar/views/menu.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +52,7 @@ class MyApp extends StatelessWidget {
                   return const CircularProgressIndicator();
                 } else {
                   if (snapshot.hasData && snapshot.data!) {
-                    return MenuScreen();
+                    return HomeScreen();
                   } else {
                     return const AuthView();
                   }
