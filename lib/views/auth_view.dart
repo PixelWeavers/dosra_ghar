@@ -242,8 +242,8 @@ class _AuthViewState extends State<AuthView> {
                         accountType: accountType);
 
                     firestoreService.addUser(user, context);
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (_) => const HomeScreen()));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (_) => const Announcement()));
                   },
                   child: const Text("Confirm"))
             ],

@@ -21,7 +21,7 @@ final GoRouter router = GoRouter(
             GoRoute(
                 path: '/announcements',
                 builder: (context, state) {
-                  return HomeScreen();
+                  return Announcement();
                 },
                 parentNavigatorKey: _rootNavigatorKey),
             GoRoute(

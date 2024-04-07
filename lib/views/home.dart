@@ -14,7 +14,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   var _selectedIndex = 0;
   List<Widget> screenList = [
-    HomeScreen(),
+    Announcement(),
     Text("Event Page"),
     MenuScreen(),
     Text("WERIDE"),
