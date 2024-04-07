@@ -14,12 +14,12 @@ class ChatIntiator extends StatelessWidget {
             ElevatedButton(onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(builder: (_)=>ChatPage(email: "Admin")));
             },
-             child: Text("Chat as Admin")),
-             SizedBox(height: 18,),
+             child: const Text("Chat as Admin")),
+             const SizedBox(height: 18,),
              ElevatedButton(onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(builder: (_)=>ChatPage(email: "Hostellor")));
              },
-             child: Text("Chat as Hostellor")),
+             child: const Text("Chat as Hostellor")),
              
           ],
         ),

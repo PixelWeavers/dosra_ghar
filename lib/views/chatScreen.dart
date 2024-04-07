@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class ChatPage extends StatefulWidget {
   String email;
-  ChatPage({required this.email});
+  ChatPage({super.key, required this.email});
   @override
   _ChatPageState createState() => _ChatPageState(email: email);
 }
@@ -18,7 +18,7 @@ class _ChatPageState extends State<ChatPage> {
 
   final fs = FirebaseFirestore.instance;
  // final _auth = FirebaseAuth.instance;
-  final TextEditingController message = new TextEditingController();
+  final TextEditingController message = TextEditingController();
   @override
   Widget build(BuildContext context) {
     String sender = email;
@@ -37,7 +37,7 @@ class _ChatPageState extends State<ChatPage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Container(
+            SizedBox(
               height: MediaQuery.of(context).size.height * 0.79,
               child: messages(
                 email: email,
@@ -58,22 +58,24 @@ class _ChatPageState extends State<ChatPage> {
                         contentPadding: const EdgeInsets.only(
                             left: 14.0, bottom: 8.0, top: 8.0),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: new BorderSide(),
-                          borderRadius: new BorderRadius.circular(10),
+                          borderSide: const BorderSide(),
+                          borderRadius: BorderRadius.circular(10),
                         ),
               
                         enabledBorder: UnderlineInputBorder(
-                          borderSide: new BorderSide(),
-                          borderRadius: new BorderRadius.circular(10),
+                          borderSide: const BorderSide(),
+                          borderRadius: BorderRadius.circular(10),
                         ),
                       ),
-                      validator: (value) {},
+                      validator: (value) {
+                        return null;
+                      },
                       onSaved: (value) {
                         message.text = value!;
                       },
                     ),
                   ),
-                  SizedBox(width: 20,),
+                  const SizedBox(width: 20,),
                   IconButton(
                     onPressed: () {
                       if (message.text.isNotEmpty) {
@@ -86,7 +88,7 @@ class _ChatPageState extends State<ChatPage> {
                         message.clear();
                       }
                     },
-                    icon: Icon(Icons.send_sharp , color: Colors.white,size: 36,),
+                    icon: const Icon(Icons.send_sharp , color: Colors.white,size: 36,),
                   ),
                 ],
               ),

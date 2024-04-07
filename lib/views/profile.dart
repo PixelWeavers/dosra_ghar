@@ -21,6 +21,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final UserProvider user = Provider.of<UserProvider>(context, listen: true);
     UserModel? currentUser = user.user;
     if (currentUser == null) {
+      var screenSize = MediaQuery.of(context).size;
       return Scaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(
