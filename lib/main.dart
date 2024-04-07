@@ -1,11 +1,13 @@
 import 'package:dosra_ghar/firebase_options.dart';
 import 'package:dosra_ghar/providers/firebase_provider.dart';
+import 'package:dosra_ghar/providers/issue_provider.dart';
 import 'package:dosra_ghar/providers/menu_provider.dart';
 import 'package:dosra_ghar/providers/user_provider.dart';
 import 'package:dosra_ghar/utils/auth.dart';
 import 'package:dosra_ghar/views/auth_view.dart';
 import 'package:dosra_ghar/views/home.dart';
-import 'package:dosra_ghar/views/issues.dart';
+import 'package:dosra_ghar/views/issues_view.dart';
+import 'package:dosra_ghar/views/addComplain.dart';
 import 'package:dosra_ghar/views/menu.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +36,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AuthenticationProvider()),
         ChangeNotifierProvider(create: (_) => MMenuProvider()),
         ChangeNotifierProvider(create: (_) => FirestoreServiceProvider()),
-        ChangeNotifierProvider(create: (_) => UserProvider())
+        ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => IssueProvider())
       ],
       child: Consumer<AuthenticationProvider>(
         builder: (context, authProvider, child) {
