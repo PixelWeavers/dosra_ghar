@@ -5,6 +5,7 @@ import 'package:dosra_ghar/providers/user_provider.dart';
 import 'package:dosra_ghar/utils/auth.dart';
 import 'package:dosra_ghar/views/auth_view.dart';
 import 'package:dosra_ghar/views/home.dart';
+import 'package:dosra_ghar/views/issues.dart';
 import 'package:dosra_ghar/views/menu.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
