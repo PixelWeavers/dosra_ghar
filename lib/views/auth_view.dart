@@ -1,5 +1,6 @@
 import 'package:dosra_ghar/providers/firebase_provider.dart';
 import 'package:dosra_ghar/utils/utils.dart';
+import 'package:dosra_ghar/views/announcement.dart';
 import 'package:dosra_ghar/views/home.dart';
 import 'package:dosra_ghar/views/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -139,7 +140,7 @@ class _AuthViewState extends State<AuthView> {
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                           content: Text("User already registered")));
                       Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(builder: (_) => const ProfileScreen()),
+                        MaterialPageRoute(builder: (_) => const HomePage()),
                         (route) {
                           return route is ProfileScreen;
                         },
@@ -205,8 +206,7 @@ class _AuthViewState extends State<AuthView> {
                   icon: const Icon(Icons.house),
                   items: hostelBlocks.map((hostel) {
                     return DropdownMenuItem(
-                        value: hostel,
-                        child: Text(hostel.toString()));
+                        value: hostel, child: Text(hostel.toString()));
                   }).toList(),
                   value: selectedHostel,
                   onChanged: (newHostel) {
@@ -221,8 +221,7 @@ class _AuthViewState extends State<AuthView> {
                   icon: const Icon(Icons.food_bank),
                   items: messTypes.map((mess) {
                     return DropdownMenuItem(
-                        value: mess,
-                        child: Text(mess.toString()));
+                        value: mess, child: Text(mess.toString()));
                   }).toList(),
                   onChanged: (newMess) {
                     setState(() {
@@ -243,8 +242,8 @@ class _AuthViewState extends State<AuthView> {
                         accountType: accountType);
 
                     firestoreService.addUser(user, context);
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (_) => const HomeScreen()));
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => const HomeScreen()));
                   },
                   child: const Text("Confirm"))
             ],

@@ -4,12 +4,13 @@ import 'package:dosra_ghar/providers/menu_provider.dart';
 import 'package:dosra_ghar/providers/user_provider.dart';
 import 'package:dosra_ghar/utils/auth.dart';
 import 'package:dosra_ghar/views/auth_view.dart';
-import 'package:dosra_ghar/views/chatIntiator.dart';
 import 'package:dosra_ghar/views/home.dart';
 import 'package:dosra_ghar/views/menu.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:dosra_ghar/utils/router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,7 +43,12 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
               useMaterial3: true,
+              textTheme: GoogleFonts.poppinsTextTheme(),
             ),
+            // routeInformationParser: router.routeInformationParser,
+            // routeInformationProvider: router.routeInformationProvider,
+            // routerDelegate: router.routerDelegate,
+
             home: FutureBuilder<bool>(
               future: authProvider.isUserSignedIn(),
               builder: (context, snapshot) {
@@ -50,7 +56,7 @@ class MyApp extends StatelessWidget {
                   return const CircularProgressIndicator();
                 } else {
                   if (snapshot.hasData && snapshot.data!) {
-                    return const MenuScreen();
+                    return HomePage();
                   } else {
                     return const AuthView();
                   }
