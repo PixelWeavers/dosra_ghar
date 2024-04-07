@@ -1,12 +1,12 @@
+import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dosra_ghar/models/rating.dart';
 import 'package:dosra_ghar/utils/utils.dart';
-import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 class RatingScreen extends StatefulWidget {
-  const RatingScreen({super.key});
+  const RatingScreen({Key? key}) : super(key: key);
 
   @override
   _RatingScreenState createState() => _RatingScreenState();
@@ -14,31 +14,53 @@ class RatingScreen extends StatefulWidget {
 
 class _RatingScreenState extends State<RatingScreen> {
   double _rating = 0.0;
-  var id =1;
+  var id = 1;
   var uid;
-  void _submitRating() async {
-   // final user = FirebaseAuth.instance.currentUser;
-   // final userId = user?.uid;
+  String _feedback = '';
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  Future<void> _submitRatingAndFeedback() async {
+    // Get current date
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('yyyy-MM-dd').format(now);
 
-   // if (userId != null) {
-    id= id+1;
+    // Increment id for rating
+    id = id + 1;
     uid = id.toString();
-      final rating = Rating(
-        userId: uid,
-        rating: _rating,
-        timestamp: formattedDate,
-      );
-  
-      await FirebaseFirestore.instance
-          .collection('ratings')
-          .add(rating.toMap());
 
-      Utils.flushBarErrorMessage('Rating submitted successfully!', context);
-    //} else {
-     // Utils.flushBarErrorMessage('Please log in to submit a rating.', context);
-  //  }
+    // Create rating object
+    final rating = Rating(
+      userId: uid,
+      rating: _rating,
+      timestamp: formattedDate,
+      feedback: _feedback,
+    );
+
+    try {
+      // Store rating data in Firestore
+      await FirebaseFirestore.instance.collection('ratings').add(rating.toMap());
+
+      // Store feedback data in Firestore
+      await FirebaseFirestore.instance.collection('feedback').add({
+        'feedback': _feedback,
+        'timestamp': Timestamp.now(),
+      });
+
+      // Show success message or navigate to another screen
+      Utils.flushBarErrorMessage('Rating and feedback submitted successfully!', context);
+
+      // Clear the form after submission
+      _formKey.currentState!.reset();
+      setState(() {
+        _rating = 0;
+        _feedback = '';
+      });
+    } catch (error) {
+      // Handle error
+      print('Error submitting rating and feedback: $error');
+      
+    }
   }
 
   @override
@@ -51,17 +73,32 @@ class _RatingScreenState extends State<RatingScreen> {
           borderRadius: BorderRadius.circular(8),
         ),
         child: Column(
-          
           children: [
-             Text(
+            Text(
               'Rate the food:',
               style: GoogleFonts.poppins(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
-                decoration: TextDecoration.none,
-               color: Colors.white
+                color: Colors.white,
               ),
             ),
+            SizedBox(height: 16),
+            TextFormField(
+              style: TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                prefixIcon: Icon(Icons.feedback_outlined),
+                prefixIconColor: Colors.white,
+                label: Text('Feedback (optional)', style: GoogleFonts.poppins(color: Colors.white)),
+                enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: Colors.white)),
+              ),
+              maxLines: 2,
+              onChanged: (value) {
+                setState(() {
+                  _feedback = value;
+                });
+              },
+            ),
+            SizedBox(height: 16),
             Material(
               color: Colors.transparent,
               child: Slider(
@@ -77,12 +114,17 @@ class _RatingScreenState extends State<RatingScreen> {
                 },
               ),
             ),
-            const SizedBox(height: 16),
-            ElevatedButton(onPressed: _submitRating,
-            style: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(255, 241, 241, 241),
-            foregroundColor: Colors.black,
-            side: BorderSide( color: Theme.of(context).colorScheme.tertiary, width: 2),
-             fixedSize: const Size(150, 50)),child: const Text('Submit Rating'),)
+            SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: _submitRatingAndFeedback,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color.fromARGB(255, 241, 241, 241),
+                foregroundColor: Colors.black,
+                side: BorderSide(color: Theme.of(context).colorScheme.tertiary, width: 2),
+                fixedSize: const Size(150, 50),
+              ),
+              child: Text('Submit Rating'),
+            )
           ],
         ),
       ),

@@ -61,7 +61,9 @@ class _MenuScreenState extends State<MenuScreen> {
                 ),
               ),
             MessMenuCard(title: 'Lunch', items: lunch),
+           
             if (userType == "Regular") const RatingScreen(),
+
           ],
         ),
       ),
