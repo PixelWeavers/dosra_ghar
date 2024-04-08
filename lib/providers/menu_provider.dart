@@ -7,7 +7,7 @@ class MMenuProvider extends ChangeNotifier {
 List _menu =[];
 Future<void> fetchMenu(String messType, String day, String meal) async {
   try {
-    print("lunch");
+   
     _documentSnapshot = await firestore
         .collection('mess')
         .doc(messType)
