@@ -17,30 +17,39 @@ class _ChatPageState extends State<ChatPage> {
   _ChatPageState({required this.email});
 
   final fs = FirebaseFirestore.instance;
- // final _auth = FirebaseAuth.instance;
+  // final _auth = FirebaseAuth.instance;
   final TextEditingController message = TextEditingController();
   @override
   Widget build(BuildContext context) {
     String sender = email;
     return Scaffold(
-      resizeToAvoidBottomInset : false,
       backgroundColor: Colors.black,
+      resizeToAvoidBottomInset:
+          true, // Ensure the scaffold body resizes to avoid the bottom inset (keyboard)
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.black,
         title: Text(
-          'Chat',style: GoogleFonts.poppins(color: Colors.white),
+          'Chat',
+          style: GoogleFonts.poppins(color: Colors.white),
         ),
       ),
       body: SingleChildScrollView(
-              child: Column(
+        // Wrap the scaffold body with SingleChildScrollView
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.79,
-              child: messages(
-                email: email,
+              child: ListView.separated(
+                itemCount: 1,
+                separatorBuilder: (context, index) => SizedBox(
+                  height: 7,
+                ),
+                itemBuilder: (context, index) => messages(
+                  email: email,
+                ),
               ),
             ),
             Padding(
@@ -61,7 +70,6 @@ class _ChatPageState extends State<ChatPage> {
                           borderSide: const BorderSide(),
                           borderRadius: BorderRadius.circular(10),
                         ),
-              
                         enabledBorder: UnderlineInputBorder(
                           borderSide: const BorderSide(),
                           borderRadius: BorderRadius.circular(10),
@@ -75,7 +83,9 @@ class _ChatPageState extends State<ChatPage> {
                       },
                     ),
                   ),
-                  const SizedBox(width: 20,),
+                  const SizedBox(
+                    width: 20,
+                  ),
                   IconButton(
                     onPressed: () {
                       if (message.text.isNotEmpty) {
@@ -84,11 +94,15 @@ class _ChatPageState extends State<ChatPage> {
                           'time': DateTime.now(),
                           'email': email,
                         });
-              
+
                         message.clear();
                       }
                     },
-                    icon: const Icon(Icons.send_sharp , color: Colors.white,size: 36,),
+                    icon: const Icon(
+                      Icons.send_sharp,
+                      color: Colors.white,
+                      size: 36,
+                    ),
                   ),
                 ],
               ),

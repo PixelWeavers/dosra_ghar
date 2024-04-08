@@ -1,6 +1,7 @@
 import 'package:dosra_ghar/views/announcement.dart';
 import 'package:dosra_ghar/views/menu.dart';
 import 'package:dosra_ghar/views/profile.dart';
+import 'package:dosra_ghar/views/weride.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -17,16 +18,14 @@ class _HomePageState extends State<HomePage> {
     Announcement(),
     Text("Event Page"),
     MenuScreen(),
-    Text("WERIDE"),
+    WeRide(),
     ProfileScreen()
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.black,
-        body: Center(
-          child: screenList[_selectedIndex],
-        ),
+        body: IndexedStack(children: screenList, index: _selectedIndex),
         bottomNavigationBar: SafeArea(
           child: Theme(
             data: ThemeData(splashFactory: NoSplash.splashFactory),
@@ -49,7 +48,11 @@ class _HomePageState extends State<HomePage> {
                     backgroundColor: Colors.black),
                 BottomNavigationBarItem(
                     icon: Icon(Icons.local_taxi_outlined),
-                    activeIcon: Icon(Icons.local_taxi_rounded),
+                    activeIcon: Icon(
+                      Icons.local_taxi_rounded,
+                      color: Colors.amber,
+                      applyTextScaling: true,
+                    ),
                     label: "WeRide",
                     backgroundColor: Colors.black),
                 BottomNavigationBarItem(
@@ -59,7 +62,7 @@ class _HomePageState extends State<HomePage> {
                     backgroundColor: Colors.black),
               ],
               type: BottomNavigationBarType.shifting,
-              elevation: 0.0,
+              elevation: 10,
               selectedItemColor: Colors.white,
               unselectedItemColor: Colors.grey,
               selectedFontSize: 12,
