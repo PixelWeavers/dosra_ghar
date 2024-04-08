@@ -1,3 +1,4 @@
+import 'package:dosra_ghar/views/caters_performance.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dosra_ghar/models/rating.dart';
@@ -25,30 +26,25 @@ class _RatingScreenState extends State<RatingScreen> {
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('yyyy-MM-dd').format(now);
 
-    // Increment id for rating
-    id = id + 1;
-    uid = id.toString();
+    // Increment id for rating (optional, if needed)
+    // id = id + 1;
+    // uid = id.toString();
 
-    // Create rating object
-    final rating = Rating(
-      userId: uid,
-      rating: _rating,
-      timestamp: formattedDate,
-      feedback: _feedback,
-    );
+    // Create a single document with both rating and feedback data
+    final ratingData = {
+      'userId': UniqueKey().toString(), // Generate a unique user ID
+      'rating': _rating,
+      'timestamp': formattedDate,
+      'feedback': _feedback,
+    };
 
     try {
-      // Store rating data in Firestore
-      await FirebaseFirestore.instance.collection('ratings').add(rating.toMap());
-
-      // Store feedback data in Firestore
-      await FirebaseFirestore.instance.collection('feedback').add({
-        'feedback': _feedback,
-        'timestamp': Timestamp.now(),
-      });
+      // Store all data in a single document within the "ratings" collection
+      await FirebaseFirestore.instance.collection('ratings').add(ratingData);
 
       // Show success message or navigate to another screen
-      Utils.flushBarErrorMessage('Rating and feedback submitted successfully!', context);
+      Utils.flushBarErrorMessage(
+          'Rating and feedback submitted successfully!', context);
 
       // Clear the form after submission
       _formKey.currentState!.reset();
@@ -59,7 +55,6 @@ class _RatingScreenState extends State<RatingScreen> {
     } catch (error) {
       // Handle error
       print('Error submitting rating and feedback: $error');
-      
     }
   }
 
@@ -88,8 +83,11 @@ class _RatingScreenState extends State<RatingScreen> {
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.feedback_outlined),
                 prefixIconColor: Colors.white,
-                label: Text('Feedback (optional)', style: GoogleFonts.poppins(color: Colors.white)),
-                enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: Colors.white)),
+                label: Text('Feedback (optional)',
+                    style: GoogleFonts.poppins(color: Colors.white)),
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: Colors.white)),
               ),
               maxLines: 2,
               onChanged: (value) {
@@ -116,11 +114,15 @@ class _RatingScreenState extends State<RatingScreen> {
             ),
             SizedBox(height: 16),
             ElevatedButton(
-              onPressed: _submitRatingAndFeedback,
+              onPressed: () {
+                _submitRatingAndFeedback();
+                // Navigator.of(context).push(MaterialPageRoute(builder: (_)=>StatisticsScreen()));
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color.fromARGB(255, 241, 241, 241),
                 foregroundColor: Colors.black,
-                side: BorderSide(color: Theme.of(context).colorScheme.tertiary, width: 2),
+                side: BorderSide(
+                    color: Theme.of(context).colorScheme.tertiary, width: 2),
                 fixedSize: const Size(150, 50),
               ),
               child: Text('Submit Rating'),

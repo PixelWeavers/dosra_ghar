@@ -8,7 +8,7 @@ class Rating {
     required this.userId,
     required this.rating,
     required this.timestamp,
-    required this.feedback, // Update constructor parameter
+    required this.feedback,
   });
 
   // Convert the Rating object to a Map
