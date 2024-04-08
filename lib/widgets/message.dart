@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class messages extends StatefulWidget {
   final String email;
-  messages({required this.email});
+  const messages({super.key, required this.email});
 
   @override
   _messagesState createState() => _messagesState(email: email);
@@ -14,7 +14,7 @@ class _messagesState extends State<messages> {
   final String email;
   _messagesState({required this.email});
 
-  Stream<QuerySnapshot> _messageStream = FirebaseFirestore.instance
+  final Stream<QuerySnapshot> _messageStream = FirebaseFirestore.instance
       .collection('Messages')
       .orderBy('time')
       .snapshots();
@@ -45,7 +45,7 @@ class _messagesState extends State<messages> {
               subtitle: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
+                  SizedBox(
                     width: 200,
                     child: Text(
                       qs['message'],
@@ -54,7 +54,7 @@ class _messagesState extends State<messages> {
                     ),
                   ),
                   Text(
-                    d.hour.toString() + ":" + d.minute.toString(),
+                    "${d.hour}:${d.minute}",
                     style: const TextStyle(color: Colors.white),
                   ),
                 ],

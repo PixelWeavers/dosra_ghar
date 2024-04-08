@@ -6,7 +6,7 @@ class Rating {
   Rating({
     required this.userId,
     required this.rating,
-    required this.timestamp,
+    required this.timestamp, required String feedback,
   });
 
   // Convert the Rating object to a Map

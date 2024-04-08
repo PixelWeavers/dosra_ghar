@@ -1,5 +1,7 @@
+import 'package:dosra_ghar/models/user.dart';
 import 'package:dosra_ghar/providers/menu_provider.dart';
-import 'package:dosra_ghar/utils/utils.dart';
+import 'package:dosra_ghar/providers/user_provider.dart';
+import 'package:dosra_ghar/views/caters_performance.dart';
 import 'package:dosra_ghar/widgets/mess_menu_card.dart';
 import 'package:dosra_ghar/widgets/rating.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class MenuScreen extends StatefulWidget {
-  const MenuScreen({Key? key}) : super(key: key);
+  const MenuScreen({super.key});
 
   @override
   _MenuScreenState createState() => _MenuScreenState();
@@ -16,6 +18,8 @@ class MenuScreen extends StatefulWidget {
 class _MenuScreenState extends State<MenuScreen> {
   @override
   Widget build(BuildContext context) {
+     final UserProvider user = Provider.of<UserProvider>(context, listen: true);
+    UserModel? currentUser = user.user;
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
 
@@ -30,8 +34,8 @@ class _MenuScreenState extends State<MenuScreen> {
     } else {
       print("Data not found");
     }
-
-    return Scaffold(
+return user.user?.accountType == "student"?
+    Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -66,6 +70,6 @@ class _MenuScreenState extends State<MenuScreen> {
           ],
         ),
       ),
-    );
+    ) : StatisticsScreen();
   }
 }
