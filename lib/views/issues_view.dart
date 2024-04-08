@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart'; // Import the shimmer package
 
 class IssueListScreen extends StatefulWidget {
-  const IssueListScreen({Key? key}) : super(key: key);
+  const IssueListScreen({super.key});
 
   @override
   State<IssueListScreen> createState() => _IssueListScreenState();
@@ -35,10 +35,10 @@ Widget build(BuildContext context) {
           IconButton(
             onPressed: () {
               if (currentUser!.accountType == "student") {
-                Navigator.of(context).push(MaterialPageRoute(builder: (_) => AddComplain()));
+                Navigator.of(context).push(MaterialPageRoute(builder: (_) => const AddComplain()));
               }
             },
-            icon: Icon(Icons.domain_add, size: 28, color: Colors.white), // White icon for visibility
+            icon: const Icon(Icons.domain_add, size: 28, color: Colors.white), // White icon for visibility
           ),
         ],
         title: Text(
@@ -80,7 +80,7 @@ Widget build(BuildContext context) {
   }
 }
 class ShimmerLoadingCard extends StatelessWidget {
-  const ShimmerLoadingCard({Key? key}) : super(key: key);
+  const ShimmerLoadingCard({super.key});
 
   @override
   Widget build(BuildContext context) {

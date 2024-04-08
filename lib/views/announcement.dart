@@ -1,11 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dosra_ghar/views/announce.dart';
 import 'package:dosra_ghar/widgets/annoucement_card.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer/shimmer.dart';
 
 class Announcement extends StatefulWidget {
@@ -47,12 +43,12 @@ class _HomeState extends State<Announcement> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: Text("Announcements",
+        title: const Text("Announcements",
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         centerTitle: true,
         actions: [
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 10),
+            margin: const EdgeInsets.symmetric(horizontal: 10),
             child: IconButton(
               icon: const Icon(
                 color: Colors.white,
@@ -81,12 +77,12 @@ class _HomeState extends State<Announcement> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
                         children: [
-                          const SizedBox(
+                          SizedBox(
                             width: 20,
                           ),
                         ],
@@ -123,7 +119,7 @@ class _HomeState extends State<Announcement> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
                                           children: [
-                                            Container(
+                                            SizedBox(
                                               height: h * 0.5,
                                               width: MediaQuery.of(context)
                                                       .size

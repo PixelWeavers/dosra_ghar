@@ -210,7 +210,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         builder: (_) => ChatPage(
                             email: currentUser.accountType.toString())));
                   },
-                  icon: Icon(Icons.chat_rounded)),
+                  icon: const Icon(Icons.chat_rounded)),
               IconButton(
                 onPressed: () async {
                   await FirebaseAuth.instance.signOut();

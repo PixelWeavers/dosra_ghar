@@ -31,7 +31,7 @@ class AnnouncementContainer extends StatelessWidget {
               color: Colors.black,
               child: Text(description,
                   style: GoogleFonts.poppins(
-                    textStyle: TextStyle(fontSize: 16, color: Colors.white),
+                    textStyle: const TextStyle(fontSize: 16, color: Colors.white),
                   )),
             ),
             const SizedBox(height: 8),
@@ -50,7 +50,7 @@ class AnnouncementContainer extends StatelessWidget {
           color: Colors.black,
           child: Text(title,
               style: GoogleFonts.poppins(
-                textStyle: TextStyle(
+                textStyle: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: Colors.white),

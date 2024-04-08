@@ -44,7 +44,7 @@ class _ChatPageState extends State<ChatPage> {
               height: MediaQuery.of(context).size.height * 0.79,
               child: ListView.separated(
                 itemCount: 1,
-                separatorBuilder: (context, index) => SizedBox(
+                separatorBuilder: (context, index) => const SizedBox(
                   height: 7,
                 ),
                 itemBuilder: (context, index) => messages(

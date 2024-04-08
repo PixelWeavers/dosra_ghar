@@ -1,4 +1,5 @@
 import 'package:dosra_ghar/models/user.dart';
+import 'package:dosra_ghar/models/weride_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:cloud_firestore/cloud_firestore.dart";
 import 'package:flutter/material.dart';
@@ -6,7 +7,15 @@ import 'package:flutter/material.dart';
 class FirestoreServiceProvider extends ChangeNotifier {
   final CollectionReference users =
       FirebaseFirestore.instance.collection('users');
+  final CollectionReference weRide =
+      FirebaseFirestore.instance.collection('carpool');
   final User? currentUser = FirebaseAuth.instance.currentUser;
+
+  // Future<void> AddToWeRide(WeRideModel weRideModel) async {
+  //   try {
+  //     await weRide.doc("${weRideModel.source}-${weRideModel.destination}").collection('${weRideModel.date}').
+  //   }
+  // }
 
   Future<bool> isAdmin() async {
     try {
@@ -49,12 +58,12 @@ class FirestoreServiceProvider extends ChangeNotifier {
     if (!userExists) {
       try {
         await users.doc(docID).set(user.toDocument());
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text("User created successfully")));
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("User created successfully")));
         notifyListeners();
       } catch (error) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text("User creation failed")));
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("User creation failed")));
       }
     } else {
       ScaffoldMessenger.of(context)

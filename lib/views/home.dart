@@ -3,7 +3,6 @@ import 'package:dosra_ghar/views/menu.dart';
 import 'package:dosra_ghar/views/profile.dart';
 import 'package:dosra_ghar/views/weride.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,17 +14,17 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   var _selectedIndex = 0;
   List<Widget> screenList = [
-    Announcement(),
-    Text("Event Page"),
-    MenuScreen(),
-    WeRide(),
-    ProfileScreen()
+    const Announcement(),
+    const Text("Event Page"),
+    const MenuScreen(),
+    const WeRide(),
+    const ProfileScreen()
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.black,
-        body: IndexedStack(children: screenList, index: _selectedIndex),
+        body: IndexedStack(index: _selectedIndex, children: screenList),
         bottomNavigationBar: SafeArea(
           child: Theme(
             data: ThemeData(splashFactory: NoSplash.splashFactory),
@@ -66,7 +65,7 @@ class _HomePageState extends State<HomePage> {
               selectedItemColor: Colors.white,
               unselectedItemColor: Colors.grey,
               selectedFontSize: 12,
-              unselectedIconTheme: IconThemeData(color: Colors.grey, fill: 0.0),
+              unselectedIconTheme: const IconThemeData(color: Colors.grey, fill: 0.0),
               unselectedFontSize: 6,
               currentIndex: _selectedIndex,
               onTap: (index) {

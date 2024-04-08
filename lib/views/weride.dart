@@ -1,3 +1,4 @@
+import 'package:dosra_ghar/models/weride_model.dart';
 import 'package:dosra_ghar/widgets/dropdownitem.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
@@ -21,7 +22,7 @@ class _WeRideState extends State<WeRide> {
   String? selectedSource = "";
   String? selectedDestination = "";
   DateTime? selectedDate = DateTime.now();
-  TimeOfDay? selectedTime = TimeOfDay.now();
+  TimeOfDay? selectedTime = const TimeOfDay(hour: 00, minute: 00);
   String? formattedTime;
   String? formattedDate;
   List<DropdownMenuItem<String>> dropdownPlaces = places.map((place) {
@@ -36,7 +37,7 @@ class _WeRideState extends State<WeRide> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        actions: [],
+        actions: const [],
         backgroundColor: Colors.black,
         toolbarHeight: 70,
         title: Row(
@@ -46,7 +47,7 @@ class _WeRideState extends State<WeRide> {
             Text(
               "We",
               style: GoogleFonts.londrinaSolid(
-                  textStyle: TextStyle(
+                  textStyle: const TextStyle(
                       fontWeight: FontWeight.w800,
                       color: Colors.amber,
                       fontSize: 32)),
@@ -72,10 +73,10 @@ class _WeRideState extends State<WeRide> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Center(
-                    child: Container(
+                    child: SizedBox(
                       height: size.height * 0.05,
                       width: size.width * 0.8,
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           "Book Your Ride",
                           style: TextStyle(fontSize: 26, color: Colors.white),
@@ -98,12 +99,12 @@ class _WeRideState extends State<WeRide> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            margin: EdgeInsets.only(left: 20, top: 20),
+                            margin: const EdgeInsets.only(left: 20, top: 20),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   "From",
                                   style: TextStyle(
                                       fontSize: 28,
@@ -150,18 +151,20 @@ class _WeRideState extends State<WeRide> {
                                   height: size.height * 0.02,
                                 ),
                                 Container(
-                                  padding: EdgeInsets.only(right: 20),
+                                  padding: const EdgeInsets.only(right: 20),
                                   child: GFButton(
                                     onPressed: () async {
                                       selectedTime =
                                           await showIntervalTimePicker(
                                               context: context,
-                                              visibleStep: VisibleStep.sixtieth,
-                                              interval: 60,
-                                              initialTime: const TimeOfDay(
-                                                  hour: 00, minute: 00));
-                                      String? formattedTime =
-                                          selectedTime as String;
+                                              visibleStep:
+                                                  VisibleStep.thirtieths,
+                                              interval: 30,
+                                              initialTime: selectedTime ??
+                                                  TimeOfDay(
+                                                      hour: 00, minute: 00));
+                                      formattedTime =
+                                          selectedTime!.format(context);
                                     },
                                     shape: GFButtonShape.standard,
                                     color: Colors.black,
@@ -188,14 +191,14 @@ class _WeRideState extends State<WeRide> {
                                   height: size.height * 0.02,
                                 ),
                                 Container(
-                                    padding: EdgeInsets.only(right: 20),
+                                    padding: const EdgeInsets.only(right: 20),
                                     child: GFButton(
                                       onPressed: () async {
                                         selectedDate = await showDatePicker(
                                             context: context,
                                             firstDate: DateTime.now(),
                                             lastDate: DateTime(2030, 12, 12));
-                                        String? formattedDate = selectedDate
+                                        formattedDate = selectedDate
                                             .toString()
                                             .split(' ')
                                             .first;
@@ -237,18 +240,28 @@ class _WeRideState extends State<WeRide> {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(17.5),
                   shape: BoxShape.rectangle,
-                  border: Border.fromBorderSide(BorderSide(
+                  border: const Border.fromBorderSide(BorderSide(
                       color: Colors.amber,
                       style: BorderStyle.solid,
                       width: 2))),
               child: GFButton(
                 onPressed: () {
                   if (selectedSource != selectedDestination) {
+                    WeRideModel weRideModel = WeRideModel(
+                        source: selectedSource,
+                        destination: selectedDestination,
+                        date: formattedDate,
+                        time: formattedTime);
                     print(selectedSource);
                     print(selectedDestination);
-
-                    print(selectedTime);
-                  } else {
+                    print(formattedDate);
+                    print(formattedTime);
+                  } else if (selectedSource == "" ||
+                      selectedDestination == "") {
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content:
+                            Text("Source or Destination cannot be empty!")));
+                  } else if (selectedSource == selectedDestination) {
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                         content:
                             Text("Source and Destination cannot be same!")));
@@ -262,7 +275,7 @@ class _WeRideState extends State<WeRide> {
                 fullWidthButton: true,
                 borderShape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(17.5),
-                    side: BorderSide(
+                    side: const BorderSide(
                         color: Colors.black,
                         style: BorderStyle.solid,
                         width: 2.5)),
