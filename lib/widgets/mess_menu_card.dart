@@ -18,7 +18,7 @@ class MessMenuCard extends StatelessWidget {
         width: MediaQuery.of(context).size.width*0.9,
         child: Card(
           
-         color: const Color.fromARGB(255, 243, 216, 180),
+         color: Colors.white,
           elevation: 4, // Add elevation for a shadow effect
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
@@ -28,12 +28,14 @@ class MessMenuCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  "$title 🍜",
-                  style: const TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                     color: Color.fromARGB(255, 140, 84, 0),
+                Center(
+                  child: Text(
+                    "$title 🍜",
+                    style: const TextStyle(
+                      fontSize: 38,
+                      fontWeight: FontWeight.bold,
+                       color: Color.fromARGB(255, 140, 84, 0),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -45,7 +47,7 @@ class MessMenuCard extends StatelessWidget {
                           (item) => Text(
                             "•  ${item.toString()}", // Display each item in the list
                             style: const TextStyle(
-                              fontSize: 18,
+                              fontSize: 21,
                               fontWeight: FontWeight.w600,
                               color: Color.fromARGB(255, 140, 84, 0),
                             ),

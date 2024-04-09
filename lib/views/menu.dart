@@ -23,7 +23,7 @@ class _MenuScreenState extends State<MenuScreen> {
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
 
-    var userType = "Regular";
+    var userType = currentUser?.accountType;
     List<dynamic>? lunch;
 
     final menuProvider = Provider.of<MMenuProvider>(context);
@@ -65,7 +65,7 @@ class _MenuScreenState extends State<MenuScreen> {
                       ),
                     ),
                   MessMenuCard(title: 'Lunch', items: lunch),
-                  if (userType == "Regular") const RatingScreen(),
+                  if (userType != "Admin") const RatingScreen(),
                 ],
               ),
             ),
