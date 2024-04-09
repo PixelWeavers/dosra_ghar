@@ -24,7 +24,7 @@ class LostAndFoundScreen extends StatelessWidget {
         stream: FirebaseFirestore.instance.collection('uploads').snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }
@@ -39,7 +39,7 @@ class LostAndFoundScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 var item = snapshot.data!.docs[index];
                 return Padding(
-                  padding: const EdgeInsets.fromLTRB(20,8,20,8),
+                  padding: const EdgeInsets.fromLTRB(15,8,15,8),
                   child: Card(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,18 +63,28 @@ class LostAndFoundScreen extends StatelessWidget {
                               Center(
                                 child: Text(
                                   item['title'],
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 28,
                                   ),
                                 ),
                               ),
-                              SizedBox(height: 8),
+                              const SizedBox(height: 8),
                               Center(
                                 child: Text(
                                   item['description'],
                                   style: GoogleFonts.poppins(fontSize: 16),
                                 ),
+                              ),
+                               const SizedBox(height: 8),
+                               Text("Contact Details",style: GoogleFonts.poppins(fontWeight: FontWeight.bold,fontSize: 18),),
+                              Text(
+                                'Name: ${item['name']}',
+                                style: const TextStyle(fontSize: 16),
+                              ),
+                              Text(
+                                'Email: ${item['email']}',
+                                style: const TextStyle(fontSize: 16),
                               ),
                             ],
                           ),
@@ -86,7 +96,7 @@ class LostAndFoundScreen extends StatelessWidget {
               },
             );
           }
-          return Center(
+          return const Center(
             child: Text(
               'No items found.',
               style: TextStyle(color: Colors.white),
@@ -98,7 +108,7 @@ class LostAndFoundScreen extends StatelessWidget {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => UploadImage()),
+            MaterialPageRoute(builder: (context) => const UploadImage()),
           );
         },
         child: const Icon(Icons.add),
