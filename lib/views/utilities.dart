@@ -49,7 +49,7 @@ class _UtilitiesState extends State<Utilities> {
         break;
       case "Lost/Found":
         Navigator.of(context)
-            .push(MaterialPageRoute(builder: (_) => LostScreen()));
+            .push(MaterialPageRoute(builder: (_) => LostAndFoundScreen()));
         break;
       case "Counselling":
         Navigator.of(context).push(MaterialPageRoute(
