@@ -1,9 +1,12 @@
 import 'dart:io';
+import 'package:dosra_ghar/models/user.dart';
+import 'package:dosra_ghar/providers/user_provider.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:cloud_firestore/cloud_firestore.dart'; // Add this import
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart'; // Add this import
 
 class UploadImage extends StatefulWidget {
   const UploadImage({Key? key}) : super(key: key);
@@ -54,16 +57,19 @@ class _UploadImageState extends State<UploadImage> {
     });
   }
 
-  uploadDataToFirebase() async {
+  uploadDataToFirebase(String? name, String email) async {
     try {
       if (_titleController.text.isNotEmpty &&
           _descriptionController.text.isNotEmpty &&
           imageUrl != null) {
         // Upload data to Firestore
+         
         await FirebaseFirestore.instance.collection('uploads').add({
           'title': _titleController.text,
           'description': _descriptionController.text,
           'imageUrl': imageUrl,
+          'name':name,
+          'email':email,
         });
 
         print('Data uploaded successfully');
@@ -96,6 +102,10 @@ class _UploadImageState extends State<UploadImage> {
 
   @override
   Widget build(BuildContext context) {
+     final UserProvider user = Provider.of<UserProvider>(context, listen: true);
+    UserModel? currentUser = user.user;
+    String? name = currentUser?.name;
+    String? email = currentUser?.email;
     return Scaffold(
       backgroundColor: Colors.black,
       body: Center(
@@ -167,7 +177,7 @@ class _UploadImageState extends State<UploadImage> {
               padding: const EdgeInsets.fromLTRB(120,8,120,8),
               child: ElevatedButton(
                 onPressed: () {
-                  uploadDataToFirebase();
+                  uploadDataToFirebase(name, email!);
                 },
                 child: Text('Submit'),
               ),
