@@ -71,8 +71,7 @@ class _VolunteerScreenState extends State<VolunteerScreen> {
                           );
                   },
                 ),
-                // NGO selection section
-                const Text('Select an NGO:'),
+
                 Consumer<VolunteerProvider>(
                   builder: (context, provider, _) {
                     return Padding(
@@ -108,7 +107,7 @@ class _VolunteerScreenState extends State<VolunteerScreen> {
                 ),
                 const SizedBox(height: 16.0),
                 // Date selection section
-                const Text('Select Date:'),
+                
                 Consumer<VolunteerProvider>(
                   builder: (context, provider, _) {
                     return Padding(
@@ -144,7 +143,7 @@ class _VolunteerScreenState extends State<VolunteerScreen> {
                 ),
                 const SizedBox(height: 16.0),
                 // Time selection section
-                const Text('Select Time Slot:'),
+                
                 Consumer<VolunteerProvider>(
                   builder: (context, provider, _) {
                     return Padding(

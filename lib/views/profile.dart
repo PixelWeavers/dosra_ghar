@@ -241,160 +241,119 @@ class _ProfileScreenState extends State<ProfileScreen> {
               )
             ],
           ),
-          body: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(20)),
-                margin: const EdgeInsets.all(20),
-                padding: const EdgeInsets.all(5),
-                height: 150,
-                width: 400,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    CircleAvatar(
-                      radius: 50,
-                      backgroundImage: NetworkImage(currentUser.profileUrl!),
-                    ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          maxLines: 2,
-                          softWrap: true,
-                          currentUser.name!,
+          body: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                  margin: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(5),
+                  height: 150,
+                  width: 400,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      CircleAvatar(
+                        radius: 40,
+                        backgroundImage: NetworkImage(currentUser.profileUrl!),
+                      ),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            maxLines: 2,
+                            softWrap: true,
+                            currentUser.name!,
+                            style: GoogleFonts.poppins(
+                                textStyle: const TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold)),
+                          ),
+                          Text(
+                            softWrap: true,
+                            currentUser.email!,
+                            style: GoogleFonts.poppins(
+                                textStyle: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.white.withOpacity(0.8),
+                                    fontWeight: FontWeight.w400)),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 40,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 25.0),
+                        child: Text(
+                          "Details",
+                          textAlign: TextAlign.start,
                           style: GoogleFonts.poppins(
                               textStyle: const TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold)),
+                            color: Colors.white,
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          )),
                         ),
-                        Text(
-                          softWrap: true,
-                          currentUser.email!,
-                          style: GoogleFonts.poppins(
-                              textStyle: TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.white.withOpacity(0.8),
-                                  fontWeight: FontWeight.w400)),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 40,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 25.0),
-                      child: Text(
-                        "Details",
-                        textAlign: TextAlign.start,
-                        style: GoogleFonts.poppins(
-                            textStyle: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        )),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: const Color.fromARGB(255, 255, 255, 255)
-                        .withOpacity(0.8)),
-                height: 460,
-                width: 370,
-                padding: const EdgeInsets.all(15),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                      height: 80,
-                      padding: const EdgeInsets.all(20),
-                      width: 350,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(17.5),
-                        color: const Color.fromARGB(255, 0, 0, 0),
-                        boxShadow: const [
-                          BoxShadow(
-                              blurRadius: 10,
-                              spreadRadius: -0.5,
-                              color: Color.fromARGB(255, 75, 75, 75))
-                        ],
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Registration #",
-                            softWrap: true,
-                            style: GoogleFonts.poppins(
-                                textStyle: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                            )),
+                const SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(9.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: const Color.fromARGB(255, 255, 255, 255)
+                            .withOpacity(0.8)),
+                    height: 460,
+                    width: 370,
+                    padding: const EdgeInsets.all(15),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                          height: 80,
+                          padding: const EdgeInsets.all(20),
+                          width: 350,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(17.5),
+                            color: const Color.fromARGB(255, 0, 0, 0),
+                            boxShadow: const [
+                              BoxShadow(
+                                  blurRadius: 10,
+                                  spreadRadius: -0.5,
+                                  color: Color.fromARGB(255, 75, 75, 75))
+                            ],
                           ),
-                          Text(
-                            currentUser.regNo!,
-                            softWrap: true,
-                            style: GoogleFonts.poppins(
-                                textStyle: const TextStyle(
-                              color: Color.fromARGB(255, 235, 231, 231),
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            )),
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      height: 80,
-                      padding: const EdgeInsets.all(20),
-                      width: 350,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(17.5),
-                        color: const Color.fromARGB(255, 0, 0, 0),
-                        boxShadow: const [
-                          BoxShadow(
-                              blurRadius: 10,
-                              spreadRadius: -0.5,
-                              color: Color.fromARGB(255, 75, 75, 75))
-                        ],
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Row(
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                "Hostel",
+                                "Registration #",
                                 softWrap: true,
                                 style: GoogleFonts.poppins(
                                     textStyle: const TextStyle(
@@ -403,54 +362,139 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   fontWeight: FontWeight.w600,
                                 )),
                               ),
-                              SizedBox(
-                                height: 30,
-                                width: 50,
-                                child: SvgPicture.network(
-                                  "https://www.svgrepo.com/show/513283/building.svg",
-                                  fit: BoxFit.scaleDown,
+                              Text(
+                                currentUser.regNo!,
+                                softWrap: true,
+                                style: GoogleFonts.poppins(
+                                    textStyle: const TextStyle(
+                                  color: Color.fromARGB(255, 235, 231, 231),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                )),
+                              )
+                            ],
+                          ),
+                        ),
+                        Container(
+                          height: 80,
+                          padding: const EdgeInsets.all(20),
+                          width: 350,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(17.5),
+                            color: const Color.fromARGB(255, 0, 0, 0),
+                            boxShadow: const [
+                              BoxShadow(
+                                  blurRadius: 10,
+                                  spreadRadius: -0.5,
+                                  color: Color.fromARGB(255, 75, 75, 75))
+                            ],
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    "Hostel",
+                                    softWrap: true,
+                                    style: GoogleFonts.poppins(
+                                        textStyle: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600,
+                                    )),
+                                  ),
+                                  SizedBox(
+                                    height: 30,
+                                    width: 50,
+                                    child: SvgPicture.network(
+                                      "https://www.svgrepo.com/show/513283/building.svg",
+                                      fit: BoxFit.scaleDown,
+                                    ),
+                                  )
+                                ],
+                              ),
+                              Row(children: [
+                                Text(
+                                  currentUser.hostelBlock.toString(),
+                                  softWrap: true,
+                                  style: GoogleFonts.poppins(
+                                      textStyle: const TextStyle(
+                                    color: Color.fromARGB(255, 235, 231, 231),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                  )),
                                 ),
-                              )
+                              ])
                             ],
                           ),
-                          Row(children: [
-                            Text(
-                              currentUser.hostelBlock.toString(),
-                              softWrap: true,
-                              style: GoogleFonts.poppins(
-                                  textStyle: const TextStyle(
-                                color: Color.fromARGB(255, 235, 231, 231),
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                              )),
-                            ),
-                          ])
-                        ],
-                      ),
-                    ),
-                    Container(
-                      height: 80,
-                      padding: const EdgeInsets.all(20),
-                      width: 350,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(17.5),
-                        color: const Color.fromARGB(255, 0, 0, 0),
-                        boxShadow: const [
-                          BoxShadow(
-                              blurRadius: 10,
-                              spreadRadius: -0.5,
-                              color: Color.fromARGB(255, 75, 75, 75))
-                        ],
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Row(
+                        ),
+                        Container(
+                          height: 80,
+                          padding: const EdgeInsets.all(20),
+                          width: 350,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(17.5),
+                            color: const Color.fromARGB(255, 0, 0, 0),
+                            boxShadow: const [
+                              BoxShadow(
+                                  blurRadius: 10,
+                                  spreadRadius: -0.5,
+                                  color: Color.fromARGB(255, 75, 75, 75))
+                            ],
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    "Mess",
+                                    softWrap: true,
+                                    style: GoogleFonts.poppins(
+                                        textStyle: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600,
+                                    )),
+                                  ),
+                                  SizedBox(
+                                    height: 40,
+                                    width: 50,
+                                    child: SvgPicture.network(
+                                        'https://www.svgrepo.com/show/486297/soup.svg'),
+                                  )
+                                ],
+                              ),
+                              Row(children: mess())
+                            ],
+                          ),
+                        ),
+                        Container(
+                          height: 80,
+                          padding: const EdgeInsets.all(20),
+                          width: 350,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(17.5),
+                            color: const Color.fromARGB(255, 0, 0, 0),
+                            boxShadow: const [
+                              BoxShadow(
+                                  blurRadius: 10,
+                                  spreadRadius: -0.5,
+                                  color: Color.fromARGB(255, 75, 75, 75))
+                            ],
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                "Mess",
+                                "Account",
                                 softWrap: true,
                                 style: GoogleFonts.poppins(
                                     textStyle: const TextStyle(
@@ -459,57 +503,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   fontWeight: FontWeight.w600,
                                 )),
                               ),
-                              SizedBox(
-                                height: 40,
-                                width: 50,
-                                child: SvgPicture.network(
-                                    'https://www.svgrepo.com/show/486297/soup.svg'),
+                              Row(
+                                children: type(),
                               )
                             ],
                           ),
-                          Row(children: mess())
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    Container(
-                      height: 80,
-                      padding: const EdgeInsets.all(20),
-                      width: 350,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(17.5),
-                        color: const Color.fromARGB(255, 0, 0, 0),
-                        boxShadow: const [
-                          BoxShadow(
-                              blurRadius: 10,
-                              spreadRadius: -0.5,
-                              color: Color.fromARGB(255, 75, 75, 75))
-                        ],
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Account",
-                            softWrap: true,
-                            style: GoogleFonts.poppins(
-                                textStyle: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                            )),
-                          ),
-                          Row(
-                            children: type(),
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            ],
+                  ),
+                )
+              ],
+            ),
           ));
     }
   }
