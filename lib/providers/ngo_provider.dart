@@ -41,13 +41,14 @@ class VolunteerProvider extends ChangeNotifier {
   List<Ngo> get ngoList => _ngoList;
   List<String> get dateSlots => _dateSlots;
   List<String> get timeSlots => _timeSlots;
-
+   String? _ngoname;
   Ngo? get selectedNgo => _selectedNgo;
   String? get selectedDate => _selectedDate;
   String? get selectedTimeSlot => _selectedTimeSlot;
-
-  void updateSelectedNgo(Ngo ngo) {
+  String? get ngoname => _ngoname;
+  void updateSelectedNgo(Ngo ngo, String ngoname) {
     _selectedNgo = ngo;
+_ngoname = ngoname;
     notifyListeners();  // Notify listeners of state change
   }
 

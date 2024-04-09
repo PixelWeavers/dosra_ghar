@@ -7,8 +7,10 @@ import 'package:dosra_ghar/utils/auth.dart';
 import 'package:dosra_ghar/views/auth_view.dart';
 import 'package:dosra_ghar/views/menu.dart';
 import 'package:dosra_ghar/views/volunteer_screen.dart';
+import 'package:dosra_ghar/views/volunteerr_list_display.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -18,6 +20,7 @@ void main() async {
   );
 
   runApp(
+    
     const MyApp(),
   );
 }
@@ -27,13 +30,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ]);
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthenticationProvider()),
         ChangeNotifierProvider(create: (_) => MMenuProvider()),
         ChangeNotifierProvider(create: (_) => FirestoreServiceProvider()),
         ChangeNotifierProvider(create: (_) => UserProvider()),
-                ChangeNotifierProvider(create: (_) => VolunteerProvider())
+        ChangeNotifierProvider(create: (_) => VolunteerProvider())
 
       ],
       child: Consumer<AuthenticationProvider>(
@@ -52,7 +59,7 @@ class MyApp extends StatelessWidget {
                   return const CircularProgressIndicator();
                 } else {
                   if (snapshot.hasData && snapshot.data!) {
-                    return  VolunteerScreen();
+                    return  VolunteerListScreen();
                   } else {
                     return const AuthView();
                   }
