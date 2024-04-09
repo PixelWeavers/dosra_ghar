@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 class AnnouncementContainer extends StatelessWidget {
@@ -20,21 +21,18 @@ class AnnouncementContainer extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-        
-          borderRadius: BorderRadius.circular(8),
-        ),
+            borderRadius: BorderRadius.circular(8), color: Colors.black),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildTitleRow(),
             const SizedBox(height: 8),
             Material(
-              child: Text(
-                description,
-                style: const TextStyle(
-                  fontSize: 16,
-                ),
-              ),
+              color: Colors.black,
+              child: Text(description,
+                  style: GoogleFonts.poppins(
+                    textStyle: const TextStyle(fontSize: 16, color: Colors.white),
+                  )),
             ),
             const SizedBox(height: 8),
             _buildTimestampText(),
@@ -49,13 +47,14 @@ class AnnouncementContainer extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Material(
-          child: Text(
-            title,
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          color: Colors.black,
+          child: Text(title,
+              style: GoogleFonts.poppins(
+                textStyle: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              )),
         ),
         const Icon(
           Icons.info_outline,
@@ -67,11 +66,12 @@ class AnnouncementContainer extends StatelessWidget {
 
   Widget _buildTimestampText() {
     return Material(
+      color: Colors.black,
       child: Text(
         '${DateFormat('dd-MM-yyyy').format(timestamp)}  ${DateFormat('HH:mm:ss').format(timestamp)}',
         style: const TextStyle(
           fontSize: 14,
-          color: Color.fromARGB(255, 133, 133, 133),
+          color: Color.fromARGB(255, 212, 211, 211),
         ),
       ),
     );

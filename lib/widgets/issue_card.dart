@@ -6,13 +6,13 @@ import 'package:intl/intl.dart';
 class IssueCard extends StatelessWidget {
   final Issue issue;
 
-  const IssueCard({Key? key, required this.issue}) : super(key: key);
+  const IssueCard({super.key, required this.issue});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(22.0),
-      child: Container(
+      child: SizedBox(
         height: 200,
         child: Card(
           elevation: 4.0,

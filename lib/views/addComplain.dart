@@ -2,13 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dosra_ghar/models/user.dart';
 import 'package:dosra_ghar/providers/user_provider.dart';
 import 'package:dosra_ghar/utils/utils.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class AddComplain extends StatefulWidget {
-  AddComplain({Key? key}) : super(key: key);
+  const AddComplain({super.key});
 
   @override
   State<AddComplain> createState() => _AddComplainState();
@@ -163,8 +162,8 @@ class _AddComplainState extends State<AddComplain> {
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 elevation: 20,
-                fixedSize: Size(160, 50),
-                  backgroundColor: Color.fromARGB(255, 255, 255, 255),
+                fixedSize: const Size(160, 50),
+                  backgroundColor: const Color.fromARGB(255, 255, 255, 255),
                   foregroundColor: Colors.black,
                   side: const BorderSide(
                     width: 4,

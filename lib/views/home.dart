@@ -1,8 +1,11 @@
 import 'package:dosra_ghar/views/announcement.dart';
+import 'package:dosra_ghar/views/bookingHistory.dart';
 import 'package:dosra_ghar/views/menu.dart';
 import 'package:dosra_ghar/views/profile.dart';
+import 'package:dosra_ghar/views/test.dart';
+import 'package:dosra_ghar/views/utilities.dart';
+import 'package:dosra_ghar/views/weride.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,19 +17,18 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   var _selectedIndex = 0;
   List<Widget> screenList = [
-    Announcement(),
-    Text("Event Page"),
-    MenuScreen(),
-    Text("WERIDE"),
-    ProfileScreen()
+    const Announcement(),
+    const Utilities(),
+    const MenuScreen(),
+    const WeRide(),
+    const ProfileScreen()
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.black,
-        body: Center(
-          child: screenList[_selectedIndex],
-        ),
+        // body: IndexedStack(index: _selectedIndex, children: screenList) ,
+        body: IndexedStack(index: _selectedIndex, children: screenList),
         bottomNavigationBar: SafeArea(
           child: Theme(
             data: ThemeData(splashFactory: NoSplash.splashFactory),
@@ -38,9 +40,9 @@ class _HomePageState extends State<HomePage> {
                     backgroundColor: Colors.black,
                     activeIcon: Icon(Icons.announcement_rounded)),
                 BottomNavigationBarItem(
-                    icon: Icon(Icons.event_note_outlined),
-                    label: "Events",
-                    activeIcon: Icon(Icons.event_note_rounded),
+                    icon: Icon(Icons.brush_outlined),
+                    label: "Utilities",
+                    activeIcon: Icon(Icons.brush_rounded),
                     backgroundColor: Colors.black),
                 BottomNavigationBarItem(
                     icon: Icon(Icons.food_bank_outlined),
@@ -49,7 +51,11 @@ class _HomePageState extends State<HomePage> {
                     backgroundColor: Colors.black),
                 BottomNavigationBarItem(
                     icon: Icon(Icons.local_taxi_outlined),
-                    activeIcon: Icon(Icons.local_taxi_rounded),
+                    activeIcon: Icon(
+                      Icons.local_taxi_rounded,
+                      color: Colors.amber,
+                      applyTextScaling: true,
+                    ),
                     label: "WeRide",
                     backgroundColor: Colors.black),
                 BottomNavigationBarItem(
@@ -59,11 +65,12 @@ class _HomePageState extends State<HomePage> {
                     backgroundColor: Colors.black),
               ],
               type: BottomNavigationBarType.shifting,
-              elevation: 0.0,
+              elevation: 10,
               selectedItemColor: Colors.white,
               unselectedItemColor: Colors.grey,
               selectedFontSize: 12,
-              unselectedIconTheme: IconThemeData(color: Colors.grey, fill: 0.0),
+              unselectedIconTheme:
+                  const IconThemeData(color: Colors.grey, fill: 0.0),
               unselectedFontSize: 6,
               currentIndex: _selectedIndex,
               onTap: (index) {

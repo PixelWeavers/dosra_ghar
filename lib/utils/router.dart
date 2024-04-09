@@ -21,19 +21,19 @@ final GoRouter router = GoRouter(
             GoRoute(
                 path: '/announcements',
                 builder: (context, state) {
-                  return Announcement();
+                  return const Announcement();
                 },
                 parentNavigatorKey: _rootNavigatorKey),
             GoRoute(
                 path: '/event',
                 builder: (context, state) {
-                  return Placeholder();
+                  return const Placeholder();
                 },
                 parentNavigatorKey: _rootNavigatorKey),
             GoRoute(
                 path: '/mess',
                 builder: (context, state) {
-                  return MenuScreen();
+                  return const MenuScreen();
                 },
                 parentNavigatorKey: _rootNavigatorKey),
             GoRoute(

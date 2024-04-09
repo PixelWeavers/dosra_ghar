@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 class RatingScreen extends StatefulWidget {
-  const RatingScreen({Key? key}) : super(key: key);
+  const RatingScreen({super.key});
 
   @override
   _RatingScreenState createState() => _RatingScreenState();
@@ -77,11 +77,11 @@ class _RatingScreenState extends State<RatingScreen> {
                 color: Colors.white,
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextFormField(
-              style: TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white),
               decoration: InputDecoration(
-                prefixIcon: Icon(Icons.feedback_outlined),
+                prefixIcon: const Icon(Icons.feedback_outlined),
                 prefixIconColor: Colors.white,
                 label: Text('Feedback (optional)',
                     style: GoogleFonts.poppins(color: Colors.white)),
@@ -96,7 +96,7 @@ class _RatingScreenState extends State<RatingScreen> {
                 });
               },
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Material(
               color: Colors.transparent,
               child: Slider(
@@ -112,7 +112,7 @@ class _RatingScreenState extends State<RatingScreen> {
                 },
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
                 _submitRatingAndFeedback();
@@ -125,7 +125,7 @@ class _RatingScreenState extends State<RatingScreen> {
                     color: Theme.of(context).colorScheme.tertiary, width: 2),
                 fixedSize: const Size(150, 50),
               ),
-              child: Text('Submit Rating'),
+              child: const Text('Submit Rating'),
             )
           ],
         ),

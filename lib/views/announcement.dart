@@ -2,8 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dosra_ghar/views/announce.dart';
 import 'package:dosra_ghar/widgets/annoucement_card.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:shimmer/shimmer.dart';
 
 class Announcement extends StatefulWidget {
   const Announcement({super.key});
@@ -42,69 +41,48 @@ class _HomeState extends State<Announcement> {
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        title: const Text("Announcements",
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+        centerTitle: true,
+        actions: [
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 10),
+            child: IconButton(
+              icon: const Icon(
+                color: Colors.white,
+                Icons.add,
+                size: 30,
+              ),
+              onPressed: () {
+                // Perform search operation
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (_) => const CreateAnnouncementScreen()));
+              },
+            ),
+          ),
+        ],
+      ),
+      backgroundColor: Colors.black,
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.only(top: h / 50),
+          padding: EdgeInsets.only(top: h / 100),
           child: Container(
             decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20))),
+              color: Colors.black,
+            ),
             child: SizedBox(
               height: MediaQuery.of(context).size.height / 1.1,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Row(
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
                         children: [
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              /*    if (name != null)
-                                Text('Hi $name 👋',
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                        color:Theme.of(context).colorScheme.tertiary,
-                                        fontFamily: "Sen",
-                                        fontSize: 30,
-                                        fontWeight: FontWeight.w500)),*/
-                              /*    const SizedBox(
-                                height: 8,
-                              ),*/
-                              Material(
-                                child: Text('Announcements ',
-                                    style: GoogleFonts.lato(
-                                        backgroundColor: Colors.white,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 28)),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          IconButton(
-                            icon: const Icon(Icons.add, size: 30),
-                            onPressed: () {
-                              // Perform search operation
-                              Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (_) =>
-                                      const CreateAnnouncementScreen()));
-                            },
-                          ),
-                          const SizedBox(
+                          SizedBox(
                             width: 20,
                           ),
                         ],
@@ -130,16 +108,26 @@ class _HomeState extends State<Announcement> {
                                   }
 
                                   if (!snapshot.hasData) {
-                                    return Container(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .secondary,
-                                        child: Center(
-                                            child: SpinKitFadingCube(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .primary,
-                                                size: 100.0)));
+                                    return Shimmer.fromColors(
+                                        baseColor: const Color.fromARGB(
+                                            255, 53, 53, 53),
+                                        highlightColor: const Color.fromARGB(
+                                            255, 114, 114, 114),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            SizedBox(
+                                              height: h * 0.5,
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.8,
+                                            )
+                                          ],
+                                        ));
                                   }
 
                                   // Data is available

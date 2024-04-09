@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dosra_ghar/utils/utils.dart';
 import 'package:dosra_ghar/widgets/button.dart';
@@ -20,16 +19,16 @@ class _CreateAnnouncementScreenState extends State<CreateAnnouncementScreen> {
   final _descriptionController = TextEditingController();
   bool loading = false;
   final user = FirebaseAuth.instance.currentUser;
- // final UserServices _userServicse = UserServices();
+  // final UserServices _userServicse = UserServices();
   String? userType = "";
 
- /* _fetch() async {
+  /* _fetch() async {
     var userModel = await _userServicse.getUserById(user!.uid);
     final data = userModel?.userType;
     userType = data;
   }*/
 
- /* @override
+  /* @override
   void initState() {
     _fetch();
     super.initState();
@@ -48,7 +47,9 @@ class _CreateAnnouncementScreenState extends State<CreateAnnouncementScreen> {
           child: Center(
             child: Column(
               children: [
-                const SizedBox(height: 30,),
+                const SizedBox(
+                  height: 30,
+                ),
                 TextFormField(
                   controller: _titleController,
                   decoration: const InputDecoration(
@@ -79,9 +80,9 @@ class _CreateAnnouncementScreenState extends State<CreateAnnouncementScreen> {
                   msg: 'Create Announcement',
                   loading: loading,
                   onTap: () {
-                    createAnnouncement( context);
+                    createAnnouncement(context);
                     Navigator.pop(context);
-                   /* if (_formKey.currentState!.validate()) {
+                    /* if (_formKey.currentState!.validate()) {
                       if (userType == "Admin") {
                         createAnnouncement();
                       } else {
@@ -111,7 +112,7 @@ class _CreateAnnouncementScreenState extends State<CreateAnnouncementScreen> {
       loading = true;
     });
 
-     FirebaseFirestore.instance
+    FirebaseFirestore.instance
         .collection('announcements')
         .doc(currentDate.toString())
         .set({
@@ -126,8 +127,8 @@ class _CreateAnnouncementScreenState extends State<CreateAnnouncementScreen> {
       _formKey.currentState!.reset();
       _titleController.clear();
       _descriptionController.clear();
-      
-     // Navigator.pushNamed(context, RoutesName.post,arguments: 0);
+
+      // Navigator.pushNamed(context, RoutesName.post,arguments: 0);
     }).catchError((error) {
       setState(() {
         loading = false;
