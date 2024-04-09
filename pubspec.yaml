@@ -52,6 +52,8 @@ dependencies:
   provider: ^6.1.2
   shimmer: ^3.0.0
   syncfusion_flutter_charts: ^25.1.38
+  image_picker: ^1.0.7
+  firebase_storage: ^11.7.0
 
 dev_dependencies:
   flutter_lints: ^3.0.2

@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
                   return const CircularProgressIndicator();
                 } else {
                   if (snapshot.hasData && snapshot.data!) {
-                    return HomePage();
+                    return LostAndFoundScreen();
                   } else {
                     return const AuthView();
                   }
