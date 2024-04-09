@@ -13,8 +13,8 @@ class NgoCard extends StatelessWidget {
       elevation: 8,
       child: ListTile(
         leading: Container(
-          width: 120, // Adjust width as needed
-          height: 700, // Adjust height as needed
+          width: 120, 
+          height: 50,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
             image: DecorationImage(
