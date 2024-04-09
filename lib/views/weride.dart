@@ -1,9 +1,13 @@
+import 'package:dosra_ghar/models/user.dart';
 import 'package:dosra_ghar/models/weride_model.dart';
+import 'package:dosra_ghar/providers/user_provider.dart';
+import 'package:dosra_ghar/views/bookingHistory.dart';
 import 'package:dosra_ghar/widgets/dropdownitem.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:interval_time_picker/interval_time_picker.dart';
+import 'package:provider/provider.dart';
 
 class WeRide extends StatefulWidget {
   const WeRide({super.key});
@@ -33,11 +37,37 @@ class _WeRideState extends State<WeRide> {
   }).toList();
   @override
   Widget build(BuildContext context) {
+    final UserProvider user = Provider.of<UserProvider>(context, listen: true);
+    UserModel? currentUser = user.user;
     final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        actions: const [],
+        actions: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              IconButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (_) => BookingHistory()));
+                  },
+                  icon: const Icon(
+                    Icons.history,
+                    semanticLabel: String.fromEnvironment("Booking Hostory"),
+                    color: Colors.amber,
+                  )),
+              Text(
+                "HISTORY",
+                style: TextStyle(fontSize: 14, color: Colors.amber),
+              ),
+              SizedBox(
+                width: 10,
+              )
+            ],
+          )
+        ],
         backgroundColor: Colors.black,
         toolbarHeight: 70,
         title: Row(
@@ -248,10 +278,14 @@ class _WeRideState extends State<WeRide> {
                 onPressed: () {
                   if (selectedSource != selectedDestination) {
                     WeRideModel weRideModel = WeRideModel(
-                        source: selectedSource,
-                        destination: selectedDestination,
-                        date: formattedDate,
-                        time: formattedTime);
+                        source: selectedSource.toString(),
+                        destination: selectedDestination.toString(),
+                        date: formattedDate.toString(),
+                        time: formattedTime.toString(),
+                        bookedBy: currentUser!.name.toString(),
+                        email: currentUser.email.toString(),
+                        regNo: currentUser.regNo.toString(),
+                        uid: currentUser.uid.toString());
                     print(selectedSource);
                     print(selectedDestination);
                     print(formattedDate);

@@ -1,5 +1,5 @@
-class WeRideModel {
-  WeRideModel(
+class BookingResponseModel {
+  BookingResponseModel(
       {required this.source,
       required this.destination,
       required this.time,

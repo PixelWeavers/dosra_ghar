@@ -11,12 +11,6 @@ class FirestoreServiceProvider extends ChangeNotifier {
       FirebaseFirestore.instance.collection('carpool');
   final User? currentUser = FirebaseAuth.instance.currentUser;
 
-  // Future<void> AddToWeRide(WeRideModel weRideModel) async {
-  //   try {
-  //     await weRide.doc("${weRideModel.source}-${weRideModel.destination}").collection('${weRideModel.date}').
-  //   }
-  // }
-
   Future<bool> isAdmin() async {
     try {
       final DocumentSnapshot doc =

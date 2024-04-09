@@ -1,6 +1,9 @@
 import 'package:dosra_ghar/views/announcement.dart';
+import 'package:dosra_ghar/views/bookingHistory.dart';
 import 'package:dosra_ghar/views/menu.dart';
 import 'package:dosra_ghar/views/profile.dart';
+import 'package:dosra_ghar/views/test.dart';
+import 'package:dosra_ghar/views/utilities.dart';
 import 'package:dosra_ghar/views/weride.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +18,7 @@ class _HomePageState extends State<HomePage> {
   var _selectedIndex = 0;
   List<Widget> screenList = [
     const Announcement(),
-    const Text("Event Page"),
+    const Utilities(),
     const MenuScreen(),
     const WeRide(),
     const ProfileScreen()
@@ -24,6 +27,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.black,
+        // body: IndexedStack(index: _selectedIndex, children: screenList) ,
         body: IndexedStack(index: _selectedIndex, children: screenList),
         bottomNavigationBar: SafeArea(
           child: Theme(
@@ -65,7 +69,8 @@ class _HomePageState extends State<HomePage> {
               selectedItemColor: Colors.white,
               unselectedItemColor: Colors.grey,
               selectedFontSize: 12,
-              unselectedIconTheme: const IconThemeData(color: Colors.grey, fill: 0.0),
+              unselectedIconTheme:
+                  const IconThemeData(color: Colors.grey, fill: 0.0),
               unselectedFontSize: 6,
               currentIndex: _selectedIndex,
               onTap: (index) {

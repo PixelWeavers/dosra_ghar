@@ -1,8 +1,10 @@
 import 'package:dosra_ghar/models/user.dart';
 import 'package:dosra_ghar/views/auth_view.dart';
 import 'package:dosra_ghar/views/chatScreen.dart';
+import 'package:dosra_ghar/views/test.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:dosra_ghar/providers/user_provider.dart';
@@ -204,13 +206,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             centerTitle: true,
             actions: [
-              IconButton(
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (_) => ChatPage(
-                            email: currentUser.accountType.toString())));
-                  },
-                  icon: const Icon(Icons.chat_rounded)),
+              GestureDetector(
+                onLongPress: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (_) => TestScreen()));
+                },
+                child: IconButton(
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (_) => ChatPage(
+                              email: currentUser.accountType.toString())));
+                    },
+                    icon: const Icon(
+                      Icons.chat_rounded,
+                      color: Colors.white,
+                    )),
+              ),
               IconButton(
                 onPressed: () async {
                   await FirebaseAuth.instance.signOut();
