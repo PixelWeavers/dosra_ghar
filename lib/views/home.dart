@@ -40,9 +40,9 @@ class _HomePageState extends State<HomePage> {
                     backgroundColor: Colors.black,
                     activeIcon: Icon(Icons.announcement_rounded)),
                 BottomNavigationBarItem(
-                    icon: Icon(Icons.event_note_outlined),
-                    label: "Events",
-                    activeIcon: Icon(Icons.event_note_rounded),
+                    icon: Icon(Icons.brush_outlined),
+                    label: "Utilities",
+                    activeIcon: Icon(Icons.brush_rounded),
                     backgroundColor: Colors.black),
                 BottomNavigationBarItem(
                     icon: Icon(Icons.food_bank_outlined),

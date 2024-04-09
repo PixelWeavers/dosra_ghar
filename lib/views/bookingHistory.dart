@@ -97,7 +97,7 @@ class _BookingHistoryState extends State<BookingHistory> {
         ),
         backgroundColor: Colors.black,
         body: Padding(
-          padding: const EdgeInsets.all(14.0),
+          padding: const EdgeInsets.only(left: 12.0, right: 12.0),
           child: ListView.builder(
               itemCount: bookingResponsesDummy.length,
               itemBuilder: (context, index) => GestureDetector(
