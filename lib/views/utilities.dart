@@ -1,11 +1,13 @@
 import 'package:dosra_ghar/models/user.dart';
 import 'package:dosra_ghar/providers/user_provider.dart';
 import 'package:dosra_ghar/views/chatScreen.dart';
+import 'package:dosra_ghar/views/emergencies.dart';
 import 'package:dosra_ghar/views/issues_view.dart';
 import 'package:dosra_ghar/views/laundry.dart';
 import 'package:dosra_ghar/views/lost_screeen.dart';
 import 'package:dosra_ghar/views/volunteer_screen.dart';
 import 'package:dosra_ghar/widgets/utiltiesGridItem.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,6 +19,7 @@ class Utilities extends StatefulWidget {
 }
 
 class _UtilitiesState extends State<Utilities> {
+  final User? currentUserFirebase = FirebaseAuth.instance.currentUser;
   final List<UtilitiesGridItem> utilitiesGridList = [
     UtilitiesGridItem(
         utilityName: "Laundry",
@@ -32,7 +35,10 @@ class _UtilitiesState extends State<Utilities> {
         svgUrl: "https://www.svgrepo.com/show/525829/dialog-2.svg"),
     UtilitiesGridItem(
         utilityName: "Donate to NGOs",
-        svgUrl: "https://www.svgrepo.com/show/194213/donate-donation.svg")
+        svgUrl: "https://www.svgrepo.com/show/194213/donate-donation.svg"),
+    UtilitiesGridItem(
+        utilityName: "Emergency Services",
+        svgUrl: "https://www.svgrepo.com/show/186956/red-cross.svg")
   ];
   void _navigateToUtilityPage(String utilityName) {
     final UserProvider user = Provider.of<UserProvider>(context, listen: false);
@@ -48,8 +54,11 @@ class _UtilitiesState extends State<Utilities> {
             .push(MaterialPageRoute(builder: (_) => IssueListScreen()));
         break;
       case "Lost/Found":
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (_) => LostAndFoundScreen()));
+        if (currentUser!.accountType.toString() != 'admin' )
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (_) => LostAndFoundScreen()));
+              else
+              Navigator.of(context).push(MaterialPageRoute(builder: (_) => ));
         break;
       case "Counselling":
         Navigator.of(context).push(MaterialPageRoute(
@@ -59,6 +68,9 @@ class _UtilitiesState extends State<Utilities> {
       case "Donate to NGOs":
         Navigator.of(context)
             .push(MaterialPageRoute(builder: (_) => VolunteerScreen()));
+      case "Emergency Services":
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (_) => Emergencies()));
     }
   }
 
@@ -79,7 +91,7 @@ class _UtilitiesState extends State<Utilities> {
         child: GridView.count(
           shrinkWrap: true,
           crossAxisCount: 2, // Number of columns in the grid
-          children: List.generate(5, (index) {
+          children: List.generate(6, (index) {
             // Generate 6 items for the grid
             return Center(
                 child: GestureDetector(
