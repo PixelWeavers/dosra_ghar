@@ -120,16 +120,51 @@ class _LaundryPageState extends State<LaundryPage> {
                                 ),
                               ),
                             ),
-                          if (laundryProvider.isCheckedIn)
-                            Container(
-                              padding: EdgeInsets.all(15),
-                              child: Text(
-                                "Your token number is ${tokenController.text}",
-                                style: TextStyle(
-                                  fontSize: 26,
-                                ),
-                              ),
-                            ),
+                       Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+  children: [
+    if (laundryProvider.isCheckedIn)
+      FutureBuilder<String>(
+        future: laundryProvider.getLaundryToken(),
+        builder: (context, tokenSnapshot) {
+          if (tokenSnapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          } else if (tokenSnapshot.hasError) {
+            return Text('Error: ${tokenSnapshot.error}');
+          } else {
+            return Center(
+              child: Text(
+                "Your token number is ${tokenSnapshot.data}",
+                style: TextStyle(
+                  fontSize: 26,
+                ),
+              ),
+            );
+          }
+        },
+      ),
+    if (laundryProvider.isCheckedIn)
+      FutureBuilder<String>(
+        future: laundryProvider.getLaundryNoClothes(),
+        builder: (context, clothesSnapshot) {
+          if (clothesSnapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          } else if (clothesSnapshot.hasError) {
+            return Text('Error: ${clothesSnapshot.error}');
+          } else {
+            return Text(
+              "Number of Clothes: ${clothesSnapshot.data}",
+              style: TextStyle(
+                fontSize: 26,
+              ),
+            );
+          }
+        },
+      ),
+  ],
+),
+
                           Container(
                             padding: EdgeInsets.all(15),
                             child: GFButton(

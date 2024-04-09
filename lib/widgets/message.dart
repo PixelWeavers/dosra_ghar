@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 
 class messages extends StatefulWidget {
@@ -40,7 +41,9 @@ class _messagesState extends State<messages> {
               tileColor: isSentByCurrentUser ? const Color(0xFF833AB4) :  const Color.fromARGB(255, 69, 66, 66),
               title: Text(
                 qs['email'],
-                style: const TextStyle(fontSize: 15, color: Colors.white),
+                style:  GoogleFonts.poppins(fontSize: 18, 
+                fontWeight: FontWeight.w600,
+                color: Colors.white),
               ),
               subtitle: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -50,7 +53,9 @@ class _messagesState extends State<messages> {
                     child: Text(
                       qs['message'],
                       softWrap: true,
-                      style: const TextStyle(fontSize: 15,color: Colors.white),
+                      style:  GoogleFonts.poppins(fontSize: 15,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white),
                     ),
                   ),
                   Text(
