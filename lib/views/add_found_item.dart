@@ -8,14 +8,14 @@ import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart'; // Add this import
 
-class UploadImage extends StatefulWidget {
-  const UploadImage({Key? key}) : super(key: key);
+class FoundDataAdd extends StatefulWidget {
+  const FoundDataAdd({Key? key}) : super(key: key);
 
   @override
-  State<UploadImage> createState() => _UploadImageState();
+  State<FoundDataAdd> createState() => _FoundDataAddState();
 }
 
-class _UploadImageState extends State<UploadImage> {
+class _FoundDataAddState extends State<FoundDataAdd> {
   String? imageUrl;
   final ImagePicker _imagePicker = ImagePicker();
   bool isloading = false;
@@ -57,19 +57,17 @@ class _UploadImageState extends State<UploadImage> {
     });
   }
 
-  uploadDataToFirebase(String? name, String email) async {
+  uploadDataToFirebase( ) async {
     try {
       if (_titleController.text.isNotEmpty &&
           _descriptionController.text.isNotEmpty &&
           imageUrl != null) {
         // Upload data to Firestore
          
-        await FirebaseFirestore.instance.collection('uploads').add({
+        await FirebaseFirestore.instance.collection('foundItems').add({
           'title': _titleController.text,
           'description': _descriptionController.text,
           'imageUrl': imageUrl,
-          'name':name,
-          'email':email,
         });
 
         print('Data uploaded successfully');
@@ -83,7 +81,7 @@ class _UploadImageState extends State<UploadImage> {
 
         // Show success message or navigate to another screen
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             content: Text('Data uploaded successfully'),
           ),
         );
@@ -91,10 +89,11 @@ class _UploadImageState extends State<UploadImage> {
       } else {
         // Show error message if any field is empty
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             content: Text('Please fill all the fields'),
           ),
         );
+        Navigator.of(context).pop();
       }
     } catch (e) {
       print('Error occurred $e');
@@ -114,7 +113,7 @@ class _UploadImageState extends State<UploadImage> {
           shrinkWrap: true,
           children: [
             imageUrl == null
-                ? Icon(
+                ? const Icon(
                     Icons.person,
                     size: 200,
                     color: Colors.grey,
@@ -125,62 +124,62 @@ class _UploadImageState extends State<UploadImage> {
                       height: 50,
                     ),
                   ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Center(
               child: ElevatedButton.icon(
                 onPressed: () {
                   pickImage();
                 },
-                icon: Icon(Icons.image),
-                label: Text(
+                icon: const Icon(Icons.image),
+                label: const Text(
                   'Pick Image',
                   style: TextStyle(fontSize: 20),
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: TextField(
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
                 controller: _titleController,
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
+                    borderSide: const BorderSide(color: Colors.white),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   labelText: 'Title',
-                  labelStyle: TextStyle(color: Colors.white),
+                  labelStyle: const TextStyle(color: Colors.white),
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: TextField(
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
                 controller: _descriptionController,
                 maxLines: 3,
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
+                    borderSide: const BorderSide(color: Colors.white),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   labelText: 'Description',
-                  labelStyle: TextStyle(color: Colors.white),
+                  labelStyle: const TextStyle(color: Colors.white),
                 ),
               ),
             ),
-            SizedBox(height: 20),
-            if (isloading) SpinKitThreeBounce(color: Colors.white, size: 20),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
+            if (isloading) const SpinKitThreeBounce(color: Colors.white, size: 20),
+            const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.fromLTRB(120,8,120,8),
               child: ElevatedButton(
                 onPressed: () {
-                  uploadDataToFirebase(name, email!);
+                  uploadDataToFirebase();
                 },
-                child: Text('Submit'),
+                child: const Text('Submit'),
               ),
             ),
           ],
