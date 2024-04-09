@@ -89,7 +89,6 @@ print("Fetched Documents: ${snapshot.docs.length}");
                     child: SfCartesianChart(
                       backgroundColor: Colors.white,
                       primaryXAxis: CategoryAxis(
-                       
                       ),
                     
                      

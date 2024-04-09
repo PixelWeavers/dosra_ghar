@@ -1,10 +1,12 @@
 import 'package:dosra_ghar/firebase_options.dart';
 import 'package:dosra_ghar/providers/firebase_provider.dart';
 import 'package:dosra_ghar/providers/menu_provider.dart';
+import 'package:dosra_ghar/providers/ngo_provider.dart';
 import 'package:dosra_ghar/providers/user_provider.dart';
 import 'package:dosra_ghar/utils/auth.dart';
 import 'package:dosra_ghar/views/auth_view.dart';
 import 'package:dosra_ghar/views/menu.dart';
+import 'package:dosra_ghar/views/volunteer_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -30,7 +32,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AuthenticationProvider()),
         ChangeNotifierProvider(create: (_) => MMenuProvider()),
         ChangeNotifierProvider(create: (_) => FirestoreServiceProvider()),
-        ChangeNotifierProvider(create: (_) => UserProvider())
+        ChangeNotifierProvider(create: (_) => UserProvider()),
+                ChangeNotifierProvider(create: (_) => VolunteerProvider())
+
       ],
       child: Consumer<AuthenticationProvider>(
         builder: (context, authProvider, child) {
@@ -48,7 +52,7 @@ class MyApp extends StatelessWidget {
                   return const CircularProgressIndicator();
                 } else {
                   if (snapshot.hasData && snapshot.data!) {
-                    return const MenuScreen();
+                    return  VolunteerScreen();
                   } else {
                     return const AuthView();
                   }
