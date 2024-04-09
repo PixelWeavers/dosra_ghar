@@ -1,5 +1,6 @@
 import 'package:dosra_ghar/firebase_options.dart';
 import 'package:dosra_ghar/providers/firebase_provider.dart';
+import 'package:dosra_ghar/providers/issue_provider.dart';
 import 'package:dosra_ghar/providers/laundry_provider.dart';
 import 'package:dosra_ghar/providers/menu_provider.dart';
 import 'package:dosra_ghar/providers/ngo_provider.dart';
@@ -48,7 +49,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => VolunteerProvider()),
         ChangeNotifierProvider(create: (_) => WeRideProvider()),
-        ChangeNotifierProvider(create: (_) => LaundryProvider())
+        ChangeNotifierProvider(create: (_) => LaundryProvider()),
+        ChangeNotifierProvider(create: (_) => IssueProvider())
       ],
       child: Consumer<AuthenticationProvider>(
         builder: (context, authProvider, child) {

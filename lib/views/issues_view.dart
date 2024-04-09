@@ -23,8 +23,8 @@ class _IssueListScreenState extends State<IssueListScreen> {
     issueProvider.fetchDataOnInitialization(context);
   }
 
- @override
-Widget build(BuildContext context) {
+  @override
+  Widget build(BuildContext context) {
     final issueProvider = Provider.of<IssueProvider>(context);
     final UserProvider user = Provider.of<UserProvider>(context, listen: true);
     UserModel? currentUser = user.user;
@@ -35,10 +35,15 @@ Widget build(BuildContext context) {
           IconButton(
             onPressed: () {
               if (currentUser!.accountType == "student") {
-                Navigator.of(context).push(MaterialPageRoute(builder: (_) => const AddComplain()));
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => const AddComplain()));
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text("This option is only valid for a student!")));
               }
             },
-            icon: const Icon(Icons.domain_add, size: 28, color: Colors.white), // White icon for visibility
+            icon: const Icon(Icons.domain_add,
+                size: 28, color: Colors.white), // White icon for visibility
           ),
         ],
         title: Text(
@@ -66,7 +71,9 @@ Widget build(BuildContext context) {
               ? const Center(
                   child: Text(
                     'No issues found.',
-                    style: TextStyle(fontSize: 18, color: Colors.white), // White text for visibility
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.white), // White text for visibility
                   ),
                 )
               : ListView.builder(
@@ -79,6 +86,7 @@ Widget build(BuildContext context) {
     );
   }
 }
+
 class ShimmerLoadingCard extends StatelessWidget {
   const ShimmerLoadingCard({super.key});
 
@@ -90,8 +98,10 @@ class ShimmerLoadingCard extends StatelessWidget {
         elevation: 4.0,
         color: Colors.grey[900], // Darker color for card background
         child: Shimmer.fromColors(
-          baseColor: Colors.grey[300]!.withOpacity(0.5), // Lighter base color with reduced opacity
-          highlightColor: Colors.grey[400]!.withOpacity(0.5), // Lighter highlight color with reduced opacity
+          baseColor: Colors.grey[300]!
+              .withOpacity(0.5), // Lighter base color with reduced opacity
+          highlightColor: Colors.grey[400]!
+              .withOpacity(0.5), // Lighter highlight color with reduced opacity
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -100,7 +110,8 @@ class ShimmerLoadingCard extends StatelessWidget {
                 // Title placeholder
                 Container(
                   height: 24.0,
-                  color: Colors.grey[600]!.withOpacity(0.5), // Darker grey with reduced opacity
+                  color: Colors.grey[600]!
+                      .withOpacity(0.5), // Darker grey with reduced opacity
                   width: double.infinity,
                 ),
                 const SizedBox(height: 20),
@@ -110,13 +121,15 @@ class ShimmerLoadingCard extends StatelessWidget {
                     Container(
                       height: 16.0,
                       width: 100.0,
-                      color: Colors.grey[600]!.withOpacity(0.5), // Darker grey with reduced opacity
+                      color: Colors.grey[600]!
+                          .withOpacity(0.5), // Darker grey with reduced opacity
                     ),
                     const Spacer(),
                     Container(
                       height: 16.0,
                       width: 80.0,
-                      color: Colors.grey[600]!.withOpacity(0.5), // Darker grey with reduced opacity
+                      color: Colors.grey[600]!
+                          .withOpacity(0.5), // Darker grey with reduced opacity
                     ),
                   ],
                 ),
@@ -127,13 +140,15 @@ class ShimmerLoadingCard extends StatelessWidget {
                     Container(
                       height: 16.0,
                       width: 50.0, // Adjust width as needed
-                      color: Colors.grey[600]!.withOpacity(0.5), // Darker grey with reduced opacity
+                      color: Colors.grey[600]!
+                          .withOpacity(0.5), // Darker grey with reduced opacity
                     ),
                     const SizedBox(width: 8.0),
                     Container(
                       height: 16.0,
                       width: 80.0, // Adjust width as needed
-                      color: Colors.grey[600]!.withOpacity(0.5), // Darker grey with reduced opacity
+                      color: Colors.grey[600]!
+                          .withOpacity(0.5), // Darker grey with reduced opacity
                     ),
                   ],
                 ),
@@ -141,7 +156,8 @@ class ShimmerLoadingCard extends StatelessWidget {
                 // Placeholder for additional content section (adjust height as needed)
                 Container(
                   height: 16.0,
-                  color: Colors.grey[600]!.withOpacity(0.5), // Darker grey with reduced opacity
+                  color: Colors.grey[600]!
+                      .withOpacity(0.5), // Darker grey with reduced opacity
                   width: double.infinity,
                 ),
               ],
