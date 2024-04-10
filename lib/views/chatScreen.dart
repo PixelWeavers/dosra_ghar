@@ -31,7 +31,7 @@ class _ChatPageState extends State<ChatPage> {
         backgroundColor: Colors.black,
         title: Text(
           'Chat',
-          style: GoogleFonts.poppins(color: Colors.white),
+          style: GoogleFonts.poppins(color: Colors.white,fontWeight: FontWeight.bold),
         ),
       ),
       body: SingleChildScrollView(

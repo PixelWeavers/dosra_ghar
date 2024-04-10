@@ -1,9 +1,10 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dosra_ghar/models/rating.dart';
+import 'package:dosra_ghar/providers/menu_provider.dart';
+import 'package:dosra_ghar/widgets/mess_menu_card.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class StatisticsScreen extends StatefulWidget {
@@ -30,8 +31,6 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
     print(formattedDate);
    final snapshot = await FirebaseFirestore.instance
     .collection('ratings')
-    .orderBy('timestamp', descending: true)
-    .where('timestamp', isGreaterThanOrEqualTo: formattedDate)
     .get();
 print("Fetched Documents: ${snapshot.docs.length}");
     setState(() {
@@ -69,39 +68,52 @@ print("Fetched Documents: ${snapshot.docs.length}");
 
   @override
   Widget build(BuildContext context) {
+    List<dynamic>? lunch;
+
+    final menuProvider = Provider.of<MMenuProvider>(context);
+    menuProvider.fetchMenu("veg", "Monday", "lunch");
+    final data = menuProvider.documentSnapshot?.data() as Map<String, dynamic>?;
+    if (data != null) {
+      lunch = data['lunch'] as List<dynamic>?;
+    } else {
+      print("Data not found");
+    }
     return Scaffold(
       appBar: AppBar(
-        title: Text("Today's Mess Ratings", style: GoogleFonts.poppins(color: Colors.white, 
-        fontSize: 24,
-        fontWeight: FontWeight.bold),),
         backgroundColor: Colors.black,
-      ),
+        centerTitle: true,
+        title:  const Text(
+                    "Today's Mess Rating",
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      decoration: TextDecoration.none,
+                      color: Colors.white,
+                    ),
+                  ),),
       body: Container(
-        color: Colors.black,
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.black,
+          
+        ),
         child: _chartData.isNotEmpty
             ? Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  
-                  Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: SfCartesianChart(
-                      backgroundColor: Colors.white,
-                      primaryXAxis: CategoryAxis(
+                         children: [
+                           MessMenuCard(title: 'Lunch', items: lunch),
+                 
+                  SfCartesianChart(
+                    primaryXAxis: CategoryAxis(),
+                    backgroundColor: Colors.white,
+                    series: <CartesianSeries>[
+                      ColumnSeries<_DataPoint, String>(
+                        dataSource: _chartData,
+                        xValueMapper: (_DataPoint data, _) => data.date,
+                        yValueMapper: (_DataPoint data, _) => data.rating,
+                        color: Colors.blue,
                       ),
-                    
-                     
-                      
-                      series: <CartesianSeries>[
-                        ColumnSeries<_DataPoint, String>(
-                          dataSource: _chartData,
-                          xValueMapper: (_DataPoint data, _) => data.date,
-                          yValueMapper: (_DataPoint data, _) => data.rating,
-                          color: Colors.blue,
-                        ),
-                      ],
-                    ),
+                    ],
                   ),
                 ],
               )

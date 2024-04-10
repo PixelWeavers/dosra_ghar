@@ -38,7 +38,7 @@ class _IssueListScreenState extends State<IssueListScreen> {
                 Navigator.of(context).push(
                     MaterialPageRoute(builder: (_) => const AddComplain()));
               } else {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                     content: Text("This option is only valid for a student!")));
               }
             },

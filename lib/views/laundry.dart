@@ -81,110 +81,140 @@ class _LaundryPageState extends State<LaundryPage> {
                   ),
                 ],
               ),
-              Container(
-                height: MediaQuery.of(context).size.height * 0.4,
-                width: MediaQuery.of(context).size.width,
-                margin: EdgeInsets.only(top: 10, bottom: 10),
-                child: Card(
-                  color: Colors.white,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      if (!isCheckedIn)
-                        Container(
-                          padding: EdgeInsets.all(15),
-                          child: TextField(
-                            onChanged: (value) {
-                              clothes = value;
-                            },
-                            decoration: InputDecoration(
-                              hintText: "Number of Clothes",
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: BorderSide(color: Colors.black),
-                              ),
-                            ),
-                          ),
-                        ),
-                      if (!isCheckedIn)
-                        Container(
-                          padding: EdgeInsets.all(15),
-                          child: TextField(
-                            onChanged: (value) {
-                              token = value;
-                            },
-                            decoration: InputDecoration(
-                              hintText: "Token Number",
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(12),
-                                borderSide: BorderSide(color: Colors.black),
-                              ),
-                            ),
-                          ),
-                        ),
-                      if (isCheckedIn)
-                        Container(
-                          padding: EdgeInsets.all(15),
-                          child: Text(
-                            "Your token number is $backupToken",
-                            style: TextStyle(
-                              fontSize: 26,
-                            ),
-                          ),
-                        ),
-                      Container(
-                        padding: EdgeInsets.all(15),
-                        child: GFButton(
-                          onPressed: () {
-                            if (isCheckedIn) {
-                              // Check-out logic
-                              setState(() {
-                                isCheckedIn = false;
-                              });
-                            } else {
-                              // Check-in logic
-                              DateTime today = DateTime.now();
-                              if (availableDates.contains(DateTime(
-                                  today.year, today.month, today.day))) {
-                                setState(() {
-                                  isCheckedIn = true;
-                                  backupToken = token;
-                                });
-                              } else {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) => AlertDialog(
-                                    title: Text('Not Available'),
-                                    content: Text(
-                                        'Laundry is only available on specific dates.'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: Text('OK'),
-                                      ),
-                                    ],
+              Consumer<LaundryProvider>(
+                builder: (context, laundryProvider, _) {
+                  return Container(
+                    height: MediaQuery.of(context).size.height * 0.4,
+                    width: MediaQuery.of(context).size.width,
+                    margin: EdgeInsets.only(top: 10, bottom: 10),
+                    child: Card(
+                      color: Colors.white,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          if (!laundryProvider.isCheckedIn)
+                            Container(
+                              padding: EdgeInsets.all(15),
+                              child: TextField(
+                                controller: clothesController,
+                                decoration: InputDecoration(
+                                  hintText: "Number of Clothes",
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                    borderSide: BorderSide(color: Colors.black),
                                   ),
-                                );
-                              }
-                            }
-                          },
-                          color: Colors.black,
-                          child: Text(isCheckedIn ? "Check-Out" : "Check-In"),
-                          size: 50,
-                          shape: GFButtonShape.square,
-                          borderShape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(11),
+                                ),
+                              ),
+                            ),
+                          if (!laundryProvider.isCheckedIn)
+                            Container(
+                              padding: EdgeInsets.all(15),
+                              child: TextField(
+                                controller: tokenController,
+                                decoration: InputDecoration(
+                                  hintText: "Token Number",
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                    borderSide: BorderSide(color: Colors.black),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              if (laundryProvider.isCheckedIn)
+                                FutureBuilder<String>(
+                                  future: laundryProvider.getLaundryToken(),
+                                  builder: (context, tokenSnapshot) {
+                                    if (tokenSnapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return CircularProgressIndicator();
+                                    } else if (tokenSnapshot.hasError) {
+                                      return Text(
+                                          'Error: ${tokenSnapshot.error}');
+                                    } else {
+                                      return Center(
+                                        child: Text(
+                                          "Your token number is ${tokenSnapshot.data}",
+                                          style: TextStyle(
+                                            fontSize: 26,
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                ),
+                              if (laundryProvider.isCheckedIn)
+                                FutureBuilder<String>(
+                                  future: laundryProvider.getLaundryNoClothes(),
+                                  builder: (context, clothesSnapshot) {
+                                    if (clothesSnapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return CircularProgressIndicator();
+                                    } else if (clothesSnapshot.hasError) {
+                                      return Text(
+                                          'Error: ${clothesSnapshot.error}');
+                                    } else {
+                                      return Text(
+                                        "Number of Clothes: ${clothesSnapshot.data}",
+                                        style: TextStyle(
+                                          fontSize: 26,
+                                        ),
+                                      );
+                                    }
+                                  },
+                                ),
+                            ],
                           ),
-                          fullWidthButton: true,
-                        ),
+                          Container(
+                            padding: EdgeInsets.all(15),
+                            child: GFButton(
+                              onPressed: () async {
+                                if (laundryProvider.isCheckedIn) {
+                                  // Check-out logic
+                                  await laundryProvider.addLaundryCheckIn(
+                                    LaundryModel(
+                                      noClothes: clothesController.text,
+                                      token: tokenController.text,
+                                      isCheckIn: false,
+                                      date: DateTime.now(),
+                                      uid: currentUser?.uid ?? '',
+                                    ),
+                                  );
+                                } else {
+                                  // Check-in logic
+                                  await laundryProvider.addLaundryCheckIn(
+                                    LaundryModel(
+                                      noClothes: clothesController.text,
+                                      token: tokenController.text,
+                                      isCheckIn: true,
+                                      date: DateTime.now(),
+                                      uid: currentUser?.uid ?? '',
+                                    ),
+                                  );
+                                }
+                              },
+                              color: Colors.black,
+                              child: Text(laundryProvider.isCheckedIn
+                                  ? "Check-Out"
+                                  : "Check-In"),
+                              size: 50,
+                              shape: GFButtonShape.square,
+                              borderShape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(11),
+                              ),
+                              fullWidthButton: true,
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
+                    ),
+                  );
+                },
               ),
             ],
           ),

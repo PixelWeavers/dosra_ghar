@@ -10,31 +10,50 @@ class NgoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Colors.white,
       elevation: 8,
-      child: ListTile(
-        leading: Container(
-          width: 120, 
-          height: 50,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            image: DecorationImage(
-              image: NetworkImage(ngo.logoUrl),
-              fit: BoxFit.fill,
+      child: Column(
+        children: [
+          // Logo container at the top
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Container(
+              width: double.infinity, // Match parent width
+              height: 120, // Adjust height as needed
+              decoration: BoxDecoration(
+                
+                image: DecorationImage(
+                  image: NetworkImage(ngo.logoUrl),
+                  fit: BoxFit.cover, // Ensure full image coverage
+                ),
+              ),
             ),
           ),
-        ),
-        title: Text(
-          ngo.name,
-          style: GoogleFonts.poppins(
-            fontWeight: FontWeight.bold,
-            fontSize: 26,
+          // Details section below the logo
+          Padding(
+            padding: const EdgeInsets.all(8.0), // Add some padding
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start, // Left-align content
+              children: [
+                Text(
+                  ngo.name,
+                  style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 28,
+                  ),
+                ),
+                const SizedBox(height: 8.0), // Add some vertical spacing
+                Text(
+                  ngo.description,
+                  style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 18,
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-        subtitle: Text(ngo.description,style:GoogleFonts.poppins(
-            fontWeight: FontWeight.w400,
-            fontSize: 18,
-          ),),
-
+        ],
       ),
     );
   }

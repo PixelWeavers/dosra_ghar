@@ -19,10 +19,39 @@ class LaundryProvider extends ChangeNotifier {
         'date': laundry.date,
         'uid': laundry.uid,
       });
-      _isCheckedIn = true; // Updat e the checked-in status
+      _isCheckedIn = true; // Update the checked-in status
       notifyListeners();
     } catch (e) {
       print('Error adding laundry check-in: $e');
     }
+  }
+
+  
+  Future<String> getLaundryToken() async {
+    String token = '';
+    try {
+      QuerySnapshot querySnapshot = await laundryCollection.get();
+      querySnapshot.docs.forEach((doc) {
+        String tokenValue = doc['token'].toString();
+        token = tokenValue;
+      });
+    } catch (e) {
+      print('Error getting laundry token: $e');
+    }
+    return token;
+  }
+
+  Future<String> getLaundryNoClothes() async {
+    String noClothes = '';
+    try {
+      QuerySnapshot querySnapshot = await laundryCollection.get();
+      querySnapshot.docs.forEach((doc) {
+        String noClothesValue = doc['noClothes'].toString();
+        noClothes = noClothesValue;
+      });
+    } catch (e) {
+      print('Error getting laundry noClothes: $e');
+    }
+    return noClothes;
   }
 }
