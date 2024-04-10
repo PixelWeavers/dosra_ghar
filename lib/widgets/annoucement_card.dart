@@ -21,7 +21,9 @@ class AnnouncementContainer extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8), color: Colors.black),
+            borderRadius: BorderRadius.circular(12),
+            color: Colors.black,
+            border: Border.all(color: Colors.white, width: 2)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -31,7 +33,8 @@ class AnnouncementContainer extends StatelessWidget {
               color: Colors.black,
               child: Text(description,
                   style: GoogleFonts.poppins(
-                    textStyle: const TextStyle(fontSize: 16, color: Colors.white),
+                    textStyle:
+                        const TextStyle(fontSize: 16, color: Colors.white),
                   )),
             ),
             const SizedBox(height: 8),

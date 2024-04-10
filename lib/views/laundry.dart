@@ -1,10 +1,9 @@
-import 'package:dosra_ghar/models/user.dart';
 import 'package:dosra_ghar/models/laundry.dart';
 import 'package:dosra_ghar/providers/laundry_provider.dart';
-import 'package:dosra_ghar/providers/user_provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/button/gf_button.dart';
-import 'package:getwidget/getwidget.dart';
+import 'package:getwidget/shape/gf_button_shape.dart';
 import 'package:provider/provider.dart';
 
 class LaundryPage extends StatefulWidget {
@@ -15,13 +14,23 @@ class LaundryPage extends StatefulWidget {
 }
 
 class _LaundryPageState extends State<LaundryPage> {
+  String backupToken = '';
+  bool isCheckedIn = false;
+  String clothes = '';
+  String token = '';
+
+  List<DateTime> availableDates = [
+    DateTime(2024, 4, 1),
+    DateTime(2024, 4, 5),
+    DateTime(2024, 4, 10),
+    DateTime(2024, 4, 15),
+  ];
+
   @override
   Widget build(BuildContext context) {
     TextEditingController clothesController = TextEditingController();
     TextEditingController tokenController = TextEditingController();
-    final UserProvider user = Provider.of<UserProvider>(context, listen: false);
-    UserModel? currentUser = user.user;
-
+    User? currentUser = FirebaseAuth.instance.currentUser;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -120,51 +129,54 @@ class _LaundryPageState extends State<LaundryPage> {
                                 ),
                               ),
                             ),
-                       Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-  children: [
-    if (laundryProvider.isCheckedIn)
-      FutureBuilder<String>(
-        future: laundryProvider.getLaundryToken(),
-        builder: (context, tokenSnapshot) {
-          if (tokenSnapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
-          } else if (tokenSnapshot.hasError) {
-            return Text('Error: ${tokenSnapshot.error}');
-          } else {
-            return Center(
-              child: Text(
-                "Your token number is ${tokenSnapshot.data}",
-                style: TextStyle(
-                  fontSize: 26,
-                ),
-              ),
-            );
-          }
-        },
-      ),
-    if (laundryProvider.isCheckedIn)
-      FutureBuilder<String>(
-        future: laundryProvider.getLaundryNoClothes(),
-        builder: (context, clothesSnapshot) {
-          if (clothesSnapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
-          } else if (clothesSnapshot.hasError) {
-            return Text('Error: ${clothesSnapshot.error}');
-          } else {
-            return Text(
-              "Number of Clothes: ${clothesSnapshot.data}",
-              style: TextStyle(
-                fontSize: 26,
-              ),
-            );
-          }
-        },
-      ),
-  ],
-),
-
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              if (laundryProvider.isCheckedIn)
+                                FutureBuilder<String>(
+                                  future: laundryProvider.getLaundryToken(),
+                                  builder: (context, tokenSnapshot) {
+                                    if (tokenSnapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return CircularProgressIndicator();
+                                    } else if (tokenSnapshot.hasError) {
+                                      return Text(
+                                          'Error: ${tokenSnapshot.error}');
+                                    } else {
+                                      return Center(
+                                        child: Text(
+                                          "Your token number is ${tokenSnapshot.data}",
+                                          style: TextStyle(
+                                            fontSize: 26,
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                ),
+                              if (laundryProvider.isCheckedIn)
+                                FutureBuilder<String>(
+                                  future: laundryProvider.getLaundryNoClothes(),
+                                  builder: (context, clothesSnapshot) {
+                                    if (clothesSnapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return CircularProgressIndicator();
+                                    } else if (clothesSnapshot.hasError) {
+                                      return Text(
+                                          'Error: ${clothesSnapshot.error}');
+                                    } else {
+                                      return Text(
+                                        "Number of Clothes: ${clothesSnapshot.data}",
+                                        style: TextStyle(
+                                          fontSize: 26,
+                                        ),
+                                      );
+                                    }
+                                  },
+                                ),
+                            ],
+                          ),
                           Container(
                             padding: EdgeInsets.all(15),
                             child: GFButton(
