@@ -2,10 +2,13 @@ import 'package:dosra_ghar/models/user.dart';
 import 'package:dosra_ghar/providers/user_provider.dart';
 import 'package:dosra_ghar/views/chatScreen.dart';
 import 'package:dosra_ghar/views/emergencies.dart';
+import 'package:dosra_ghar/views/found_screen.dart';
+import 'package:dosra_ghar/views/help_centre.dart';
 import 'package:dosra_ghar/views/issues_view.dart';
 import 'package:dosra_ghar/views/laundry.dart';
 import 'package:dosra_ghar/views/lost_screeen.dart';
 import 'package:dosra_ghar/views/volunteer_screen.dart';
+import 'package:dosra_ghar/views/volunteerr_list_display.dart';
 import 'package:dosra_ghar/widgets/utiltiesGridItem.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +40,7 @@ class _UtilitiesState extends State<Utilities> {
         utilityName: "Donate to NGOs",
         svgUrl: "https://www.svgrepo.com/show/194213/donate-donation.svg"),
     UtilitiesGridItem(
-        utilityName: "Emergency Services",
+        utilityName: "Contact Services",
         svgUrl: "https://www.svgrepo.com/show/186956/red-cross.svg")
   ];
   void _navigateToUtilityPage(String utilityName) {
@@ -54,11 +57,12 @@ class _UtilitiesState extends State<Utilities> {
             .push(MaterialPageRoute(builder: (_) => IssueListScreen()));
         break;
       case "Lost/Found":
-        if (currentUser!.accountType.toString() != 'admin' )
+        if (currentUser!.accountType.toString() != 'admin')
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (_) => LostAndFoundScreen()));
-              else
-              Navigator.of(context).push(MaterialPageRoute(builder: (_) => ));
+        else
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (_) => FoundScreen()));
         break;
       case "Counselling":
         Navigator.of(context).push(MaterialPageRoute(
@@ -66,11 +70,15 @@ class _UtilitiesState extends State<Utilities> {
                 ChatPage(email: currentUser!.accountType.toString())));
         break;
       case "Donate to NGOs":
+        if (currentUser!.accountType != 'admin')
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (_) => VolunteerScreen()));
+        else
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (_) => VolunteerListScreen()));
+      case "Contact Services":
         Navigator.of(context)
-            .push(MaterialPageRoute(builder: (_) => VolunteerScreen()));
-      case "Emergency Services":
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (_) => Emergencies()));
+            .push(MaterialPageRoute(builder: (_) => HelpCenterPage()));
     }
   }
 

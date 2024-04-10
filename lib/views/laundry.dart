@@ -1,11 +1,6 @@
-import 'package:dosra_ghar/models/user.dart';
-import 'package:dosra_ghar/models/laundry.dart';
-import 'package:dosra_ghar/providers/laundry_provider.dart';
-import 'package:dosra_ghar/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/button/gf_button.dart';
-import 'package:getwidget/getwidget.dart';
-import 'package:provider/provider.dart';
+import 'package:getwidget/shape/gf_button_shape.dart';
 
 class LaundryPage extends StatefulWidget {
   const LaundryPage({Key? key}) : super(key: key);
@@ -15,13 +10,20 @@ class LaundryPage extends StatefulWidget {
 }
 
 class _LaundryPageState extends State<LaundryPage> {
+  String backupToken = '';
+  bool isCheckedIn = false;
+  String clothes = '';
+  String token = '';
+
+  List<DateTime> availableDates = [
+    DateTime(2024, 4, 1),
+    DateTime(2024, 4, 5),
+    DateTime(2024, 4, 10),
+    DateTime(2024, 4, 15),
+  ];
+
   @override
   Widget build(BuildContext context) {
-    TextEditingController clothesController = TextEditingController();
-    TextEditingController tokenController = TextEditingController();
-    final UserProvider user = Provider.of<UserProvider>(context, listen: false);
-    UserModel? currentUser = user.user;
-
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -79,102 +81,110 @@ class _LaundryPageState extends State<LaundryPage> {
                   ),
                 ],
               ),
-              Consumer<LaundryProvider>(
-                builder: (context, laundryProvider, _) {
-                  return Container(
-                    height: MediaQuery.of(context).size.height * 0.4,
-                    width: MediaQuery.of(context).size.width,
-                    margin: EdgeInsets.only(top: 10, bottom: 10),
-                    child: Card(
-                      color: Colors.white,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          if (!laundryProvider.isCheckedIn)
-                            Container(
-                              padding: EdgeInsets.all(15),
-                              child: TextField(
-                                controller: clothesController,
-                                decoration: InputDecoration(
-                                  hintText: "Number of Clothes",
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: BorderSide(color: Colors.black),
-                                  ),
-                                ),
+              Container(
+                height: MediaQuery.of(context).size.height * 0.4,
+                width: MediaQuery.of(context).size.width,
+                margin: EdgeInsets.only(top: 10, bottom: 10),
+                child: Card(
+                  color: Colors.white,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      if (!isCheckedIn)
+                        Container(
+                          padding: EdgeInsets.all(15),
+                          child: TextField(
+                            onChanged: (value) {
+                              clothes = value;
+                            },
+                            decoration: InputDecoration(
+                              hintText: "Number of Clothes",
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: BorderSide(color: Colors.black),
                               ),
-                            ),
-                          if (!laundryProvider.isCheckedIn)
-                            Container(
-                              padding: EdgeInsets.all(15),
-                              child: TextField(
-                                controller: tokenController,
-                                decoration: InputDecoration(
-                                  hintText: "Token Number",
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: BorderSide(color: Colors.black),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          if (laundryProvider.isCheckedIn)
-                            Container(
-                              padding: EdgeInsets.all(15),
-                              child: Text(
-                                "Your token number is ${tokenController.text}",
-                                style: TextStyle(
-                                  fontSize: 26,
-                                ),
-                              ),
-                            ),
-                          Container(
-                            padding: EdgeInsets.all(15),
-                            child: GFButton(
-                              onPressed: () async {
-                                if (laundryProvider.isCheckedIn) {
-                                  // Check-out logic
-                                  await laundryProvider.addLaundryCheckIn(
-                                    LaundryModel(
-                                      noClothes: clothesController.text,
-                                      token: tokenController.text,
-                                      isCheckIn: false,
-                                      date: DateTime.now(),
-                                      uid: currentUser?.uid ?? '',
-                                    ),
-                                  );
-                                } else {
-                                  // Check-in logic
-                                  await laundryProvider.addLaundryCheckIn(
-                                    LaundryModel(
-                                      noClothes: clothesController.text,
-                                      token: tokenController.text,
-                                      isCheckIn: true,
-                                      date: DateTime.now(),
-                                      uid: currentUser?.uid ?? '',
-                                    ),
-                                  );
-                                }
-                              },
-                              color: Colors.black,
-                              child: Text(laundryProvider.isCheckedIn
-                                  ? "Check-Out"
-                                  : "Check-In"),
-                              size: 50,
-                              shape: GFButtonShape.square,
-                              borderShape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(11),
-                              ),
-                              fullWidthButton: true,
                             ),
                           ),
-                        ],
+                        ),
+                      if (!isCheckedIn)
+                        Container(
+                          padding: EdgeInsets.all(15),
+                          child: TextField(
+                            onChanged: (value) {
+                              token = value;
+                            },
+                            decoration: InputDecoration(
+                              hintText: "Token Number",
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: BorderSide(color: Colors.black),
+                              ),
+                            ),
+                          ),
+                        ),
+                      if (isCheckedIn)
+                        Container(
+                          padding: EdgeInsets.all(15),
+                          child: Text(
+                            "Your token number is $backupToken",
+                            style: TextStyle(
+                              fontSize: 26,
+                            ),
+                          ),
+                        ),
+                      Container(
+                        padding: EdgeInsets.all(15),
+                        child: GFButton(
+                          onPressed: () {
+                            if (isCheckedIn) {
+                              // Check-out logic
+                              setState(() {
+                                isCheckedIn = false;
+                              });
+                            } else {
+                              // Check-in logic
+                              DateTime today = DateTime.now();
+                              if (availableDates.contains(DateTime(
+                                  today.year, today.month, today.day))) {
+                                setState(() {
+                                  isCheckedIn = true;
+                                  backupToken = token;
+                                });
+                              } else {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    title: Text('Not Available'),
+                                    content: Text(
+                                        'Laundry is only available on specific dates.'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text('OK'),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }
+                            }
+                          },
+                          color: Colors.black,
+                          child: Text(isCheckedIn ? "Check-Out" : "Check-In"),
+                          size: 50,
+                          shape: GFButtonShape.square,
+                          borderShape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(11),
+                          ),
+                          fullWidthButton: true,
+                        ),
                       ),
-                    ),
-                  );
-                },
+                    ],
+                  ),
+                ),
               ),
             ],
           ),
