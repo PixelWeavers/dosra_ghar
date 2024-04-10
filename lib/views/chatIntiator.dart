@@ -1,4 +1,4 @@
-import 'package:dosra_ghar/views/chatScreen.dart';
+/*import 'package:dosra_ghar/views/chatScreen.dart';
 import 'package:flutter/material.dart';
 
 class ChatIntiator extends StatelessWidget {
@@ -26,4 +26,4 @@ class ChatIntiator extends StatelessWidget {
       ),
     );
   }
-}
+}*/

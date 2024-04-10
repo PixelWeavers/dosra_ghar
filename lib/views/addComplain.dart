@@ -52,134 +52,136 @@ class _AddComplainState extends State<AddComplain> {
                 fontWeight: FontWeight.bold, fontSize: 26, color: Colors.white),
           ),
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(30.0),
-              child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                color: Colors.white
-              ),
-                alignment: Alignment.center,
-                child: Form(
-                    key: _formKey,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 25,),
-                        SizedBox(
-                          width: 300,
-                          child: DropdownButtonFormField<String>(
-                            borderRadius: BorderRadius.circular(18),
-                            value: selectedIssueType,
-                            items: issueTypes
-                                .map((issueType) => DropdownMenuItem<String>(
-                                      value: issueType,
-                                      child: Text(
-                                        issueType,
-                                        style: GoogleFonts.poppins(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight
-                                                .bold), // Set text color to white
-                                      ),
-                                    ))
-                                .toList(),
-                            onChanged: (value) => setState(() {
-                              selectedIssueType = value!;
-                              titleController.text = selectedIssueType;
-                            }),
-                            decoration: const InputDecoration(
-                              labelText: 'Issue Type',
-                              border: OutlineInputBorder(),
-                              labelStyle: TextStyle(
-                                  color: Colors
-                                      .black), // Set label color to white with some opacity
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(30.0),
+                child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: Colors.white
+                ),
+                  alignment: Alignment.center,
+                  child: Form(
+                      key: _formKey,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 25,),
+                          SizedBox(
+                            width: 300,
+                            child: DropdownButtonFormField<String>(
+                              borderRadius: BorderRadius.circular(18),
+                              value: selectedIssueType,
+                              items: issueTypes
+                                  .map((issueType) => DropdownMenuItem<String>(
+                                        value: issueType,
+                                        child: Text(
+                                          issueType,
+                                          style: GoogleFonts.poppins(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight
+                                                  .bold), // Set text color to white
+                                        ),
+                                      ))
+                                  .toList(),
+                              onChanged: (value) => setState(() {
+                                selectedIssueType = value!;
+                                titleController.text = selectedIssueType;
+                              }),
+                              decoration: const InputDecoration(
+                                labelText: 'Issue Type',
+                                border: OutlineInputBorder(),
+                                labelStyle: TextStyle(
+                                    color: Colors
+                                        .black), // Set label color to white with some opacity
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(80, 8, 80, 8),
-                          child: TextFormField(
-                              
-                              decoration: InputDecoration(
-                                  hintText: "Room no.",
-                                  hintStyle: GoogleFonts.poppins(
-                                      color: Colors.black,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                  prefixIcon: const Icon(Icons.home_outlined, 
-                                  size: 35,
-                                  color: Colors.black,)),
-                              controller: roomController,
-                              keyboardType: TextInputType.number,
-                              obscureText: false,
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Enter your room number';
-                                }
-                                return null;
-                              }),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
-                          child: TextFormField(           
-                              decoration: InputDecoration(
-                                  hintText: "Description",
-                                  hintStyle: GoogleFonts.poppins(
-                                      color: Colors.black,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                  prefixIcon: const Icon(Icons.description,
-                                  size: 30,
-                                   color: Colors.black,)),
-                              controller: desController,
-                              keyboardType: TextInputType.text,
-                              obscureText: false,
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Enter description';
-                                }
-                                return null;
-                              }),
-                        ),
-                        const SizedBox(height: 25,)
-                      ],
-                    )),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(80, 8, 80, 8),
+                            child: TextFormField(
+                                
+                                decoration: InputDecoration(
+                                    hintText: "Room no.",
+                                    hintStyle: GoogleFonts.poppins(
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                    prefixIcon: const Icon(Icons.home_outlined, 
+                                    size: 35,
+                                    color: Colors.black,)),
+                                controller: roomController,
+                                keyboardType: TextInputType.number,
+                                obscureText: false,
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return 'Enter your room number';
+                                  }
+                                  return null;
+                                }),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
+                            child: TextFormField(           
+                                decoration: InputDecoration(
+                                    hintText: "Description",
+                                    hintStyle: GoogleFonts.poppins(
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                    prefixIcon: const Icon(Icons.description,
+                                    size: 30,
+                                     color: Colors.black,)),
+                                controller: desController,
+                                keyboardType: TextInputType.text,
+                                obscureText: false,
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return 'Enter description';
+                                  }
+                                  return null;
+                                }),
+                          ),
+                          const SizedBox(height: 25,)
+                        ],
+                      )),
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 35,
-            ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                elevation: 20,
-                fixedSize: const Size(160, 50),
-                  backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-                  foregroundColor: Colors.black,
-                  side: const BorderSide(
-                    width: 4,
-                      color: Color.fromARGB(255, 174, 125, 222))),
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  createComplain(currentUser!.hostelBlock);
-                }
-              },
-              child: Text("Add complain",
-                  style: GoogleFonts.poppins(fontWeight: FontWeight.bold)),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-          ],
+              const SizedBox(
+                height: 35,
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  elevation: 20,
+                  fixedSize: const Size(160, 50),
+                    backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+                    foregroundColor: Colors.black,
+                    side: const BorderSide(
+                      width: 4,
+                        color: Color.fromARGB(255, 174, 125, 222))),
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    createComplain(currentUser!.hostelBlock);
+                  }
+                },
+                child: Text("Add complain",
+                    style: GoogleFonts.poppins(fontWeight: FontWeight.bold)),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+            ],
+          ),
         ),
       ),
     );
