@@ -32,6 +32,7 @@ class _VolunteerListScreenState extends State<VolunteerListScreen> {
             );
           })
           .toList();
+          print(_volunteers);
       setState(() {});
     } catch (error) {
       print('Error fetching volunteers: $error');
@@ -49,12 +50,11 @@ class _VolunteerListScreenState extends State<VolunteerListScreen> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        centerTitle: true,
         backgroundColor: Colors.black,
-        title: Text('Volunteer List', style: GoogleFonts.poppins(color: Colors.white,fontWeight: FontWeight.bold),),
+        title: Text('Volunteer List',style: GoogleFonts.poppins(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 26),),
       ),
       body: _volunteers.isEmpty
-          ? const Center(child: CircularProgressIndicator())
+          ? Center(child: CircularProgressIndicator())
           : ListView.builder(
               itemCount: _volunteers.length,
               itemBuilder: (context, index) {
@@ -66,53 +66,49 @@ class _VolunteerListScreenState extends State<VolunteerListScreen> {
   }
 
   Widget _buildVolunteerCard(Volunteer volunteer) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16,8,16,8),
-      child: Card(
-        elevation: 4.0,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                volunteer.ngo,
-                style: GoogleFonts.poppins(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
+    return Card(
+      elevation: 4.0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              volunteer.ngo,
+              style: GoogleFonts.poppins(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 8.0),
+            Text(
+              'Registration Number: ${volunteer.regNo}',
+              style: GoogleFonts.poppins(fontSize: 14.0),
+            ),
+            const SizedBox(height: 8.0),
+            Row(
+              children: [
+                const Icon(Icons.calendar_today_outlined, size: 16.0),
+                const SizedBox(width: 5.0),
+                Text(
+                  volunteer.date,
+                  style: GoogleFonts.poppins(fontSize: 14.0),
                 ),
-              ),
-              const SizedBox(height: 8.0),
-              Text(
-                'Registration Number: ${volunteer.regNo}',
-                style: GoogleFonts.poppins(fontSize: 14.0),
-              ),
-              const SizedBox(height: 8.0),
-              Row(
-                children: [
-                  const Icon(Icons.calendar_today_outlined, size: 16.0),
-                  const SizedBox(width: 5.0),
-                  Text(
-                    volunteer.date,
-                    style: GoogleFonts.poppins(fontSize: 14.0),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 8.0),
-              Row(
-                children: [
-                  const Icon(Icons.access_time_outlined, size: 16.0),
-                  const SizedBox(width: 5.0),
-                  Text(
-                    volunteer.timeSlot,
-                    style: GoogleFonts.poppins(fontSize: 14.0),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 6,)
-            ],
-          ),
+              ],
+            ),
+            const SizedBox(height: 8.0),
+            Row(
+              children: [
+                const Icon(Icons.access_time_outlined, size: 16.0),
+                const SizedBox(width: 5.0),
+                Text(
+                  volunteer.timeSlot,
+                  style: GoogleFonts.poppins(fontSize: 14.0),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
