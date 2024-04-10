@@ -5,6 +5,8 @@ class MMenuProvider extends ChangeNotifier {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   DocumentSnapshot? _documentSnapshot;
 List _menu =[];
+int _totalStudents = 500;
+int get totalStudents =>_totalStudents;
 Future<void> fetchMenu(String messType, String day, String meal) async {
   try {
    
@@ -29,6 +31,13 @@ Future<void> fetchMenu(String messType, String day, String meal) async {
   }
 }
 
+void updateStudents(bool flag){
+    _totalStudents = _totalStudents - 1;
+    firestore.collection('attendance').add({
+    'totalStudents':_totalStudents
+    });
+    notifyListeners();
+}
 
   DocumentSnapshot? get documentSnapshot => _documentSnapshot;
 }

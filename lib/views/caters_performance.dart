@@ -3,6 +3,7 @@ import 'package:dosra_ghar/models/rating.dart';
 import 'package:dosra_ghar/providers/menu_provider.dart';
 import 'package:dosra_ghar/widgets/mess_menu_card.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -23,6 +24,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
     super.initState();
     _chartData = [];
     _fetchRatings();
+    getAttendanceForMeal();
   }
 
   void _fetchRatings() async {
@@ -66,6 +68,22 @@ print("Fetched Documents: ${snapshot.docs.length}");
     }).toList();
   }
 
+Future<int> getAttendanceForMeal() async {
+  final collection = FirebaseFirestore.instance.collection('attendance');
+  final querySnapshot = await collection.get();
+
+  // Assuming you have only one document matching your criteria
+  if (querySnapshot.docs.isNotEmpty) {
+    final docData = querySnapshot.docs.first.data()!;
+    return docData['totalStudents'] as int;
+  } else {
+    // Handle no documents found (create new document or return default)
+    //final docId = collection.doc().id;
+    //await collection.doc(docId).set({'totalStudents': 0}); // Create new document with 0 students
+    return 0; // Or return another default value
+  }
+}
+
   @override
   Widget build(BuildContext context) {
     List<dynamic>? lunch;
@@ -91,43 +109,74 @@ print("Fetched Documents: ${snapshot.docs.length}");
                       color: Colors.white,
                     ),
                   ),),
-      body: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Colors.black,
-          
-        ),
-        child: _chartData.isNotEmpty
-            ? Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-                         children: [
-                           MessMenuCard(title: 'Lunch', items: lunch),
-                 
-                  SfCartesianChart(
-                    primaryXAxis: CategoryAxis(),
-                    backgroundColor: Colors.white,
-                    series: <CartesianSeries>[
-                      ColumnSeries<_DataPoint, String>(
-                        dataSource: _chartData,
-                        xValueMapper: (_DataPoint data, _) => data.date,
-                        yValueMapper: (_DataPoint data, _) => data.rating,
-                        color: Colors.blue,
-                      ),
-                    ],
-                  ),
-                ],
-              )
-            : const Center(
-                child: Text(
-                  "No Ratings Till Now😴",
-                  style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
-                    decoration: TextDecoration.none,
-                    color: Colors.white,
+      body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.black,
+            
+          ),
+          child: _chartData.isNotEmpty
+              ? Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                           children: [
+                             Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: FutureBuilder<int>(
+                    future: getAttendanceForMeal(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Text(
+                          "Total no. of students eating today ${snapshot.data!}",
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 22,
+                          ),
+                        );
+                      } else if (snapshot.hasError) {
+                        return Text(
+                          "Error: ${snapshot.error}",
+                          style: GoogleFonts.poppins(
+                            color: Colors.red,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        );
+                      }
+                      // Display a loading indicator while waiting
+                      return const CircularProgressIndicator();
+                    },
                   ),
                 ),
-              ),
+                             MessMenuCard(title: 'Lunch', items: lunch),
+                   
+                    SfCartesianChart(
+                      primaryXAxis: CategoryAxis(),
+                      backgroundColor: Colors.white,
+                      series: <CartesianSeries>[
+                        ColumnSeries<_DataPoint, String>(
+                          dataSource: _chartData,
+                          xValueMapper: (_DataPoint data, _) => data.date,
+                          yValueMapper: (_DataPoint data, _) => data.rating,
+                          color: Colors.blue,
+                        ),
+                      ],
+                    ),
+                  ],
+                )
+              : const Center(
+                  child: Text(
+                    "No Ratings Till Now😴",
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      decoration: TextDecoration.none,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+        ),
       ),
     );
   }

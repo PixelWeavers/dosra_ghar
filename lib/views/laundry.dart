@@ -1,5 +1,6 @@
 import 'package:dosra_ghar/models/laundry.dart';
 import 'package:dosra_ghar/providers/laundry_provider.dart';
+import 'package:dosra_ghar/views/laundry_schedule.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/button/gf_button.dart';
@@ -33,17 +34,23 @@ class _LaundryPageState extends State<LaundryPage> {
     User? currentUser = FirebaseAuth.instance.currentUser;
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          IconButton(onPressed: (){
+            Navigator.of(context).push(MaterialPageRoute(builder: (_)=>LaundryScheduleScreen(title: 'Laundry Schedule')));
+          }, 
+          icon: Icon(Icons.schedule, color: Colors.white,size: 28,))
+        ],
         leading: IconButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             color: Colors.white,
           ),
         ),
         backgroundColor: Colors.black,
-        title: Text(
+        title: const Text(
           "Laundry",
           style: TextStyle(
             fontSize: 24,
@@ -65,7 +72,7 @@ class _LaundryPageState extends State<LaundryPage> {
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.02,
               ),
-              Column(
+              const Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,7 +100,7 @@ class _LaundryPageState extends State<LaundryPage> {
                   return Container(
                     height: MediaQuery.of(context).size.height * 0.4,
                     width: MediaQuery.of(context).size.width,
-                    margin: EdgeInsets.only(top: 10, bottom: 10),
+                    margin: const EdgeInsets.only(top: 10, bottom: 10),
                     child: Card(
                       color: Colors.white,
                       child: Column(
@@ -103,28 +110,28 @@ class _LaundryPageState extends State<LaundryPage> {
                         children: [
                           if (!laundryProvider.isCheckedIn)
                             Container(
-                              padding: EdgeInsets.all(15),
+                              padding: const EdgeInsets.all(15),
                               child: TextField(
                                 controller: clothesController,
                                 decoration: InputDecoration(
                                   hintText: "Number of Clothes",
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(12),
-                                    borderSide: BorderSide(color: Colors.black),
+                                    borderSide: const BorderSide(color: Colors.black),
                                   ),
                                 ),
                               ),
                             ),
                           if (!laundryProvider.isCheckedIn)
                             Container(
-                              padding: EdgeInsets.all(15),
+                              padding: const EdgeInsets.all(15),
                               child: TextField(
                                 controller: tokenController,
                                 decoration: InputDecoration(
                                   hintText: "Token Number",
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(12),
-                                    borderSide: BorderSide(color: Colors.black),
+                                    borderSide: const BorderSide(color: Colors.black),
                                   ),
                                 ),
                               ),
@@ -139,7 +146,7 @@ class _LaundryPageState extends State<LaundryPage> {
                                   builder: (context, tokenSnapshot) {
                                     if (tokenSnapshot.connectionState ==
                                         ConnectionState.waiting) {
-                                      return CircularProgressIndicator();
+                                      return const CircularProgressIndicator();
                                     } else if (tokenSnapshot.hasError) {
                                       return Text(
                                           'Error: ${tokenSnapshot.error}');
@@ -147,7 +154,7 @@ class _LaundryPageState extends State<LaundryPage> {
                                       return Center(
                                         child: Text(
                                           "Your token number is ${tokenSnapshot.data}",
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 26,
                                           ),
                                         ),
@@ -161,14 +168,14 @@ class _LaundryPageState extends State<LaundryPage> {
                                   builder: (context, clothesSnapshot) {
                                     if (clothesSnapshot.connectionState ==
                                         ConnectionState.waiting) {
-                                      return CircularProgressIndicator();
+                                      return const CircularProgressIndicator();
                                     } else if (clothesSnapshot.hasError) {
                                       return Text(
                                           'Error: ${clothesSnapshot.error}');
                                     } else {
                                       return Text(
                                         "Number of Clothes: ${clothesSnapshot.data}",
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 26,
                                         ),
                                       );
@@ -178,7 +185,7 @@ class _LaundryPageState extends State<LaundryPage> {
                             ],
                           ),
                           Container(
-                            padding: EdgeInsets.all(15),
+                            padding: const EdgeInsets.all(15),
                             child: GFButton(
                               onPressed: () async {
                                 if (laundryProvider.isCheckedIn) {
