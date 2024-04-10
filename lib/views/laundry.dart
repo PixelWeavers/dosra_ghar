@@ -1,6 +1,10 @@
+import 'package:dosra_ghar/models/laundry.dart';
+import 'package:dosra_ghar/providers/laundry_provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/shape/gf_button_shape.dart';
+import 'package:provider/provider.dart';
 
 class LaundryPage extends StatefulWidget {
   const LaundryPage({Key? key}) : super(key: key);
@@ -24,6 +28,9 @@ class _LaundryPageState extends State<LaundryPage> {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController clothesController = TextEditingController();
+    TextEditingController tokenController = TextEditingController();
+    User? currentUser = FirebaseAuth.instance.currentUser;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
