@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
                   return const CircularProgressIndicator();
                 } else {
                   if (snapshot.hasData && snapshot.data!) {
-                    return const HomePage();
+                    return  VolunteerListScreen();
                   } else {
                     return const AuthView();
                   }

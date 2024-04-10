@@ -30,8 +30,9 @@ class _VolunteerScreenState extends State<VolunteerScreen> {
         backgroundColor: Colors.black,
         appBar: AppBar(
           backgroundColor: Colors.black,
+          centerTitle: true,
           title: Text(
-            'Volunteer for Food Rescue',
+            'Volunteer',
             style: GoogleFonts.poppins(
               color: Colors.white,
               fontSize: 26,

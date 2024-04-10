@@ -91,43 +91,45 @@ print("Fetched Documents: ${snapshot.docs.length}");
                       color: Colors.white,
                     ),
                   ),),
-      body: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Colors.black,
-          
-        ),
-        child: _chartData.isNotEmpty
-            ? Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-                         children: [
-                           MessMenuCard(title: 'Lunch', items: lunch),
-                 
-                  SfCartesianChart(
-                    primaryXAxis: CategoryAxis(),
-                    backgroundColor: Colors.white,
-                    series: <CartesianSeries>[
-                      ColumnSeries<_DataPoint, String>(
-                        dataSource: _chartData,
-                        xValueMapper: (_DataPoint data, _) => data.date,
-                        yValueMapper: (_DataPoint data, _) => data.rating,
-                        color: Colors.blue,
-                      ),
-                    ],
-                  ),
-                ],
-              )
-            : const Center(
-                child: Text(
-                  "No Ratings Till Now😴",
-                  style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
-                    decoration: TextDecoration.none,
-                    color: Colors.white,
+      body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.black,
+            
+          ),
+          child: _chartData.isNotEmpty
+              ? Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                           children: [
+                             MessMenuCard(title: 'Lunch', items: lunch),
+                   
+                    SfCartesianChart(
+                      primaryXAxis: CategoryAxis(),
+                      backgroundColor: Colors.white,
+                      series: <CartesianSeries>[
+                        ColumnSeries<_DataPoint, String>(
+                          dataSource: _chartData,
+                          xValueMapper: (_DataPoint data, _) => data.date,
+                          yValueMapper: (_DataPoint data, _) => data.rating,
+                          color: Colors.blue,
+                        ),
+                      ],
+                    ),
+                  ],
+                )
+              : const Center(
+                  child: Text(
+                    "No Ratings Till Now😴",
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      decoration: TextDecoration.none,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
-              ),
+        ),
       ),
     );
   }

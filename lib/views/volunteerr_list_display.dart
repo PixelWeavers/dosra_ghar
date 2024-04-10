@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dosra_ghar/models/ngo.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -9,52 +7,46 @@ class VolunteerListScreen extends StatefulWidget {
 }
 
 class _VolunteerListScreenState extends State<VolunteerListScreen> {
-  final _firestore = FirebaseFirestore.instance;
   List<Volunteer> _volunteers = [];
 
   @override
   void initState() {
     super.initState();
-    _fetchVolunteers();
+    _loadDummyData();
   }
 
-  Future<void> _fetchVolunteers() async {
-    try {
-      final snapshot = await _firestore.collection('volunteers').get();
-      _volunteers = snapshot.docs
-          .map((doc) {
-            String regNo = doc['regno'] as String;
-            return Volunteer(
-              ngo: doc['ngo'] as String,
-              regNo: regNo,
-              date: doc['date'] as String,
-              timeSlot: doc['time_slot'] as String,
-            );
-          })
-          .toList();
-      setState(() {});
-    } catch (error) {
-      print('Error fetching volunteers: $error');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Error fetching volunteers: $error'),
-          backgroundColor: Colors.red,
-        ),
-      );
-    }
+  void _loadDummyData() {
+    // Dummy data
+    _volunteers = [
+      Volunteer(
+        ngo: 'Sri Arunodayam',
+        regNo: 'REG001',
+        date: '2024-04-10',
+        timeSlot: '10:00 AM - 12:00 PM',
+      ),
+      Volunteer(
+        ngo: 'Dean Foundation',
+        regNo: 'REG002',
+        date: '2024-04-11',
+        timeSlot: '02:00 PM - 04:00 PM',
+      ),
+      Volunteer(
+        ngo: 'annamrita.',
+        regNo: 'REG003',
+        date: '2024-04-12',
+        timeSlot: '09:00 AM - 11:00 AM',
+      ),
+    ];
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
       appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: Colors.black,
-        title: Text('Volunteer List', style: GoogleFonts.poppins(color: Colors.white,fontWeight: FontWeight.bold),),
+        title: Text('Volunteer List'),
       ),
       body: _volunteers.isEmpty
-          ? const Center(child: CircularProgressIndicator())
+          ? Center(child: CircularProgressIndicator())
           : ListView.builder(
               itemCount: _volunteers.length,
               itemBuilder: (context, index) {
@@ -66,53 +58,49 @@ class _VolunteerListScreenState extends State<VolunteerListScreen> {
   }
 
   Widget _buildVolunteerCard(Volunteer volunteer) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16,8,16,8),
-      child: Card(
-        elevation: 4.0,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                volunteer.ngo,
-                style: GoogleFonts.poppins(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
+    return Card(
+      elevation: 4.0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              volunteer.ngo,
+              style: GoogleFonts.poppins(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 8.0),
+            Text(
+              'Registration Number: ${volunteer.regNo}',
+              style: GoogleFonts.poppins(fontSize: 14.0),
+            ),
+            const SizedBox(height: 8.0),
+            Row(
+              children: [
+                const Icon(Icons.calendar_today_outlined, size: 16.0),
+                const SizedBox(width: 5.0),
+                Text(
+                  volunteer.date,
+                  style: GoogleFonts.poppins(fontSize: 14.0),
                 ),
-              ),
-              const SizedBox(height: 8.0),
-              Text(
-                'Registration Number: ${volunteer.regNo}',
-                style: GoogleFonts.poppins(fontSize: 14.0),
-              ),
-              const SizedBox(height: 8.0),
-              Row(
-                children: [
-                  const Icon(Icons.calendar_today_outlined, size: 16.0),
-                  const SizedBox(width: 5.0),
-                  Text(
-                    volunteer.date,
-                    style: GoogleFonts.poppins(fontSize: 14.0),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 8.0),
-              Row(
-                children: [
-                  const Icon(Icons.access_time_outlined, size: 16.0),
-                  const SizedBox(width: 5.0),
-                  Text(
-                    volunteer.timeSlot,
-                    style: GoogleFonts.poppins(fontSize: 14.0),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 6,)
-            ],
-          ),
+              ],
+            ),
+            const SizedBox(height: 8.0),
+            Row(
+              children: [
+                const Icon(Icons.access_time_outlined, size: 16.0),
+                const SizedBox(width: 5.0),
+                Text(
+                  volunteer.timeSlot,
+                  style: GoogleFonts.poppins(fontSize: 14.0),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
@@ -131,13 +119,4 @@ class Volunteer {
     required this.date,
     required this.timeSlot,
   });
-
-  factory Volunteer.fromSnapshot(DocumentSnapshot snapshot) {
-    return Volunteer(
-      ngo: snapshot['ngo'] as String,
-      regNo: snapshot['regno'] as String,
-      date: snapshot['date'] as String,
-      timeSlot: snapshot['time_slot'] as String,
-    );
-  }
 }

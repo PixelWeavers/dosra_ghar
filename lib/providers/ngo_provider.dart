@@ -4,19 +4,19 @@ import 'package:flutter/material.dart';
 class VolunteerProvider extends ChangeNotifier {
   final List<Ngo> _ngoList = [
     const Ngo(
-      logoUrl: 'https://www.ngo4you.com/wp-content/uploads/2023/10/Santham-Home-for-Aged-min.jpg',
-      name: 'Food for All',
-      description: 'Food for All works to fight hunger by rescuing surplus food and distributing it to those in need.',
+      logoUrl: 'https://crowdwavetrust.org/blog/wp-content/uploads/2023/08/sri-arunodayam-logo.jpg',
+      name: 'Sri Arunodayam',
+      description: 'The Akshaya Patra Foundation is an Indian NGO headquartered in Bengaluru, Karnataka, with a mission to combat classroom hunger and support the education rights of children from disadvantaged socio-economic backgrounds '),
+    
+    const Ngo(
+      logoUrl: 'https://crowdwavetrust.org/blog/wp-content/uploads/2023/08/dean-foundation-logo.jpg',
+      name: 'Dean Foundation',
+      description: 'DEAN Foundation is a compassionate organisation that serves the vulnerable and marginalised populations in Chennai, Tamil Nadu, India. They focus on providing palliative care to those suffering from terminal, incurable diseases like cancer and AIDS, particularly those with limited access to such care.',
     ),
     const Ngo(
-      logoUrl: 'https://www.ngo4you.com/wp-content/uploads/2024/01/happiness-trust.png',
-      name: 'Second Harvest',
-      description: 'Second Harvest is committed to ending hunger and reducing food waste in the community.',
-    ),
-    const Ngo(
-      logoUrl: 'https://www.ngo4you.com/wp-content/uploads/2023/10/Abdul-Kalam-Trust.png',
-      name: 'Feeding America',
-      description: 'Feeding America is a nationwide network of food banks working to end hunger.',
+      logoUrl: 'https://annamrita.org/wp-content/uploads/2023/01/new-logo-black.png',
+      name: 'Annamrita',
+      description: 'As an NGO, our values are deeply rooted into Indian traditions. Annamrita is a Sanskrit word that translates to Anna, “Food” and Amrita, “Nectar”; Food as pure as nectar.',
     ),
   ];
 

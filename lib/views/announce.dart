@@ -3,6 +3,7 @@ import 'package:dosra_ghar/utils/utils.dart';
 import 'package:dosra_ghar/widgets/button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CreateAnnouncementScreen extends StatefulWidget {
   const CreateAnnouncementScreen({super.key});
@@ -37,8 +38,11 @@ class _CreateAnnouncementScreenState extends State<CreateAnnouncementScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        title: const Text('Create Announcement'),
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.black,
+        title:  Text('Create Announcement',style: GoogleFonts.poppins(color:Colors.white),),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -54,6 +58,7 @@ class _CreateAnnouncementScreenState extends State<CreateAnnouncementScreen> {
                   controller: _titleController,
                   decoration: const InputDecoration(
                     labelText: 'Title',
+                    labelStyle: TextStyle(color: Colors.white)
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -67,6 +72,7 @@ class _CreateAnnouncementScreenState extends State<CreateAnnouncementScreen> {
                   controller: _descriptionController,
                   decoration: const InputDecoration(
                     labelText: 'Description',
+                    labelStyle: TextStyle(color: Colors.white)
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
