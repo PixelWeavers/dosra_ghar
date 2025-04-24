@@ -1,0 +1,65 @@
+name: Flutter-Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: 🚀 Flutter Build
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.4.3'
+          channel: 'stable'
+          architecture: x64
+
+      - run: flutter pub get
+
+      # Extract version from pubspec.yaml
+      - name: Get version from pubspec.yaml
+        id: get_version
+        run: echo "VERSION=$(grep 'version:' pubspec.yaml | awk '{print $2}' | cut -d+ -f1)" >> $GITHUB_ENV
+
+      # ---------------- iOS Build ----------------
+      - run: pod repo update
+        working-directory: ios
+
+      - run: flutter build ios --release --no-codesign
+
+      - run: mkdir Payload
+        working-directory: build/ios/iphoneos
+
+      - run: mv Runner.app/ Payload
+        working-directory: build/ios/iphoneos
+
+      - name: Zip iOS output
+        run: zip -qq -r -9 FlutterIpaExport.ipa Payload
+        working-directory: build/ios/iphoneos
+
+      # ---------------- Android Build ----------------
+      - run: flutter build apk --release
+
+      - name: Rename Android APK
+        run: mv build/app/outputs/flutter-apk/app-release.apk build/app/outputs/flutter-apk/FlutterAndroidRelease.apk
+
+      # ---------------- Upload to GitHub Releases ----------------
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: |
+            build/ios/iphoneos/FlutterIpaExport.ipa
+            build/app/outputs/flutter-apk/FlutterAndroidRelease.apk
+          tag: v${{ env.VERSION }}
+          overwrite: true
+          body: "Release v${{ env.VERSION }}"
